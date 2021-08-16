@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('csrf', function () {
+    return csrf_token();
+});
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes(['register' => false]);
@@ -24,6 +28,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth', 'helpDesk'])->group(function () {
 
     Route::resource('stock', "InStockProductController");
+    Route::resource('toner', "TonerController");
     Route::resource('invoice', "InvoiceController");
+    Route::resource('employer', "EmployerController");
 
 });

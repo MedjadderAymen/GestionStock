@@ -76,9 +76,8 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="{{route('invoice.show',['invoice'=>$invoice])}}">Détail</a>
+                                            <a class="dropdown-item" href="#">Supprimer</a>
                                         </div>
                                     </div>
                                 </td>

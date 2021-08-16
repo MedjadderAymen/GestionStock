@@ -18,9 +18,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route("employer.index")}}">
+                            <i class="fas fa-users text-primary"></i>
+                            <span class="nav-link-text">Employers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route("stock.index")}}">
                             <i class="ni ni-box-2 text-primary"></i>
                             <span class="nav-link-text">Stock</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route("toner.index")}}">
+                            <i class="ni ni-palette text-primary"></i>
+                            <span class="nav-link-text">Toner</span>
                         </a>
                     </li>
                     <li class="nav-item">

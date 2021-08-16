@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\inStockProduct;
+use App\toner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class InStockProductController extends Controller
+class TonerController extends Controller
 {
 
     public function index()
     {
-        return view("stock.stocks")->with('stocks', inStockProduct::all());
+        return view("toner.toners")->with('toners', toner::all());
     }
 
     /**
@@ -26,24 +27,26 @@ class InStockProductController extends Controller
 
     public function store(Request $request)
     {
-        $data = Validator::make($request->all(), [
-            'material' => ['string', 'required', 'max:255'],
+
+        $data = Validator::make($request->only('reference','color','quantity'), [
+            'reference' => ['string', 'required', 'max:255'],
+            'color' => ['required', 'string', 'in:Magenta,Cyan,Jaune,Noir'],
             'quantity' => ['required', 'numeric', 'max:255'],
         ]);
 
         if ($data->fails()) {
             $error['message'] = "validation error";
-            return response()->json($error, 404);
+            return response()->json($data->errors(), 404);
         }
 
-        $stock = inStockProduct::firstOrCreate(
-            ['material' => $request['material']],
-            ['material' => $request['material'], 'quantity' => 0]
+        $toner = toner::firstOrCreate(
+            ['reference' => $request['reference'], 'color'=>$request['color']],
+            ['reference' => $request['reference'], 'quantity' => 0, 'color' => $request['color']]
         );
 
-        $stock->quantity += $request['quantity'];
+        $toner->quantity += $request['quantity'];
 
-        $stock->save();
+        $toner->save();
 
         return redirect()->back();
     }
@@ -51,10 +54,10 @@ class InStockProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\inStockProduct $inStockProduct
+     * @param  \App\toner  $toner
      * @return \Illuminate\Http\Response
      */
-    public function show(inStockProduct $inStockProduct)
+    public function show(toner $toner)
     {
         //
     }
@@ -62,10 +65,10 @@ class InStockProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\inStockProduct $inStockProduct
+     * @param  \App\toner  $toner
      * @return \Illuminate\Http\Response
      */
-    public function edit(inStockProduct $inStockProduct)
+    public function edit(toner $toner)
     {
         //
     }
@@ -73,11 +76,11 @@ class InStockProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\inStockProduct $inStockProduct
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\toner  $toner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, inStockProduct $inStockProduct)
+    public function update(Request $request, toner $toner)
     {
         //
     }
@@ -85,10 +88,10 @@ class InStockProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\inStockProduct $inStockProduct
+     * @param  \App\toner  $toner
      * @return \Illuminate\Http\Response
      */
-    public function destroy(inStockProduct $inStockProduct)
+    public function destroy(toner $toner)
     {
         //
     }

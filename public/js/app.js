@@ -2045,36 +2045,116 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "invoice",
   props: {
     csrf_token: String,
-    materials: Array
+    materials: Array,
+    toners: Array
   },
   data: function data() {
     return {
-      material: "",
+      material: {
+        id: 0,
+        material: ""
+      },
       price: 0,
       quantity: 0,
       products: [],
+      toner: {
+        id: 0,
+        reference: "",
+        color: ""
+      },
+      toner_price: 0,
+      toner_quantity: 0,
+      toners_list: [],
       provider: "",
       serial_number: ""
     };
   },
   methods: {
+    addToner: function addToner(e) {
+      e.preventDefault();
+
+      if (this.toner.reference === "" || this.toner_quantity === 0 || this.toner_price === 0) {
+        alert("Vérifier les champs pour ajouter toner");
+      } else {
+        var toner = {
+          id: this.toner.id,
+          reference: this.toner.reference + " - " + this.toner.color,
+          price: this.toner_price,
+          quantity: this.toner_quantity
+        };
+        this.toners_list = [].concat(_toConsumableArray(this.toners_list), [toner]);
+        this.toner = {
+          id: 0,
+          reference: ""
+        };
+        this.toner_price = 0;
+        this.toner_quantity = 0;
+      }
+    },
     addItem: function addItem(e) {
       e.preventDefault();
 
-      if (this.material === "" || this.quantity === 0 || this.price === 0) {
+      if (this.material.material === "" || this.quantity === 0 || this.price === 0) {
         alert("Vérifier les champs");
       } else {
         var product = {
-          material: this.material,
+          id: this.material.id,
+          material: this.material.material,
           price: this.price,
           quantity: this.quantity
         };
         this.products = [].concat(_toConsumableArray(this.products), [product]);
-        this.material = '';
+        this.material = {
+          id: 0,
+          material: ""
+        };
         this.price = 0;
         this.quantity = 0;
       }
@@ -2087,30 +2167,54 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                if (!(_this.provider === "" || _this.serial_number === "")) {
+                  _context.next = 4;
+                  break;
+                }
+
+                alert("remplir la facture");
+                _context.next = 12;
+                break;
+
+              case 4:
+                if (!(_this.products.length === 0 && _this.toners_list.length === 0)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                alert("facture vide");
+                _context.next = 12;
+                break;
+
+              case 8:
                 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // For adding the token to axios header (add this only one time).
 
                 window.axios.defaults.headers.common = {
                   'X-Requested-With': 'XMLHttpRequest',
                   'X-CSRF-TOKEN': _this.csrf_token
                 };
-                _context.next = 4;
+                _context.next = 12;
                 return axios.post('/invoice', {
                   products: _this.products,
+                  toners_list: _this.toners_list,
                   provider: _this.provider,
                   serial_number: _this.serial_number
                 }).then(function (res) {
-                  return console.log(res.data);
+                  return _this.success(res);
                 })["catch"](function (err) {
-                  return console.log(err);
+                  return alert(err.message);
                 });
 
-              case 4:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
+    },
+    success: function success(response) {
+      window.location = response.data.redirect;
     }
   }
 });
@@ -38668,6 +38772,211 @@ var render = function() {
       _c("hr", { staticClass: "my-1" }),
       _vm._v(" "),
       _c("h6", { staticClass: "heading-small text-muted mb-4" }, [
+        _vm._v("Ajouter list des toners")
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.toners_list, function(toner) {
+        return _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
+            _c("label", { staticClass: "form-control-label" }, [
+              _vm._v("Référence")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                placeholder: "Numéro Facture",
+                name: "serial_number",
+                disabled: ""
+              },
+              domProps: { value: toner.reference }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-lg-4 col-sm-12" }, [
+            _c("label", { staticClass: "form-control-label" }, [
+              _vm._v("prix")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                placeholder: "prix",
+                name: "provider",
+                disabled: ""
+              },
+              domProps: { value: toner.price }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-lg-2 col-sm-12" }, [
+            _c("label", { staticClass: "form-control-label" }, [
+              _vm._v("Quantité")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                placeholder: "Quantité",
+                name: "provider",
+                disabled: ""
+              },
+              domProps: { value: toner.quantity }
+            })
+          ]),
+          _vm._v(" "),
+          _c("hr", { staticClass: "my-1" })
+        ])
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
+          _c(
+            "label",
+            { staticClass: "form-control-label", attrs: { for: "toner_name" } },
+            [_vm._v("Référence toner")]
+          ),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.toner,
+                  expression: "toner"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "toner_name", required: "" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.toner = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            _vm._l(_vm.toners, function(toner) {
+              return _c("option", { domProps: { value: toner } }, [
+                _vm._v(_vm._s(toner.reference) + " - " + _vm._s(toner.color))
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-lg-3 col-sm-12" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-control-label",
+              attrs: { for: "toner_price" }
+            },
+            [_vm._v("prix")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.toner_price,
+                expression: "toner_price"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "prix",
+              name: "price",
+              id: "toner_price",
+              required: ""
+            },
+            domProps: { value: _vm.toner_price },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.toner_price = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-lg-2 col-sm-12" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-control-label",
+              attrs: { for: "toner_quantity" }
+            },
+            [_vm._v("Quantité")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.toner_quantity,
+                expression: "toner_quantity"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Quantité",
+              name: "quantity",
+              id: "toner_quantity",
+              required: ""
+            },
+            domProps: { value: _vm.toner_quantity },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.toner_quantity = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-lg-1 col-sm-12" }, [
+          _c("label", { staticClass: "form-control-label" }, [
+            _vm._v("Ajouter")
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-block btn-neutral",
+              on: { click: _vm.addToner }
+            },
+            [_c("i", { staticClass: "fas fa-plus" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("hr", { staticClass: "my-1" })
+      ]),
+      _vm._v(" "),
+      _c("hr", { staticClass: "my-1" }),
+      _vm._v(" "),
+      _c("h6", { staticClass: "heading-small text-muted mb-4" }, [
         _vm._v("Ajouter list des produit")
       ]),
       _vm._v(" "),
@@ -38766,7 +39075,9 @@ var render = function() {
               }
             },
             _vm._l(_vm.materials, function(material) {
-              return _c("option", [_vm._v(_vm._s(material.material))])
+              return _c("option", { domProps: { value: material } }, [
+                _vm._v(_vm._s(material.material))
+              ])
             }),
             0
           )

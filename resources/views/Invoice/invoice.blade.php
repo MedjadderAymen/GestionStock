@@ -33,7 +33,7 @@
                     <h3 class="mb-0">Nouvelle facture</h3>
                 </div>
                 <div id="app">
-                    <invoice csrf_token="{{csrf_token()}}" v-bind:materials="{{ json_encode($products) }}"></invoice>
+                    <invoice csrf_token="{{csrf_token()}}" v-bind:materials="{{ json_encode($products)}}" v-bind:toners="{{json_encode($toners)}}"></invoice>
                 </div>
             </div>
         </div>

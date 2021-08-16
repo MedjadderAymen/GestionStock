@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,7 +46,15 @@ class User extends Authenticatable
     /**
      * Always capitalize the first name when we retrieve it
      */
-    public function getNameAttribute($value)
+    public function getFirstNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    /**
+     * Always capitalize the last name when we retrieve it
+     */
+    public function getLastNameAttribute($value)
     {
         return ucfirst($value);
     }
@@ -54,9 +62,17 @@ class User extends Authenticatable
     /**
      * Always capitalize the first name when we save it to the database
      */
-    public function setNameAttribute($value)
+    public function setFirstNameAttribute($value)
     {
-        $this->attributes['name'] = ucfirst($value);
+        $this->attributes['first_name'] = ucfirst($value);
+    }
+
+    /**
+     * Always capitalize the last name when we save it to the database
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst($value);
     }
 
     /**
@@ -81,5 +97,14 @@ class User extends Authenticatable
     public function employer()
     {
         return $this->hasOne(employer::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('first_name', 'asc');
+        });
     }
 }

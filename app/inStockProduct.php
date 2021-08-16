@@ -10,6 +10,7 @@ class inStockProduct extends Model
 
     use SoftDeletes;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,4 +23,9 @@ class inStockProduct extends Model
     protected $dates = [
         'deleted_at'
     ];
+
+    public function invoices()
+    {
+        return $this->belongsToMany(invoice::class);
+    }
 }
