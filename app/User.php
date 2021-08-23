@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, AuthenticatesWithLdap;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'phone_number', 'role'
+       'email', 'password', 'phone_number', 'role', 'username', 'name'
     ];
 
     /**
@@ -39,41 +40,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $dates = [
-        'deleted_at'
-    ];
-
     /**
      * Always capitalize the first name when we retrieve it
      */
-    public function getFirstNameAttribute($value)
+    public function getNameAttribute($value)
     {
-        return ucfirst($value);
+        return ucwords($value);
     }
 
-    /**
-     * Always capitalize the last name when we retrieve it
-     */
-    public function getLastNameAttribute($value)
-    {
-        return ucfirst($value);
-    }
+
 
     /**
      * Always capitalize the first name when we save it to the database
      */
-    public function setFirstNameAttribute($value)
+    public function setNameAttribute($value)
     {
-        $this->attributes['first_name'] = ucfirst($value);
+        $this->attributes['name'] = ucwords($value);
     }
 
-    /**
-     * Always capitalize the last name when we save it to the database
-     */
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['last_name'] = ucfirst($value);
-    }
+
 
     /**
      * @return HasOne
@@ -104,7 +89,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::addGlobalScope('order', function (Builder $builder) {
-            $builder->orderBy('first_name', 'asc');
+            $builder->orderBy('name', 'asc');
         });
     }
 }

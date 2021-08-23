@@ -91,14 +91,10 @@ class InvoiceController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\invoice $invoice
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(invoice $invoice)
     {
-        //
+        $invoice->delete();
+
+        return redirect()->back();
     }
 }

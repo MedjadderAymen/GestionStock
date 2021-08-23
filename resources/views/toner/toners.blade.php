@@ -41,11 +41,12 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="reference" class="form-control-label">Référence</label>
-                            <input class="form-control" type="text" placeholder="Référence" name="reference" id="reference" required>
+                            <input class="form-control" type="text" placeholder="Référence" name="reference"
+                                   id="reference" required>
                         </div>
                         <div class="form-group">
                             <label for="color" class="form-control-label">Couleur</label>
-                            <select class="form-control" id="color"  name="color" required>
+                            <select class="form-control" id="color" name="color" required>
                                 <option value="Noir">Noir</option>
                                 <option value="Jaune">Jaune</option>
                                 <option value="Magenta">Magenta</option>
@@ -54,7 +55,8 @@
                         </div>
                         <div class="form-group">
                             <label for="quantity" class="form-control-label">Quantité</label>
-                            <input class="form-control" type="text" placeholder="quantité" name="quantity" id="quantity" required>
+                            <input class="form-control" type="text" placeholder="quantité" name="quantity" id="quantity"
+                                   required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -81,6 +83,7 @@
                             <th scope="col" class="sort" data-sort="name">Référence</th>
                             <th scope="col" class="sort" data-sort="budget">Couleur</th>
                             <th scope="col" class="sort" data-sort="status">Quantité</th>
+                            <th scope="col" class="sort" data-sort="status">Stock affecté</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -99,6 +102,9 @@
                                 </td>
                                 <td class="budget">
                                     {{$toner->quantity}}
+                                </td>
+                                <td class="budget">
+                                    {{$toner->printers()->sum('quantity')}}
                                 </td>
                                 <td class="text-right">
                                     <div class="dropdown">

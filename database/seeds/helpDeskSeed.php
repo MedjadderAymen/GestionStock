@@ -17,8 +17,7 @@ class helpDeskSeed extends Seeder
             'password' => bcrypt('password'),
             'phone_number' => "0698281556",
             'role' => 'help desk',
-            'first_name' => 'nabih',
-            'last_name' => 'mehdi',
+            'name' => 'mehdi nabih',
         ]);
 
         $user->helpDesk()->create([

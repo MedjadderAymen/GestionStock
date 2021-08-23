@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTonersTable extends Migration
+class CreatePrintersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTonersTable extends Migration
      */
     public function up()
     {
-        Schema::create('toners', function (Blueprint $table) {
+        Schema::create('printers', function (Blueprint $table) {
             $table->bigIncrements("id");
-            $table->string("reference");
-            $table->string("color");
-            $table->integer("quantity");
+            $table->string("designation");
+            $table->string("ip")->nullable(true);
+            $table->timestamp("affectation")->nullable();
+            $table->string("site")->nullable();
             $table->timestamps();
         });
     }
@@ -29,7 +30,6 @@ class CreateTonersTable extends Migration
      */
     public function down()
     {
-
-        Schema::dropIfExists('toners');
+        Schema::dropIfExists('printers');
     }
 }

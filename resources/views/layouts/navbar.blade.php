@@ -3,6 +3,34 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar links -->
 
+            @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                    <span class="alert-text"><strong>Succès!</strong> {{ session('success') }}!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                    <span class="alert-text"><strong>Erreur!</strong> {{ session('error') }}!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if(Session::has('info'))
+
+            @endif
+
+            @if(Session::has('warning'))
+
+            @endif
+
             <ul class="navbar-nav align-items-center  ml-md-auto ">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -11,7 +39,7 @@
                     <img alt="Image placeholder" src="{{asset("../assets/img/theme/mehdi.jpg")}}">
                   </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{Auth::user()->last_name}} {{Auth::user()->first_name}}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{Auth::user()->name}}</span>
                             </div>
                         </div>
                     </a>
@@ -24,10 +52,13 @@
                             <span>My profile</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#!" class="dropdown-item">
+                        <a href="#!" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="ni ni-user-run"></i>
                             <span>Logout</span>
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>

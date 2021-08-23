@@ -14,4 +14,9 @@ class toner extends Model
     {
         return $this->belongsToMany(invoice::class);
     }
+
+    public function Printers()
+    {
+        return $this->belongsToMany(printer::class)->withPivot('quantity');
+    }
 }

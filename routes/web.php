@@ -27,9 +27,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth', 'helpDesk'])->group(function () {
 
+    Route::resource('employer', "EmployerController");
+    Route::resource('user', "UserController");
+    Route::resource('printer', "PrinterController");
+    Route::get('/printer/showRedirect/{printer}', "PrinterController@showRedirect")->name('printer.showRedirect');
     Route::resource('stock', "InStockProductController");
     Route::resource('toner', "TonerController");
+    Route::resource('consumableToner', "ConsumableTonerController");
     Route::resource('invoice', "InvoiceController");
-    Route::resource('employer', "EmployerController");
 
 });

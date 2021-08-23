@@ -77,7 +77,11 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                             <a class="dropdown-item" href="{{route('invoice.show',['invoice'=>$invoice])}}">Détail</a>
-                                            <a class="dropdown-item" href="#">Supprimer</a>
+                                            <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('invoice-delete-form').submit();">Supprimer</a>
+                                            <form id="invoice-delete-form" action="{{route('invoice.destroy',['invoice'=>$invoice])}}" method="POST" class="d-none">
+                                                @method('DELETE')
+                                                @csrf
+                                            </form>
                                         </div>
                                     </div>
                                 </td>

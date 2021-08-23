@@ -11,7 +11,7 @@
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                 <li class="breadcrumb-item"><a href="{{route("home")}}"><i class="fas fa-home"></i></a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route("employer.index")}}">Employers</a>
+                                <li class="breadcrumb-item"><a href="{{route("user.index")}}">Employers</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">Modifier employer</li>
                             </ol>
@@ -27,7 +27,7 @@
 
     <div class="row justify-content-center">
         <div class=" col ">
-            <form action="{{route('employer.update',['employer'=>$employer])}}" method="post">
+            <form action="{{route('user.update',['user'=>$user])}}" method="post">
                 @csrf
                 @method("PUT")
                 <div class="card">
@@ -36,31 +36,24 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-6 col-sm-12">
-                                <label for="last_name" class="form-control-label">Nom</label>
-                                <input class="form-control" type="text" placeholder="Nom" name="last_name"
-                                       value="{{$employer->user->last_name}}"
-                                       id="last_name" required>
-                            </div>
-                            <div class="form-group col-lg-6 col-sm-12">
-                                <label for="first_name" class="form-control-label">Prénom</label>
-                                <input class="form-control" type="text" placeholder="Prénom"
-                                       value="{{$employer->user->first_name}}"
-                                       name="first_name"
-                                       id="first_name" required>
+                            <div class="form-group col-lg-12 col-sm-12">
+                                <label for="name" class="form-control-label">Nom</label>
+                                <input class="form-control" type="text" placeholder="Nom" name="name"
+                                       value="{{$user->name}}"
+                                       id="name" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6 col-sm-12">
                                 <label for="email" class="form-control-label">Email</label>
                                 <input class="form-control" type="text" placeholder="Email" name="email"
-                                       value="{{$employer->user->email}}"
+                                       value="{{$user->email}}"
                                        id="email" required>
                             </div>
                             <div class="form-group col-lg-6 col-sm-12">
                                 <label for="phone_number" class="form-control-label">Numéro téléphone</label>
                                 <input class="form-control" type="text" placeholder="Numéro téléphone"
-                                       value="{{$employer->user->phone_number}}"
+                                       value="{{$user->phone_number}}"
                                        name="phone_number"
                                        id="phone_number" required>
                             </div>
@@ -71,7 +64,7 @@
                             <div class="form-group col-lg-4 col-sm-12">
                                 <label for="function" class="form-control-label">Fonction</label>
                                 <input class="form-control" type="text" placeholder="Fonction" name="function"
-                                       value="{{$employer->function}}"
+                                       value="@if(isset($user->employer)) {{$user->employer->function}} @endif"
                                        id="function" required>
                             </div>
                             <div class="form-group col-lg-4 col-sm-12">
@@ -79,18 +72,19 @@
                                 <select class="form-control" id="department" name="department">
                                     @foreach(['DFC','DSI'] as $department)
                                         <option
-                                            @if($employer->department == $department)
+                                            @if(isset($user->employer))
+                                            @if($user->employer->department == $department)
                                             selected
                                             @endif
-                                            value="{{$department}}"
-                                        >{{$department}}</option>
+                                            @endif
+                                            value="{{$department}}">{{$department}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-lg-4 col-sm-12">
                                 <label for="company" class="form-control-label">Entité Légale</label>
                                 <input class="form-control" type="text" placeholder="Entité Légale"
-                                       value="{{$employer->company}}"
+                                       value="@if(isset($user->employer)) {{$user->employer->company}} @endif"
                                        name="company"
                                        id="company" required>
                             </div>

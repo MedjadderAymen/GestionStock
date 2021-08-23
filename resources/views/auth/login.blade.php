@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Gestion Stock</title>
     <!-- Favicon -->
-    <link rel="icon" href="../assets/img/brand/Logo-Vitalcare.png" type="image/png">
+    <link rel="icon" href="../assets/img/brand/Stock.png" type="image/png">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <!-- Icons -->

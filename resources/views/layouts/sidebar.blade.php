@@ -18,7 +18,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route("employer.index")}}">
+                        <a class="nav-link" href="{{route("user.index")}}">
                             <i class="fas fa-users text-primary"></i>
                             <span class="nav-link-text">Employers</span>
                         </a>
@@ -27,6 +27,12 @@
                         <a class="nav-link" href="{{route("stock.index")}}">
                             <i class="ni ni-box-2 text-primary"></i>
                             <span class="nav-link-text">Stock</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route("printer.index")}}">
+                            <i class="fas fa-print text-primary"></i>
+                            <span class="nav-link-text">Imprimantes</span>
                         </a>
                     </li>
                     <li class="nav-item">

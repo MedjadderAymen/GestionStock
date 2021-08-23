@@ -12,6 +12,15 @@ class helpDesk extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'last_logon_time' => 'datetime',
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function user()
@@ -22,5 +31,10 @@ class helpDesk extends Model
     public function invoices()
     {
         return $this->hasMany(invoice::class);
+    }
+
+    public function consumableToners()
+    {
+        return $this->hasMany(consumableToner::class);
     }
 }

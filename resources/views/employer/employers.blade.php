@@ -16,7 +16,7 @@
                         </nav>
                     </div>
                     <div class="col-lg-6 col-5 text-right">
-                        <a href="{{route("employer.create")}}" class="btn btn-sm btn-neutral col-4">Ajouter Employer</a>
+                        <a href="{{route("user.create")}}" class="btn btn-sm btn-neutral col-4">Ajouter Employer</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,6 @@
     <div class="row">
         <div class="col">
             <div class="card">
-
                 <!-- Light table -->
                 <div class="table-responsive">
                     <table id="stocks" class="table align-items-center table-flush text-center">
@@ -50,7 +49,8 @@
                                 <th scope="row">
                                     <div class="media align-items-center">
                                         <div class="media-body">
-                                            <span class="name mb-0 text-sm">{{$user->first_name}} {{$user->last_name}}</span>
+                                            <span
+                                                class="name mb-0 text-sm">{{$user->name}}</span>
                                         </div>
                                     </div>
                                 </th>
@@ -68,27 +68,52 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <div class="media-body">
-                                            <span class="name mb-0 text-sm">{{$user->employer->function}}</span>
+                                @if(isset($user->employer))
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">{{$user->employer->function}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <div class="media-body">
-                                            <span class="name mb-0 text-sm">{{$user->employer->department}}</span>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">{{$user->employer->department}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <div class="media-body">
-                                            <span class="name mb-0 text-sm">{{$user->employer->company}}</span>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">{{$user->employer->company}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
+                                    </th>
+                                @else
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">N/A</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">N/A</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">N/A</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                @endif
+
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -96,9 +121,14 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{route('employer.edit',['employer'=>$user->employer])}}">Modifier</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="{{route('user.show',['user'=>$user])}}">Détail</a>
+                                            <a class="dropdown-item"
+                                               href="{{route('user.edit',['user'=>$user])}}">Modifier</a>
+                                            <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
+                                            <form id="delete-user-form" action="{{route('user.destroy',['user'=>$user])}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         </div>
                                     </div>
                                 </td>
@@ -106,6 +136,10 @@
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="card-footer">
+                    {{$users->links()}}
                 </div>
             </div>
         </div>
