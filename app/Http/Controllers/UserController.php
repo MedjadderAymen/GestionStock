@@ -24,11 +24,15 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
+        //  dd($request->all());
+
         $data = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone_number' => ['required', 'numeric', 'unique:users'],
+            'windows_username' => ['required', 'string', 'max:255'],
             'function' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
             'company' => ['required', 'string', 'max:255'],
@@ -36,16 +40,24 @@ class UserController extends Controller
 
         if ($data->fails()) {
             $error['message'] = "validation error";
-            return response()->json($error, 404);
+            return response()->json($data->errors(), 404);
         }
 
         $user = User::create([
             'name' => $request['first_name'] . ' ' . $request['last_name'],
             'email' => $request['email'],
+            'windows_username' => $request['windows_username'],
             'phone_number' => $request['phone_number'],
             'role' => "employer",
             'password' => Hash::make("password"),
         ]);
+
+        if ($request['sap'] === "on") {
+            $user->sap = 1;
+            $user->username = $request['username'];
+
+            $user->save();
+        }
 
         $user->employer()->create([
             'function' => $request['function'],
@@ -56,15 +68,31 @@ class UserController extends Controller
         return redirect()->route('user.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function show(User $user)
     {
-        //
+
+        if (isset($user->employer)) {
+
+            $laptops = $user->employer->inStockProducts->where('class', 'laptop');
+            $desktops = $user->employer->inStockProducts->where('class', 'desktop');
+            $screens = $user->employer->inStockProducts->where('class', 'screen');
+            $phones = $user->employer->inStockProducts->where('class', 'phone');
+            $ipads = $user->employer->inStockProducts->where('class', 'ipad');
+
+            return view('employer.show')
+                ->with('user', $user)
+                ->with('laptops', $laptops)
+                ->with('desktops', $desktops)
+                ->with('screens', $screens)
+                ->with('phones', $phones)
+                ->with('ipads', $ipads);
+
+        } else {
+
+            return view('employer.update')->with('user', $user);
+
+        }
     }
 
     public function edit(User $user)
@@ -78,6 +106,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255',],
             'phone_number' => ['required', 'numeric'],
+            'windows_username' => ['required', 'string', 'max:255'],
             'function' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
             'company' => ['required', 'string', 'max:255'],
@@ -89,8 +118,18 @@ class UserController extends Controller
         }
 
         $user->name = $request['name'];
+        $user->windows_username = $request['windows_username'];
         $user->email = $request['email'];
         $user->phone_number = $request['phone_number'];
+
+        if ($request['sap'] === "on") {
+            $user->sap = 1;
+            $user->username = $request['username'];
+        } else {
+            $user->sap = 0;
+            $user->username = null;
+        }
+
         $user->save();
 
         $user->employer()->updateOrCreate([], [
@@ -107,5 +146,24 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user.index');
+    }
+
+    public function print(User $user)
+    {
+
+        $laptops = $user->employer->inStockProducts->where('class', 'laptop');
+        $desktops = $user->employer->inStockProducts->where('class', 'desktop');
+        $screens = $user->employer->inStockProducts->where('class', 'screen');
+        $phones = $user->employer->inStockProducts->where('class', 'phone');
+        $ipads = $user->employer->inStockProducts->where('class', 'ipad');
+
+        return view('employer.release')
+            ->with('user', $user)
+            ->with('laptops', $laptops)
+            ->with('desktops', $desktops)
+            ->with('screens', $screens)
+            ->with('phones', $phones)
+            ->with('ipads', $ipads);
+
     }
 }

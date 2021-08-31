@@ -100,7 +100,7 @@
                     <hr class="my-1"/>
 
                     <div class="card-footer bg-transparent">
-                        <h3 class="mb-0">Facturé par: <strong>{{$invoice->helpDesk->user->first_name}} {{$invoice->helpDesk->user->last_name}}</strong></h3>
+                        <h3 class="mb-0">Facturé par: <strong>{{$invoice->helpDesk->user->name}}</strong></h3>
                     </div>
 
                 </div>

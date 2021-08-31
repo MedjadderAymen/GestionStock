@@ -21,6 +21,7 @@ class helpDeskSeed extends Seeder
         ]);
 
         $user->helpDesk()->create([
+
         ]);
     }
 }

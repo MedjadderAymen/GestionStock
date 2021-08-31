@@ -15,9 +15,16 @@ class CreateInStockProductsTable extends Migration
     {
         Schema::create('in_stock_products', function (Blueprint $table) {
             $table->bigIncrements("id");
-            $table->string("material");
-            $table->integer("quantity");
-            $table->softDeletes();
+            $table->unsignedBigInteger('employer_id')->nullable();;
+            $table->string("zi")->nullable()->unique();
+            $table->string("invoice")->nullable()->unique();
+            $table->string("class");
+            $table->string("constructor");
+            $table->string("model");
+            $table->string("serial_number");
+            $table->boolean("affected");
+            $table->string("status");
+            $table->foreign("employer_id")->references('id')->on("employers")->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -29,6 +36,12 @@ class CreateInStockProductsTable extends Migration
      */
     public function down()
     {
+        Schema::table("in_stock_products", function (Blueprint $table) {
+
+            $table->dropForeign("in_stock_products_employer_id_foreign");
+
+        });
+
         Schema::dropIfExists('in_stock_products');
     }
 }

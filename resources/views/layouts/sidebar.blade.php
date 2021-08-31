@@ -26,7 +26,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route("stock.index")}}">
                             <i class="ni ni-box-2 text-primary"></i>
-                            <span class="nav-link-text">Stock</span>
+                            <span class="nav-link-text">Parc</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -50,6 +50,7 @@
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
+
                 <!-- Heading -->
                 <h6 class="navbar-heading p-0 text-muted">
                     <span class="docs-normal">System</span>
@@ -57,7 +58,7 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
+                        <a class="nav-link" href="" target="_blank">
                             <i class="ni ni-spaceship"></i>
                             <span class="nav-link-text">Report error</span>
                         </a>

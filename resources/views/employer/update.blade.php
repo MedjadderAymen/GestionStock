@@ -13,6 +13,9 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="{{route("user.index")}}">Employers</a>
                                 </li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{route('user.show',['user'=>$user])}}">Employer</a>
+                                </li>
                                 <li class="breadcrumb-item active" aria-current="page">Modifier employer</li>
                             </ol>
                         </nav>
@@ -58,6 +61,45 @@
                                        id="phone_number" required>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-lg-1 col-sm-12">
+                                <div>
+                                    <label for="sap" class="form-control-label">Sap?</label>
+                                </div>
+                                <label class="custom-toggle btn-block">
+                                    <input id="sap" name="sap" type="checkbox"
+                                           @if($user->sap)
+                                           checked
+                                           @endif
+                                           onchange="activate()">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="Non"
+                                          data-label-on="Oui"></span>
+                                </label>
+                            </div>
+                            <div id="hide_div" class="form-group col-lg-5 col-sm-12"
+                                 @if(!$user->sap)
+                                 style="display: none"
+                                @endif
+                            >
+                                <label for="username" class="form-control-label">Sap username</label>
+                                <input class="form-control" type="text" placeholder="Sap username" name="username"
+                                       value="{{$user->username}}"
+                                       id="username">
+                            </div>
+                            <div id="expand_div"
+                                 @if(!$user->sap)
+                                 class="form-group col-lg-11 col-sm-12"
+                                 @else
+                                 class="form-group col-lg-6 col-sm-12"
+                                 @endif
+                            >
+                                <label for="windows_username" class="form-control-label">Windows username</label>
+                                <input class="form-control" type="text" placeholder="Windows username"
+                                       value="{{$user->windows_username}}"
+                                       name="windows_username"
+                                       id="windows_username" required>
+                            </div>
+                        </div>
                         <hr class="my-1"/>
                         <h6 class="heading-small text-muted mb-4">Information professionnelle</h6>
                         <div class="row">
@@ -100,6 +142,32 @@
 
 @section('script')
     <script src="{{asset("./js/app.js")}}"></script>
+
+    <script type="text/javascript">
+
+        function activate() {
+
+            var x = document.getElementById('hide_div');
+            var y = document.getElementById('expand_div');
+
+            if (x.style.display === "none") {
+
+                x.style.display = "block";
+                document.getElementById('username').setAttribute("required", true) ;
+                y.classList.remove('col-lg-11');
+                y.classList.add('col-lg-6');
+
+
+            } else {
+
+                x.style.display = "none";
+                document.getElementById('username').removeAttribute("required") ;
+                y.classList.remove('col-lg-6');
+                y.classList.add('col-lg-11');
+
+            }
+        }
+    </script>
 
 @endsection
 
