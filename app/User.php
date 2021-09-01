@@ -80,6 +80,14 @@ class User extends Authenticatable
     /**
      * @return HasOne
      */
+    public function supervisor()
+    {
+        return $this->hasOne(supervisor::class);
+    }
+
+    /**
+     * @return HasOne
+     */
     public function employer()
     {
         return $this->hasOne(employer::class);
