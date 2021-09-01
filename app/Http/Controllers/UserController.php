@@ -166,4 +166,35 @@ class UserController extends Controller
             ->with('ipads', $ipads);
 
     }
+
+    public function restore(User $user)
+    {
+
+
+        $laptops = $user->employer->inStockProducts->where('class', 'laptop');
+        $desktops = $user->employer->inStockProducts->where('class', 'desktop');
+        $screens = $user->employer->inStockProducts->where('class', 'screen');
+        $phones = $user->employer->inStockProducts->where('class', 'phone');
+        $ipads = $user->employer->inStockProducts->where('class', 'ipad');
+
+
+        foreach ($user->employer->inStockProducts as $detachData) {
+
+            $detachData->employer_id = null;
+            $detachData->save();
+
+        }
+
+        $user->active = 0;
+        $user->save();
+
+        return view('employer.restitution')
+            ->with('user', $user)
+            ->with('laptops', $laptops)
+            ->with('desktops', $desktops)
+            ->with('screens', $screens)
+            ->with('phones', $phones)
+            ->with('ipads', $ipads);
+
+    }
 }

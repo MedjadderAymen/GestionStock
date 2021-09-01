@@ -42,7 +42,7 @@
                     <div class="row justify-content-md-center mt-4">
                         <div class="col-md-auto">
                             <h1>
-                                Décharge Matérielle Informatique: D{{$user->id}}
+                                Réstitution Matériel Informatique [{{$class}}]: D{{$user->id}}
                             </h1>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                     <div class="row justify-content-md-start mt-3">
                         <div class="col-md-auto">
                             <h3>
-                                - Certifie avoir Reçu, ce jour, auprès du département informatique, ce qui suit :
+                                - Certifie avoir restitué, ce jour, auprès du département informatique, ce qui suit :
                             </h3>
                         </div>
                     </div>
@@ -107,179 +107,173 @@
 
                         <table class="table align-items-center table-flush">
                             <tbody class="list">
-                            @if(count($laptops)>0)
+                            @if(isset($laptop))
                                 <tr>
                                     <th scope="col" colspan="5" style="text-align:center">
                                         <strong>Laptop</strong>
                                     </th>
                                 </tr>
-                                @foreach($laptops as $laptop)
-                                    <tr>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Constructeur: </strong>{{$laptop->constructor}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Model: </strong>{{$laptop->model}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>S/N: </strong>{{$laptop->serial_number}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Code immo: </strong>{{$laptop->zi}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Vc: </strong>VC{{$laptop->laptop->vc}}L
-                                            </h3>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <tr>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Constructeur: </strong>{{$laptop->inStockProduct->constructor}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Model: </strong>{{$laptop->inStockProduct->model}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>S/N: </strong>{{$laptop->inStockProduct->serial_number}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Code immo: </strong>{{$laptop->inStockProduct->zi}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Vc: </strong>VC{{$laptop->vc}}L
+                                        </h3>
+                                    </td>
+                                </tr>
                             @endif
-                            @if(count($desktops)>0)
+                            @if(isset($desktop))
                                 <tr>
                                     <th scope="col" colspan="5" style="text-align:center">
                                         <strong>Desktop</strong>
                                     </th>
                                 </tr>
-                                @foreach($desktops as $desktop)
-                                    <tr>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Constructeur: </strong>{{$desktop->constructor}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Model: </strong>{{$desktop->model}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>S/N: </strong>{{$desktop->serial_number}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Code immo: </strong>{{$desktop->zi}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Vc: </strong>VC{{$desktop->desktop->vc}}L
-                                            </h3>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <tr>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Constructeur: </strong>{{$desktop->inStockProduct->constructor}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Model: </strong>{{$desktop->inStockProduct->model}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>S/N: </strong>{{$desktop->inStockProduct->serial_number}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Code immo: </strong>{{$desktop->inStockProduct->zi}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Vc: </strong>VC{{$desktop->vc}}L
+                                        </h3>
+                                    </td>
+                                </tr>
                             @endif
-                            @if(count($screens)>0)
+                            @if(isset($screen))
                                 <tr>
                                     <th scope="col" colspan="5" style="text-align:center">
                                         <strong>Ecran</strong>
                                     </th>
                                 </tr>
-                                @foreach($screens as $screen)
-                                    <tr>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Constructeur: </strong>{{$screen->constructor}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Model: </strong>{{$screen->model}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>S/N: </strong>{{$screen->serial_number}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Code immo: </strong>{{$screen->zi}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
+                                <tr>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Constructeur: </strong>{{$screen->inStockProduct->constructor}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Model: </strong>{{$screen->inStockProduct->model}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>S/N: </strong>{{$screen->inStockProduct->serial_number}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Code immo: </strong>{{$screen->inStockProduct->zi}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
 
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    </td>
+                                </tr>
                             @endif
-                            @if(count($phones)>0)
+                            @if(isset($phone))
                                 <tr>
                                     <th scope="col" colspan="5" style="text-align:center">
                                         <strong>SmartPhone</strong>
                                     </th>
                                 </tr>
-                                @foreach($phones as $phone)
-                                    <tr>
-                                        <td class="budget">
+                                <tr>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Constructeur: </strong>{{$phone->inStockProduct->constructor}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Model: </strong>{{$phone->inStockProduct->model}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>S/N: </strong>{{$phone->inStockProduct->serial_number}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Code immo: </strong>{{$phone->inStockProduct->zi}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        @if($phone->cession)
                                             <h3>
-                                                <strong>Constructeur: </strong>{{$phone->constructor}}
+                                                <strong>Cession: </strong> Oui
                                             </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Model: </strong>{{$phone->model}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>S/N: </strong>{{$phone->serial_number}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Code immo: </strong>{{$phone->zi}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        @endif
+                                    </td>
+                                </tr>
                             @endif
-                            @if(count($ipads)>0)
+                            @if(isset($ipad))
                                 <tr>
                                     <th scope="col" colspan="5" style="text-align:center">
                                         <strong>IPad</strong>
                                     </th>
                                 </tr>
-                                @foreach($ipads as $ipad)
-                                    <tr>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Constructeur: </strong>{{$ipad->constructor}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Model: </strong>{{$ipad->model}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>S/N: </strong>{{$ipad->serial_number}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
-                                            <h3>
-                                                <strong>Code immo: </strong>{{$ipad->zi}}
-                                            </h3>
-                                        </td>
-                                        <td class="budget">
+                                <tr>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Constructeur: </strong>{{$ipad->inStockProduct->constructor}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Model: </strong>{{$ipad->inStockProduct->model}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>S/N: </strong>{{$ipad->inStockProduct->serial_number}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
+                                        <h3>
+                                            <strong>Code immo: </strong>{{$ipad->inStockProduct->zi}}
+                                        </h3>
+                                    </td>
+                                    <td class="budget">
 
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    </td>
+                                </tr>
                             @endif
                             </tbody>
                         </table>
@@ -345,20 +339,6 @@
                 </div>
                 <hr class="my-1 border-darker"/>
                 <hr class="my-1 mt-9 border-darker"/>
-                <div class="row justify-content-md-center mt-1">
-                    <div class="col-md-auto text-body">
-                        <h3>
-                            Important : En cas de perte ou de dommage merci de le signaler au département IT.
-                        </h3>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center mt-1">
-                    <div class="col-md-auto text-body">
-                        <h3>
-                            Cette décharge annule et remplace les décharges précédentes.
-                        </h3>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@
 <!-- Header -->
 @yield('cards')
 <!-- Page content -->
-    <div class="container-fluid mt--6">
+    <div class="container-fluid mt--7">
         @yield('content')
     </div>
 </div>

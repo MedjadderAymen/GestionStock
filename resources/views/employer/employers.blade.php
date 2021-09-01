@@ -6,8 +6,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Employers</h6>
-                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                 <li class="breadcrumb-item"><a href="{{route("home")}}"><i class="fas fa-home"></i></a>
                                 </li>
@@ -46,21 +45,29 @@
                         <tbody class="list">
                         @foreach($users as $user)
                             <tr>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <div class="media-body">
-                                            <span
-                                                class="name mb-0 text-sm">{{$user->name}}</span>
+                                @if($user->active)
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                               <span class="badge badge-dot mr-4">
+                                                                <i class="bg-success"></i> <span
+                                                       class="name mb-0 text-sm">{{$user->email}}</span>
+                                                   </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <div class="media-body">
-                                            <span class="name mb-0 text-sm">{{$user->email}}</span>
+                                    </th>
+                                @else
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="badge badge-dot mr-4">
+                                                                <i class="bg-warning"></i>
+                                                <span class="name mb-0 text-sm">{{$user->email}}</span>
+                                                    </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
+                                    </th>
+                                @endif
                                 <th scope="row">
                                     <div class="media align-items-center">
                                         <div class="media-body">
@@ -124,8 +131,10 @@
                                             <a class="dropdown-item" href="{{route('user.show',['user'=>$user])}}">Détail</a>
                                             <a class="dropdown-item"
                                                href="{{route('user.edit',['user'=>$user])}}">Modifier</a>
-                                            <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
-                                            <form id="delete-user-form" action="{{route('user.destroy',['user'=>$user])}}" method="post">
+                                            <a class="dropdown-item" href=""
+                                               onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
+                                            <form id="delete-user-form"
+                                                  action="{{route('user.destroy',['user'=>$user])}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>

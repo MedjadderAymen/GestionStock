@@ -1,13 +1,42 @@
 @extends('layouts.app')
 
+@section('search_form')
+    <!-- Search form -->
+    <form class="navbar-search navbar-search-light form-inline mb-0" id="navbar-search-main"
+          action="{{route('stock.search')}}" method="post">
+        @csrf
+        <div class="form-group mb-0">
+            <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <label>
+                    <input class="form-control" placeholder="Chercher un ZI" type="text" name="zi_search">
+                </label>
+            </div>
+        </div>
+        <button type="button" class="close" data-action="search-close"
+                data-target="#navbar-search-main" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </form>
+@endsection
+
+@section('search_input')
+    <li class="nav-item d-sm-none">
+        <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+            <i class="ni ni-zoom-split-in"></i>
+        </a>
+    </li>
+@endsection
+
 @section('header')
     <div class="header bg-primary pb-6">
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Employers</h6>
-                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                 <li class="breadcrumb-item"><a href="{{route("home")}}"><i class="fas fa-home"></i></a>
                                 </li>
@@ -17,25 +46,7 @@
                     </div>
                     <!-- Search form -->
                 </div>
-                <!-- Search form -->
-                <form class="navbar-search navbar-search-light form-inline mb-4" id="navbar-search-main"
-                      action="{{route('stock.search')}}" method="post">
-                    @csrf
-                    <div class="form-group mb-0">
-                        <div class="input-group input-group-alternative input-group-merge">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                            </div>
-                            <label>
-                                <input class="form-control" placeholder="Chercher un ZI" type="text" name="zi_search">
-                            </label>
-                        </div>
-                    </div>
-                    <button type="button" class="close" data-action="search-close"
-                            data-target="#navbar-search-main" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </form>
+
             </div>
         </div>
     </div>
@@ -1030,7 +1041,8 @@
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="status" class="form-control-label">Etat</label>
-                                                            <select class="form-control" id="status" name="status" required>
+                                                            <select class="form-control" id="status" name="status"
+                                                                    required>
                                                                 @foreach(['neuf','bon','moyen','hors service'] as $status)
                                                                     <option
                                                                         value="{{$status}}">{{$status}}</option>

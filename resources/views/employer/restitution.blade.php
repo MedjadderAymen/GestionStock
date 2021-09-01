@@ -42,7 +42,7 @@
                     <div class="row justify-content-md-center mt-4">
                         <div class="col-md-auto">
                             <h1>
-                                Décharge Matérielle Informatique: D{{$user->id}}
+                                Réstitution Matériel Informatique: D{{$user->id}}
                             </h1>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                     <div class="row justify-content-md-start mt-3">
                         <div class="col-md-auto">
                             <h3>
-                                - Certifie avoir Reçu, ce jour, auprès du département informatique, ce qui suit :
+                                - Certifie avoir restitué, ce jour, auprès du département informatique, ce qui suit :
                             </h3>
                         </div>
                     </div>
@@ -242,7 +242,11 @@
                                             </h3>
                                         </td>
                                         <td class="budget">
-
+                                            @if($phone->phone->cession)
+                                            <h3>
+                                                <strong>Cession: </strong> Oui
+                                            </h3>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -345,20 +349,6 @@
                 </div>
                 <hr class="my-1 border-darker"/>
                 <hr class="my-1 mt-9 border-darker"/>
-                <div class="row justify-content-md-center mt-1">
-                    <div class="col-md-auto text-body">
-                        <h3>
-                            Important : En cas de perte ou de dommage merci de le signaler au département IT.
-                        </h3>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center mt-1">
-                    <div class="col-md-auto text-body">
-                        <h3>
-                            Cette décharge annule et remplace les décharges précédentes.
-                        </h3>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -30,10 +30,12 @@ Route::middleware(['auth', 'helpDesk'])->group(function () {
     Route::resource('employer', "EmployerController");
     Route::resource('user', "UserController");
     Route::get('user/{user}/print', "UserController@print")->name('user.print');
+    Route::get('user/{user}/restore', "UserController@restore")->name('user.restore');
     Route::resource('printer', "PrinterController");
     Route::get('/printer/showRedirect/{printer}', "PrinterController@showRedirect")->name('printer.showRedirect');
     Route::resource('stock', "InStockProductController");
     Route::post('stock/search', "InStockProductController@search")->name('stock.search');
+    Route::get('stock/{stock}/restore', "InStockProductController@restore")->name('stock.restore');
     Route::resource('toner', "TonerController");
     Route::resource('consumableToner', "ConsumableTonerController");
     Route::resource('invoice', "InvoiceController");

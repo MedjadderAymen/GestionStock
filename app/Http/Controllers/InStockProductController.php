@@ -118,6 +118,9 @@ class InStockProductController extends Controller
                         ]);
 
                         $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                        $user->active = 1;
+                        $user->save();
                     }
 
                 }
@@ -188,6 +191,9 @@ class InStockProductController extends Controller
                         ]);
 
                         $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                        $user->active = 1;
+                        $user->save();
                     }
                 }
                 break;
@@ -247,6 +253,10 @@ class InStockProductController extends Controller
                         ]);
 
                         $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                        $user->active = 1;
+                        $user->save();
+
                     }
                 }
                 break;
@@ -304,6 +314,9 @@ class InStockProductController extends Controller
                         ]);
 
                         $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                        $user->active = 1;
+                        $user->save();
                     }
                 }
                 break;
@@ -362,6 +375,9 @@ class InStockProductController extends Controller
                         ]);
 
                         $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                        $user->active = 1;
+                        $user->save();
                     }
                 }
                 break;
@@ -433,6 +449,9 @@ class InStockProductController extends Controller
                             $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
+
+                        $user->active = 1;
+                        $user->save();
                     }
 
                     $stock->save();
@@ -442,6 +461,12 @@ class InStockProductController extends Controller
                     $stock->laptop->ram = $request['ram'];
                     $stock->laptop->disk = $request['disk'];
                     $stock->laptop->screen = $request['screen'];
+
+                    if (isset($request['bag'])) {
+                        $stock->laptop->bag = 1;
+                    } else {
+                        $stock->laptop->bag = 0;
+                    }
 
                     $stock->laptop->save();
                 }
@@ -485,6 +510,9 @@ class InStockProductController extends Controller
                             $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
+
+                        $user->active = 1;
+                        $user->save();
                     }
 
                     $stock->save();
@@ -534,6 +562,10 @@ class InStockProductController extends Controller
                             $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
+
+                        $user->active = 1;
+                        $user->save();
+
                     }
 
                     $stock->save();
@@ -578,6 +610,9 @@ class InStockProductController extends Controller
                             $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
+
+                        $user->active = 1;
+                        $user->save();
                     }
 
                     $stock->save();
@@ -627,6 +662,10 @@ class InStockProductController extends Controller
                             $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
+
+                        $user->active = 1;
+                        $user->save();
+
                     }
 
                     $stock->save();
@@ -659,6 +698,58 @@ class InStockProductController extends Controller
 
 
         return redirect()->route('stock.show', ['stock' => $inStockProduct]);
+
+    }
+
+    public function restore(inStockProduct $stock)
+    {
+
+        $user = $stock->employer->user;
+
+        $stock->employer_id = null;
+        $stock->save();
+
+        switch ($stock->class) {
+            case 'laptop':
+
+                $laptop = $stock->laptop;
+
+                return view('stock.restitution')
+                    ->with('laptop', $laptop)
+                    ->with('class', $stock->class)
+                    ->with('user', $user);
+
+            case 'desktop':
+                $desktop = $stock->desktop;
+
+                return view('stock.restitution')
+                    ->with('desktop', $desktop)
+                    ->with('class', $stock->class)
+                    ->with('user', $user);
+
+            case 'screen':
+                $screen = $stock->screen;
+
+                return view('stock.restitution')
+                    ->with('screen', $screen)
+                    ->with('class', $stock->class)
+                    ->with('user', $user);
+            case 'phone':
+                $phone = $stock->phone;
+
+                return view('stock.restitution')
+                    ->with('phone', $phone)
+                    ->with('class', $stock->class)
+                    ->with('user', $user);
+            case 'ipad':
+                $ipad = $stock->ipad;
+
+                return view('stock.restitution')
+                    ->with('ipad', $ipad)
+                    ->with('class', $stock->class)
+                    ->with('user', $user);
+        }
+
 
     }
 }

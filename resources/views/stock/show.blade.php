@@ -6,8 +6,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Factures</h6>
-                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                 <li class="breadcrumb-item"><a href="{{route("home")}}"><i class="fas fa-home"></i></a>
                                 </li>
@@ -213,13 +212,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-6 col-sm-6">
+                                <div class="form-group col-lg-5 col-sm-6">
                                     <label for="cpu" class="form-control-label">Cpu</label>
                                     <input class="form-control" type="text" placeholder="cpu" name="cpu"
                                            value="{{$inStockProduct->laptop->cpu}}"
                                            id="cpu" required>
                                 </div>
-
+                                <div class="form-group col-lg-1 col-sm-12">
+                                    <div>
+                                        <label for="bag" class="form-control-label">Sacoche?</label>
+                                    </div>
+                                    <label class="custom-toggle btn-block">
+                                        <input id="bag" name="bag" type="checkbox"
+                                               @if($inStockProduct->laptop->bag)
+                                               checked
+                                            @endif
+                                        >
+                                        <span class="custom-toggle-slider rounded-circle" data-label-off="Non"
+                                              data-label-on="Oui"></span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div class="row">
