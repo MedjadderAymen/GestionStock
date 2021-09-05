@@ -16,15 +16,16 @@
                             </ol>
                         </nav>
                     </div>
-
-                    <div class="col-lg-8 col-sm-12 text-right">
-                        <a href="{{route('user.print',['user'=>$user])}}"
-                           class="btn btn-sm btn-success text-white col-2"><i class="fas fa-print"></i> Décharge</a>
-                        <a href="{{route('user.restore',['user'=>$user])}}"
-                           class="btn btn-sm btn-warning text-white col-2"><i class="fas fa-print"></i> Restitution</a>
-                        <a href="{{route('user.edit',['user'=>$user])}}" class="btn btn-sm btn-neutral col-2"><i
-                                class="fas fa-edit"></i> Informations</a>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                        <div class="col-lg-8 col-sm-12 text-right">
+                            <a href="{{route('user.print',['user'=>$user])}}"
+                               class="btn btn-sm btn-success text-white col-2"><i class="fas fa-print"></i> Décharge</a>
+                            <a href="{{route('user.restore',['user'=>$user])}}"
+                               class="btn btn-sm btn-warning text-white col-2"><i class="fas fa-print"></i> Restitution</a>
+                            <a href="{{route('user.edit',['user'=>$user])}}" class="btn btn-sm btn-neutral col-2"><i
+                                    class="fas fa-edit"></i> Informations</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -130,7 +131,9 @@
                                 <th scope="col">modele</th>
                                 <th scope="col">numéro de série</th>
                                 <th scope="col">Date affectation</th>
-                                <th scope="col">Réstitution</th>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                    <th scope="col">Réstitution</th>
+                                @endif
                                 <th scope="col">Détails</th>
                             </tr>
                             </thead>
@@ -152,14 +155,16 @@
                                     <td>
                                         {{\Carbon\Carbon::parse($laptop->updated_at)->toDateString()}}
                                     </td>
-                                    <td class="text-left">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-danger"
-                                               href="{{route("stock.restore",['stock' => $laptop])}}" role="button">
-                                                <i class="ni ni-scissors"></i>
-                                            </a>
-                                        </div>
-                                    </td>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                        <td class="text-left">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-danger"
+                                                   href="{{route("stock.restore",['stock' => $laptop])}}" role="button">
+                                                    <i class="ni ni-scissors"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    @endif
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-primary"
@@ -190,7 +195,9 @@
                                 <th scope="col">modele</th>
                                 <th scope="col">numéro de série</th>
                                 <th scope="col">Date affectation</th>
-                                <th scope="col">Réstitution</th>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                    <th scope="col">Réstitution</th>
+                                @endif
                                 <th scope="col">Détails</th>
                             </tr>
                             </thead>
@@ -212,14 +219,17 @@
                                     <td>
                                         {{\Carbon\Carbon::parse($desktop->updated_at)->toDateString()}}
                                     </td>
-                                    <td class="text-left">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-danger"
-                                               href="{{route("stock.restore",['stock' => $desktop])}}" role="button">
-                                                <i class="ni ni-scissors"></i>
-                                            </a>
-                                        </div>
-                                    </td>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                        <td class="text-left">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-danger"
+                                                   href="{{route("stock.restore",['stock' => $desktop])}}"
+                                                   role="button">
+                                                    <i class="ni ni-scissors"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    @endif
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-primary"
@@ -250,7 +260,9 @@
                                 <th scope="col">modele</th>
                                 <th scope="col">numéro de série</th>
                                 <th scope="col">Date affectation</th>
-                                <th scope="col">Réstitution</th>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                    <th scope="col">Réstitution</th>
+                                @endif
                                 <th scope="col">Détails</th>
                             </tr>
                             </thead>
@@ -272,14 +284,16 @@
                                     <td>
                                         {{\Carbon\Carbon::parse($screen->updated_at)->toDateString()}}
                                     </td>
-                                    <td class="text-left">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-danger"
-                                               href="{{route("stock.restore",['stock' => $screen])}}" role="button">
-                                                <i class="ni ni-scissors"></i>
-                                            </a>
-                                        </div>
-                                    </td>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                        <td class="text-left">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-danger"
+                                                   href="{{route("stock.restore",['stock' => $screen])}}" role="button">
+                                                    <i class="ni ni-scissors"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    @endif
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-primary"
@@ -310,7 +324,9 @@
                                 <th scope="col">modele</th>
                                 <th scope="col">numéro de série</th>
                                 <th scope="col">Date affectation</th>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                 <th scope="col">Réstitution</th>
+                                @endif
                                 <th scope="col">Détails</th>
                             </tr>
                             </thead>
@@ -332,6 +348,7 @@
                                     <td>
                                         {{\Carbon\Carbon::parse($phone->updated_at)->toDateString()}}
                                     </td>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-danger"
@@ -340,6 +357,7 @@
                                             </a>
                                         </div>
                                     </td>
+                                    @endif
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-primary"
@@ -370,7 +388,9 @@
                                 <th scope="col">modele</th>
                                 <th scope="col">numéro de série</th>
                                 <th scope="col">Date affectation</th>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                 <th scope="col">Réstitution</th>
+                                @endif
                                 <th scope="col">Détails</th>
                             </tr>
                             </thead>
@@ -392,6 +412,7 @@
                                     <td>
                                         {{\Carbon\Carbon::parse($ipad->updated_at)->toDateString()}}
                                     </td>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-danger"
@@ -400,6 +421,7 @@
                                             </a>
                                         </div>
                                     </td>
+                                    @endif
                                     <td class="text-left">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-primary"

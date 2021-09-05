@@ -14,9 +14,11 @@
                             </ol>
                         </nav>
                     </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                     <div class="col-lg-6 col-5 text-right">
                         <a href="#" class="btn btn-sm btn-neutral col-4" data-toggle="modal" data-target="#exampleModal">Ajouter</a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

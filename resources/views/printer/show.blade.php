@@ -44,11 +44,17 @@
                                         </span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape text-white rounded-circle shadow"
-                                             style="background: magenta; cursor: pointer"
-                                             onclick="event.preventDefault(); document.getElementById('addMagenta-form').submit();">
-                                            <i class="ni ni-send"></i>
-                                        </div>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: magenta; cursor: pointer"
+                                                 onclick="event.preventDefault(); document.getElementById('addMagenta-form').submit();">
+                                                <i class="ni ni-send"></i>
+                                            </div>
+                                        @else
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: magenta;">
+                                            </div>
+                                        @endif
                                         <form id="addMagenta-form" method="post"
                                               action="{{route('consumableToner.store')}}">
                                             @csrf
@@ -58,12 +64,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <p class="mt-0 mb-3 text-sm">
-                                    <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
-                                       data-target="#magentaModel"><i class="ni ni-fat-add"></i>Ajouter</a>
-                                </p>
-                            </div>
+                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                <div class="col">
+                                    <p class="mt-0 mb-3 text-sm">
+                                        <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
+                                           data-target="#magentaModel"><i class="ni ni-fat-add"></i>Ajouter</a>
+                                    </p>
+                                </div>
+                            @endif
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="magentaModel" tabindex="-1" role="dialog"
@@ -136,11 +144,17 @@
                                         </span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape text-white rounded-circle shadow"
-                                             style="background: cyan; cursor: pointer"
-                                             onclick="event.preventDefault(); document.getElementById('addCyan-form').submit();">
-                                            <i class="ni ni-send"></i>
-                                        </div>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: cyan; cursor: pointer"
+                                                 onclick="event.preventDefault(); document.getElementById('addCyan-form').submit();">
+                                                <i class="ni ni-send"></i>
+                                            </div>
+                                        @else
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: cyan;">
+                                            </div>
+                                        @endif
                                         <form id="addCyan-form" method="post"
                                               action="{{route('consumableToner.store')}}">
                                             @csrf
@@ -150,12 +164,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <p class="mt-0 mb-3 text-sm">
-                                    <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
-                                       data-target="#cyanModel"><i class="ni ni-fat-add"></i>Ajouter</a>
-                                </p>
-                            </div>
+                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                <div class="col">
+                                    <p class="mt-0 mb-3 text-sm">
+                                        <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
+                                           data-target="#cyanModel"><i class="ni ni-fat-add"></i>Ajouter</a>
+                                    </p>
+                                </div>
+                            @endif
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="cyanModel" tabindex="-1" role="dialog"
@@ -228,11 +244,17 @@
                                         </span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape text-white rounded-circle shadow"
-                                             style="background: yellow; cursor: pointer"
-                                             onclick="event.preventDefault(); document.getElementById('addYellow-form').submit();">
-                                            <i class="ni ni-send"></i>
-                                        </div>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: yellow; cursor: pointer"
+                                                 onclick="event.preventDefault(); document.getElementById('addYellow-form').submit();">
+                                                <i class="ni ni-send"></i>
+                                            </div>
+                                        @else
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: yellow;">
+                                            </div>
+                                        @endif
                                         <form id="addYellow-form" method="post"
                                               action="{{route('consumableToner.store')}}">
                                             @csrf
@@ -242,12 +264,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <p class="mt-0 mb-3 text-sm">
-                                    <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
-                                       data-target="#yellowModel"><i class="ni ni-fat-add"></i>Ajouter</a>
-                                </p>
-                            </div>
+                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                <div class="col">
+                                    <p class="mt-0 mb-3 text-sm">
+                                        <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
+                                           data-target="#yellowModel"><i class="ni ni-fat-add"></i>Ajouter</a>
+                                    </p>
+                                </div>
+                            @endif
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="yellowModel" tabindex="-1" role="dialog"
@@ -319,11 +343,17 @@
                                         </span>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape text-white rounded-circle shadow"
-                                             style="background: black; cursor: pointer"
-                                             onclick="event.preventDefault(); document.getElementById('addBlack-form').submit();">
-                                            <i class="ni ni-send"></i>
-                                        </div>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: black; cursor: pointer"
+                                                 onclick="event.preventDefault(); document.getElementById('addBlack-form').submit();">
+                                                <i class="ni ni-send"></i>
+                                            </div>
+                                        @else
+                                            <div class="icon icon-shape text-white rounded-circle shadow"
+                                                 style="background: black;">
+                                            </div>
+                                        @endif
                                         <form id="addBlack-form" method="post"
                                               action="{{route('consumableToner.store')}}">
                                             @csrf
@@ -333,12 +363,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <p class="mt-0 mb-3 text-sm">
-                                    <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
-                                       data-target="#blackModel"><i class="ni ni-fat-add"></i>Ajouter</a>
-                                </p>
-                            </div>
+                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                <div class="col">
+                                    <p class="mt-0 mb-3 text-sm">
+                                        <a class="text-black-50 btn-block" style="cursor: pointer" data-toggle="modal"
+                                           data-target="#blackModel"><i class="ni ni-fat-add"></i>Ajouter</a>
+                                    </p>
+                                </div>
+                            @endif
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="blackModel" tabindex="-1" role="dialog"

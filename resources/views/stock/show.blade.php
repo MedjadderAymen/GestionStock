@@ -16,15 +16,18 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-lg-6 col-5 text-right">
-                        <a onclick="event.preventDefault(); document.getElementById('delete-material-form').submit();"
-                           class="btn btn-sm btn-danger col-4 text-white">Supprimer</a>
-                        <form id="delete-material-form" action="{{route('stock.destroy',['stock'=>$inStockProduct])}}"
-                              method="post">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                        <div class="col-lg-6 col-5 text-right">
+                            <a onclick="event.preventDefault(); document.getElementById('delete-material-form').submit();"
+                               class="btn btn-sm btn-danger col-4 text-white">Supprimer</a>
+                            <form id="delete-material-form"
+                                  action="{{route('stock.destroy',['stock'=>$inStockProduct])}}"
+                                  method="post">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -337,9 +340,13 @@
 
                         @endswitch
 
-                        <div class="card-footer bg-transparent">
-                            <button type="submit" class="btn btn-neutral">Mettre a jour</button>
-                        </div>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+
+                            <div class="card-footer bg-transparent">
+                                <button type="submit" class="btn btn-neutral">Mettre a jour</button>
+                            </div>
+
+                        @endif
 
                     </div>
                 </div>

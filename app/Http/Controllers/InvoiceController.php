@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class InvoiceController extends Controller
 {
 
+    public function __construct()
+    {
+
+        $this->middleware(['helpDesk'])->except(['index','show']);
+
+    }
+
     public function index()
     {
         return view("invoice.invoices")->with("invoices", invoice::all());

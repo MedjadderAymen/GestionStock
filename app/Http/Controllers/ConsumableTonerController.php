@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Session;
 
 class ConsumableTonerController extends Controller
 {
+
+
+    public function __construct()
+    {
+
+        $this->middleware(['helpDesk'])->except(['index','show']);
+
+    }
     /**
      * Display a listing of the resource.
      *

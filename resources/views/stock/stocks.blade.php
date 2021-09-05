@@ -101,10 +101,12 @@
                                             <div class="col">
                                                 <h3 class="mb-0">Inventaire laptop</h3>
                                             </div>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                             <div class="col text-right">
                                                 <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
                                                    data-target="#laptopModal">Ajouter</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -324,10 +326,12 @@
                                             <div class="col">
                                                 <h3 class="mb-0">Inventaire Desktop</h3>
                                             </div>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                             <div class="col text-right">
                                                 <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
                                                    data-target="#desktopModal">Ajouter</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -539,10 +543,12 @@
                                             <div class="col">
                                                 <h3 class="mb-0">Inventaire Ecrans</h3>
                                             </div>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                             <div class="col text-right">
                                                 <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
                                                    data-target="#screenModal">Ajouter</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -725,10 +731,12 @@
                                             <div class="col">
                                                 <h3 class="mb-0">Inventaire Téléphone</h3>
                                             </div>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                             <div class="col text-right">
                                                 <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
                                                    data-target="#phoneModal">Ajouter</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -901,10 +909,12 @@
                                             <div class="col">
                                                 <h3 class="mb-0">Inventaire IPad</h3>
                                             </div>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                             <div class="col text-right">
                                                 <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
                                                    data-target="#ipadModal">Ajouter</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="table-responsive">

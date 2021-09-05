@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+
+        $this->middleware('helpDesk')->except(['index','show']);
+
+    }
+
     public function index()
     {
         $users = User::where('role', 'employer')->paginate(25);
@@ -179,6 +186,10 @@ class UserController extends Controller
 
 
         foreach ($user->employer->inStockProducts as $detachData) {
+
+            if ($detachData->class === "phone" && $detachData->phone->cession) {
+                continue;
+            }
 
             $detachData->employer_id = null;
             $detachData->save();

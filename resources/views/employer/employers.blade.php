@@ -14,9 +14,11 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-lg-6 col-5 text-right">
-                        <a href="{{route("user.create")}}" class="btn btn-sm btn-neutral col-4">Ajouter Employer</a>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                        <div class="col-lg-6 col-5 text-right">
+                            <a href="{{route("user.create")}}" class="btn btn-sm btn-neutral col-4">Ajouter Employer</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -51,7 +53,7 @@
                                             <div class="media-body">
                                                <span class="badge badge-dot mr-4">
                                                                 <i class="bg-success"></i> <span
-                                                       class="name mb-0 text-sm">{{$user->email}}</span>
+                                                       class="name mb-0 text-sm">{{$user->name}}</span>
                                                    </span>
                                             </div>
                                         </div>
@@ -62,12 +64,19 @@
                                             <div class="media-body">
                                                 <span class="badge badge-dot mr-4">
                                                                 <i class="bg-warning"></i>
-                                                <span class="name mb-0 text-sm">{{$user->email}}</span>
+                                                <span class="name mb-0 text-sm">{{$user->name}}</span>
                                                     </span>
                                             </div>
                                         </div>
                                     </th>
                                 @endif
+                                <th scope="row">
+                                    <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="name mb-0 text-sm">{{$user->email}}</span>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th scope="row">
                                     <div class="media align-items-center">
                                         <div class="media-body">
@@ -121,26 +130,42 @@
                                     </th>
                                 @endif
 
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{route('user.show',['user'=>$user])}}">Détail</a>
-                                            <a class="dropdown-item"
-                                               href="{{route('user.edit',['user'=>$user])}}">Modifier</a>
-                                            <a class="dropdown-item" href=""
-                                               onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
-                                            <form id="delete-user-form"
-                                                  action="{{route('user.destroy',['user'=>$user])}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="{{route('user.show',['user'=>$user])}}">Détail</a>
+                                                <a class="dropdown-item"
+                                                   href="{{route('user.edit',['user'=>$user])}}">Modifier</a>
+                                                <a class="dropdown-item" href=""
+                                                   onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
+                                                <form id="delete-user-form"
+                                                      action="{{route('user.destroy',['user'=>$user])}}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @else
+
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light"
+                                               href="{{route('user.show',['user'=>$user])}}"
+                                               role="button">
+                                                <i class="fas fa-arrow-alt-circle-right"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                @endif
+
+
                             </tr>
                         @endforeach
                         </tbody>

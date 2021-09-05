@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use App\inStockProduct;
 use App\toner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class TonerController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware(['helpDesk'])->except(['index']);
+
+    }
 
     public function index()
     {
@@ -35,8 +43,8 @@ class TonerController extends Controller
         ]);
 
         if ($data->fails()) {
-            $error['message'] = "validation error";
-            return response()->json($data->errors(), 404);
+            Session::flash("error", $data->errors());
+            return redirect()->back();
         }
 
         $toner = toner::firstOrCreate(

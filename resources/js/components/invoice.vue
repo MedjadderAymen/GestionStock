@@ -208,7 +208,7 @@ export default {
                         'X-CSRF-TOKEN': this.csrf_token
                     };
 
-                    await axios.(
+                    await axios.post(
                         '/invoice',
                         {
                             products: this.products,

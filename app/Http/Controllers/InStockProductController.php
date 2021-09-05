@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Validator;
 class InStockProductController extends Controller
 {
 
+    public function __construct()
+    {
+
+        $this->middleware(['helpDesk'])->except(['index','show','search']);
+
+    }
+
     public function index()
     {
         $users = User::where('role', 'employer')->get();
@@ -706,11 +713,11 @@ class InStockProductController extends Controller
 
         $user = $stock->employer->user;
 
-        $stock->employer_id = null;
-        $stock->save();
-
         switch ($stock->class) {
             case 'laptop':
+
+                $stock->employer_id = null;
+                $stock->save();
 
                 $laptop = $stock->laptop;
 
@@ -720,6 +727,10 @@ class InStockProductController extends Controller
                     ->with('user', $user);
 
             case 'desktop':
+
+                $stock->employer_id = null;
+                $stock->save();
+
                 $desktop = $stock->desktop;
 
                 return view('stock.restitution')
@@ -728,6 +739,10 @@ class InStockProductController extends Controller
                     ->with('user', $user);
 
             case 'screen':
+
+                $stock->employer_id = null;
+                $stock->save();
+
                 $screen = $stock->screen;
 
                 return view('stock.restitution')
@@ -737,11 +752,20 @@ class InStockProductController extends Controller
             case 'phone':
                 $phone = $stock->phone;
 
+                if (!$phone->cession) {
+                    $stock->employer_id = null;
+                    $stock->save();
+                }
+
                 return view('stock.restitution')
                     ->with('phone', $phone)
                     ->with('class', $stock->class)
                     ->with('user', $user);
             case 'ipad':
+
+                $stock->employer_id = null;
+                $stock->save();
+
                 $ipad = $stock->ipad;
 
                 return view('stock.restitution')

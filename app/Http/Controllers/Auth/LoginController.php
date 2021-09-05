@@ -42,8 +42,19 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        Auth::user()->helpDesk->last_logon_time = now();
-
-        Auth::user()->helpDesk->save();
+        switch (Auth::user()->role) {
+            case 'admin':
+                Auth::user()->admin->last_logon_time = now();
+                Auth::user()->admin->save();
+                break;
+            case 'help desk':
+                Auth::user()->helpDesk->last_logon_time = now();
+                Auth::user()->helpDesk->save();
+                break;
+            case 'supervisor':
+                Auth::user()->supervisor->last_logon_time = now();
+                Auth::user()->supervisor->save();
+                break;
+        }
     }
 }

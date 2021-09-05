@@ -14,9 +14,12 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-lg-6 col-5 text-right">
-                        <a href="{{route("invoice.create")}}" class="btn btn-sm btn-neutral col-4">Ajouter Facture</a>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                        <div class="col-lg-6 col-5 text-right">
+                            <a href="{{route("invoice.create")}}" class="btn btn-sm btn-neutral col-4">Ajouter
+                                Facture</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -68,22 +71,38 @@
                                 <td class="budget">
                                     {{ $invoice->total_price }}
                                 </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{route('invoice.show',['invoice'=>$invoice])}}">Détail</a>
-                                            <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('invoice-delete-form').submit();">Supprimer</a>
-                                            <form id="invoice-delete-form" action="{{route('invoice.destroy',['invoice'=>$invoice])}}" method="POST" class="d-none">
-                                                @method('DELETE')
-                                                @csrf
-                                            </form>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item"
+                                                   href="{{route('invoice.show',['invoice'=>$invoice])}}">Détail</a>
+                                                <a class="dropdown-item" href=""
+                                                   onclick="event.preventDefault(); document.getElementById('invoice-delete-form').submit();">Supprimer</a>
+                                                <form id="invoice-delete-form"
+                                                      action="{{route('invoice.destroy',['invoice'=>$invoice])}}"
+                                                      method="POST" class="d-none">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @else
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light"
+                                               href="{{route('invoice.show',['invoice'=>$invoice])}}"
+                                               role="button">
+                                                <i class="fas fa-arrow-alt-circle-right"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

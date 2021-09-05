@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Validator;
 class PrinterController extends Controller
 {
 
+    public function __construct()
+    {
+
+        $this->middleware(['helpDesk'])->except(['index','show','showRedirect']);
+
+    }
+
     public function index()
     {
         return view('printer.printers')->with('printers', printer::all());
@@ -39,8 +46,8 @@ class PrinterController extends Controller
         ]);
 
         if ($data->fails()) {
-            $error['message'] = "validation error";
-            return response()->json($data->errors(), 404);
+            Session::flash("error", $data->errors());
+            return redirect()->back();
         }
 
         printer::create([

@@ -13,11 +13,11 @@ class supervisorSeed extends Seeder
     public function run()
     {
         $user = User::create([
-            'email' => 'm.nebih@gmail.com',
+            'email' => 'y.achir@vitalcareprod.com',
             'password' => bcrypt('password'),
-            'phone_number' => "0698281556",
-            'role' => 'help desk',
-            'name' => 'mehdi nabih',
+            'phone_number' => "0770526333",
+            'role' => 'supervisor',
+            'name' => 'Yasmine Achir',
         ]);
 
         $user->supervisor()->create([

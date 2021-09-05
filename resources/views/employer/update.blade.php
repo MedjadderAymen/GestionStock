@@ -90,7 +90,7 @@
                                  class="form-group col-lg-11 col-sm-12"
                                  @else
                                  class="form-group col-lg-6 col-sm-12"
-                                 @endif
+                                @endif
                             >
                                 <label for="windows_username" class="form-control-label">Windows username</label>
                                 <input class="form-control" type="text" placeholder="Windows username"
@@ -130,7 +130,9 @@
                                        id="company" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-neutral">Modifier employer</button>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                            <button type="submit" class="btn btn-neutral">Modifier employer</button>
+                        @endif
                     </div>
                 </div>
             </form>
@@ -152,7 +154,7 @@
             if (x.style.display === "none") {
 
                 x.style.display = "block";
-                document.getElementById('username').setAttribute("required", true) ;
+                document.getElementById('username').setAttribute("required", true);
                 y.classList.remove('col-lg-11');
                 y.classList.add('col-lg-6');
 
@@ -160,7 +162,7 @@
             } else {
 
                 x.style.display = "none";
-                document.getElementById('username').removeAttribute("required") ;
+                document.getElementById('username').removeAttribute("required");
                 y.classList.remove('col-lg-6');
                 y.classList.add('col-lg-11');
 

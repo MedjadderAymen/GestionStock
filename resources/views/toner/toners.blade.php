@@ -14,10 +14,12 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-lg-6 col-5 text-right">
-                        <a href="#" class="btn btn-sm btn-neutral col-4" data-toggle="modal"
-                           data-target="#exampleModal">Ajouter</a>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                        <div class="col-lg-6 col-5 text-right">
+                            <a href="#" class="btn btn-sm btn-neutral col-4" data-toggle="modal"
+                               data-target="#exampleModal">Ajouter</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -83,7 +85,6 @@
                             <th scope="col" class="sort" data-sort="budget">Couleur</th>
                             <th scope="col" class="sort" data-sort="status">Quantité</th>
                             <th scope="col" class="sort" data-sort="status">Stock affecté</th>
-                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody class="list">
@@ -105,19 +106,21 @@
                                 <td class="budget">
                                     {{$toner->printers()->sum('quantity')}}
                                 </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                {{--@if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif--}}
                             </tr>
                         @endforeach
                         </tbody>
