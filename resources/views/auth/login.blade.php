@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Gestion Stock</title>
+    <title>Parc IT</title>
     <!-- Favicon -->
     <link rel="icon" href="../assets/img/brand/Stock.png" type="image/png">
     <!-- Fonts -->
@@ -31,9 +31,7 @@
 <!-- Navbar -->
 <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="dashboard.html">
-            Logo HERE
-        </a>
+        <img src="{{asset("assets/img/brand/Stock-rename.png")}}" style="width: 150px" alt="stock">
     </div>
 </nav>
 <!-- Main content -->

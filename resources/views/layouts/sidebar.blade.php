@@ -1,10 +1,8 @@
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
         <!-- Brand -->
-        <div class="sidenav-header  align-items-center">
-            <a class="navbar-brand" >
-                <img src="{{asset("assets/img/brand/Stock.png")}}" class="navbar-brand-img" alt="stock">
-            </a>
+        <div class="sidenav-header align-items-center mb-2">
+            <img src="{{asset("assets/img/brand/Stock.png")}}" style="width: 120px" alt="stock">
         </div>
         <div class="navbar-inner">
             <!-- Collapse -->

@@ -164,11 +164,35 @@
                         @endif
 
                         <div class="row">
+                            @switch($inStockProduct->class)
+                                @case("laptop")
+                                @php($constructors=['Hp','Lenovo'])
+                                @break
+                                @case("desktop")
+                                @php($constructors=['Hp','Lenovo'])
+                                @break
+                                @case("screen")
+                                @php($constructors=['Hp','Lenovo','LG', 'Samsung'])
+                                @break
+                                @case("phone")
+                                @php($constructors=['Samsung','Xiaomi', 'Apple','Condor'])
+                                @break
+                                @case("ipad")
+                                @php($constructors=['Apple'])
+                                @break
+                            @endswitch
                             <div class="form-group col-lg-3 col-sm-6">
                                 <label for="constructor" class="form-control-label">Constructeur</label>
-                                <input class="form-control" type="text" placeholder="Constructeur" name="constructor"
-                                       value="{{$inStockProduct->constructor}}"
-                                       id="constructor" required>
+                                <select class="form-control" id="constructor" name="constructor"
+                                        required>
+                                    @foreach($constructors as $constructor)
+                                        <option
+                                            @if($inStockProduct->constructor === $constructor)
+                                            selected
+                                            @endif
+                                            value="{{$constructor}}">{{$constructor}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-lg-3 col-sm-6">
                                 <label for="model" class="form-control-label">Modele</label>
@@ -217,9 +241,16 @@
                                 </div>
                                 <div class="form-group col-lg-5 col-sm-6">
                                     <label for="cpu" class="form-control-label">Cpu</label>
-                                    <input class="form-control" type="text" placeholder="cpu" name="cpu"
-                                           value="{{$inStockProduct->laptop->cpu}}"
-                                           id="cpu" required>
+                                    <select class="form-control" id="cpu" name="cpu"
+                                            required>
+                                        @foreach(['I3','I5','I7'] as $cpu)
+                                            <option
+                                                @if($inStockProduct->laptop->cpu === $cpu)
+                                                selected
+                                                @endif
+                                                value="{{$cpu}}">{{$cpu}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-lg-1 col-sm-12">
                                     <div>
@@ -241,9 +272,16 @@
 
                                 <div class="form-group col-lg-4 col-sm-6">
                                     <label for="ram" class="form-control-label">Ram</label>
-                                    <input class="form-control" type="text" placeholder="Ram"
-                                           name="ram" value="{{$inStockProduct->laptop->ram}}"
-                                           id="ram" required>
+                                    <select class="form-control" id="ram" name="ram"
+                                            required>
+                                        @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                            <option
+                                                @if($inStockProduct->laptop->ram === $ram)
+                                                selected
+                                                @endif
+                                                value="{{$ram}}">{{$ram}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-lg-4 col-sm-6">
                                     <label for="disk" class="form-control-label">Disque</label>
@@ -278,15 +316,29 @@
                                 </div>
                                 <div class="form-group col-lg-3 col-sm-6">
                                     <label for="cpu" class="form-control-label">Cpu</label>
-                                    <input class="form-control" type="text" placeholder="cpu" name="cpu"
-                                           value="{{$inStockProduct->desktop->cpu}}"
-                                           id="cpu" required>
+                                    <select class="form-control" id="cpu" name="cpu"
+                                            required>
+                                        @foreach(['I3','I5','I7'] as $cpu)
+                                            <option
+                                                @if($inStockProduct->desktop->cpu === $cpu)
+                                                selected
+                                                @endif
+                                                value="{{$cpu}}">{{$cpu}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-lg-3 col-sm-6">
                                     <label for="ram" class="form-control-label">Ram</label>
-                                    <input class="form-control" type="text" placeholder="Ram"
-                                           name="ram" value="{{$inStockProduct->desktop->ram}}"
-                                           id="ram" required>
+                                    <select class="form-control" id="ram" name="ram"
+                                            required>
+                                        @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                            <option
+                                                @if($inStockProduct->desktop->ram === $ram)
+                                                selected
+                                                @endif
+                                                value="{{$ram}}">{{$ram}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-lg-3 col-sm-6">
                                     <label for="disk" class="form-control-label">Disque</label>

@@ -114,7 +114,7 @@
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Zi</th>
+                                                <th scope="col">Code immo</th>
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">numéro de série</th>
@@ -197,8 +197,8 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
-                                                            <label for="zi" class="form-control-label">Zi</label>
-                                                            <input class="form-control" type="text" placeholder="Zi"
+                                                            <label for="zi" class="form-control-label">Code immo</label>
+                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -235,9 +235,13 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="Constructeur" name="constructor"
-                                                                   id="constructor" required>
+                                                            <select class="form-control" id="constructor" name="constructor"
+                                                                    required>
+                                                                @foreach(['Hp','Lenovo'] as $constructor)
+                                                                    <option
+                                                                        value="{{$constructor}}">{{$constructor}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="model"
@@ -251,16 +255,24 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="cpu"
                                                                    class="form-control-label">CPU</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="CPU" name="cpu"
-                                                                   id="cpu" required>
+                                                            <select class="form-control" id="cpu" name="cpu"
+                                                                    required>
+                                                                @foreach(['I3','I5','I7'] as $cpu)
+                                                                    <option
+                                                                        value="{{$cpu}}">{{$cpu}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="ram"
                                                                    class="form-control-label ">RAM</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="RAM" name="ram"
-                                                                   id="ram" required>
+                                                            <select class="form-control" id="ram" name="ram"
+                                                                    required>
+                                                                @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                                                    <option
+                                                                        value="{{$ram}}">{{$ram}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -339,7 +351,7 @@
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Zi</th>
+                                                <th scope="col">Code immo</th>
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
@@ -423,8 +435,8 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
-                                                            <label for="zi" class="form-control-label">Zi</label>
-                                                            <input class="form-control" type="text" placeholder="Zi"
+                                                            <label for="zi" class="form-control-label">Code immo</label>
+                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -461,9 +473,13 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="Constructeur" name="constructor"
-                                                                   id="constructor" required>
+                                                            <select class="form-control" id="constructor" name="constructor"
+                                                                    required>
+                                                                @foreach(['Hp','Lenovo'] as $constructor)
+                                                                    <option
+                                                                        value="{{$constructor}}">{{$constructor}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="model"
@@ -477,16 +493,24 @@
                                                         <div class="form-group col-lg-4 col-sm-12">
                                                             <label for="cpu"
                                                                    class="form-control-label">CPU</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="CPU" name="cpu"
-                                                                   id="cpu" required>
+                                                            <select class="form-control" id="cpu" name="cpu"
+                                                                    required>
+                                                                @foreach(['I3','I5','I7'] as $cpu)
+                                                                    <option
+                                                                        value="{{$cpu}}">{{$cpu}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-4 col-sm-12">
                                                             <label for="ram"
                                                                    class="form-control-label ">RAM</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="RAM" name="ram"
-                                                                   id="ram" required>
+                                                            <select class="form-control" id="ram" name="ram"
+                                                                    required>
+                                                                @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                                                    <option
+                                                                        value="{{$ram}}">{{$ram}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-4 col-sm-12">
                                                             <label for="disk"
@@ -556,7 +580,7 @@
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Zi</th>
+                                                <th scope="col">Code immo</th>
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
@@ -640,8 +664,8 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
-                                                            <label for="zi" class="form-control-label">Zi</label>
-                                                            <input class="form-control" type="text" placeholder="Zi"
+                                                            <label for="zi" class="form-control-label">Code immo</label>
+                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -663,9 +687,13 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="Constructeur" name="constructor"
-                                                                   id="constructor" required>
+                                                            <select class="form-control" id="constructor" name="constructor"
+                                                                    required>
+                                                                @foreach(['Hp','Lenovo','LG', 'Samsung'] as $constructor)
+                                                                    <option
+                                                                        value="{{$constructor}}">{{$constructor}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="model"
@@ -744,7 +772,7 @@
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Zi</th>
+                                                <th scope="col">Code immo</th>
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
@@ -828,8 +856,8 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
-                                                            <label for="zi" class="form-control-label">Zi</label>
-                                                            <input class="form-control" type="text" placeholder="Zi"
+                                                            <label for="zi" class="form-control-label">Code immo</label>
+                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -851,9 +879,12 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="Constructeur" name="constructor"
-                                                                   id="constructor" required>
+                                                            <select class="form-control" id="constructor" name="constructor"
+                                                                    required>
+                                                                @foreach(['Samsung','Xiaomi', 'Apple','Condor'] as $constructor)
+                                                                    <option value="{{$constructor}}">{{$constructor}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="model"
@@ -922,7 +953,7 @@
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Zi</th>
+                                                <th scope="col">Code immo</th>
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
@@ -1006,8 +1037,8 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
-                                                            <label for="zi" class="form-control-label">Zi</label>
-                                                            <input class="form-control" type="text" placeholder="Zi"
+                                                            <label for="zi" class="form-control-label">Code immo</label>
+                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -1029,9 +1060,13 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <input class="form-control" type="text"
-                                                                   placeholder="Constructeur" name="constructor"
-                                                                   id="constructor" required>
+                                                            <select class="form-control" id="constructor" name="constructor"
+                                                                    required>
+                                                                @foreach(['Apple'] as $constructor)
+                                                                    <option
+                                                                        value="{{$constructor}}">{{$constructor}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="model"

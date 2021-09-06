@@ -703,6 +703,13 @@ class InStockProductController extends Controller
 
         $inStockProduct = inStockProduct::where('zi', $request['zi_search'])->first();
 
+        if ($inStockProduct === null){
+
+            Session::flash("info", "ce Zi n'éxiste pas");
+
+            return redirect()->back();
+        }
+
 
         return redirect()->route('stock.show', ['stock' => $inStockProduct]);
 
