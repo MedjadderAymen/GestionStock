@@ -27,7 +27,9 @@
                     {{ printer.site }}
                 </td>
                 <td class="budget">
-                    {{ printer.ip }}
+                    <i v-on:click="visitPrinter(printer.ip)">
+                        {{ printer.ip }}
+                    </i>
                 </td>
                 <td class="budget">
                     {{ printer.affectation }}
@@ -131,6 +133,14 @@ export default {
 
             }
 
+        },
+        async visitPrinter(url) {
+
+            if (confirm("Êtes-vous sûr ?")) {
+
+                window.open(`http://${url}`, '_blank');
+
+            }
         },
         success(response) {
             window.location = response.data.redirect;

@@ -118,8 +118,9 @@
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">numéro de série</th>
-                                                <th scope="col">Date affectation</th>
+                                                <th scope="col">Site d'affectation</th>
                                                 <th scope="col">Employer</th>
+                                                <th scope="col">Date affectation</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
@@ -138,16 +139,13 @@
                                                     <td>
                                                         {{$laptop->inStockProduct->serial_number}}
                                                     </td>
-                                                    <td>
-                                                        {{isset($laptop->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($laptop->inStockProduct->date_affectation)->toDateString() : "N/A"}}
-                                                    </td>
 
-                                                    @if(isset($laptop->inStockProduct->employer->user))
+                                                    @if(isset($laptop->inStockProduct->location->site))
                                                         <td>
                                                             <span class="badge badge-dot mr-4">
                                                                 <i class="bg-success"></i>
                                                                 <span
-                                                                    class="status"> {{$laptop->inStockProduct->employer->user->name}}</span>
+                                                                    class="status"> {{$laptop->inStockProduct->location->site->address}}</span>
                                                             </span>
 
                                                         </td>
@@ -159,6 +157,27 @@
                                                             </span>
                                                         </td>
                                                     @endif
+
+                                                    @if(isset($laptop->inStockProduct->employer->user))
+                                                        <td>
+                                                        <span class="badge badge-dot mr-4">
+                                                                <i class="bg-success"></i>
+                                                                <span
+                                                                    class="status"> {{$laptop->inStockProduct->employer->user->name}}</span>
+                                                            </span>
+
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                        <span class="badge badge-dot mr-4">
+                                                                <i class="bg-warning"></i>
+                                                                <span class="status">Non Affecté</span>
+                                                            </span>
+                                                        </td>
+                                                    @endif
+                                                    <td>
+                                                        {{isset($laptop->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($laptop->inStockProduct->date_affectation)->toDateString() : "N/A"}}
+                                                    </td>
 
                                                     <td class="text-right">
                                                         <div class="dropdown">
@@ -381,8 +400,9 @@
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
-                                                <th scope="col">Date affectation</th>
+                                                <th scope="col">Site d'affectation</th>
                                                 <th scope="col">Employer</th>
+                                                <th scope="col">Date affectation</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
@@ -401,16 +421,13 @@
                                                     <td>
                                                         {{$desktop->inStockProduct->serial_number}}
                                                     </td>
-                                                    <td>
-                                                        {{isset($desktop->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($desktop->inStockProduct->date_affectation)->toDateString() : "N/A"}}
-                                                    </td>
 
-                                                    @if(isset($desktop->inStockProduct->employer->user))
+                                                    @if(isset($desktop->inStockProduct->location->site))
                                                         <td>
                                                             <span class="badge badge-dot mr-4">
                                                                 <i class="bg-success"></i>
                                                                 <span
-                                                                    class="status"> {{$desktop->inStockProduct->employer->user->name}}</span>
+                                                                    class="status"> {{$desktop->inStockProduct->location->site->address}}</span>
                                                             </span>
 
                                                         </td>
@@ -422,6 +439,27 @@
                                                             </span>
                                                         </td>
                                                     @endif
+
+                                                    @if(isset($desktop->inStockProduct->employer->user))
+                                                        <td>
+                                                        <span class="badge badge-dot mr-4">
+                                                                <i class="bg-success"></i>
+                                                                <span
+                                                                    class="status"> {{$desktop->inStockProduct->employer->user->name}}</span>
+                                                            </span>
+
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                        <span class="badge badge-dot mr-4">
+                                                                <i class="bg-warning"></i>
+                                                                <span class="status">Non Affecté</span>
+                                                            </span>
+                                                        </td>
+                                                    @endif
+                                                    <td>
+                                                        {{isset($desktop->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($desktop->inStockProduct->date_affectation)->toDateString() : "N/A"}}
+                                                    </td>
 
                                                     <td class="text-right">
                                                         <div class="dropdown">
@@ -636,8 +674,9 @@
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
-                                                <th scope="col">Date affectation</th>
+                                                <th scope="col">Site d'affectation</th>
                                                 <th scope="col">Employer</th>
+                                                <th scope="col">Date affectation</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
@@ -656,16 +695,13 @@
                                                     <td>
                                                         {{$screen->inStockProduct->serial_number}}
                                                     </td>
-                                                    <td>
-                                                        {{isset($screen->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($screen->inStockProduct->date_affectation)->toDateString() : "N/A"}}
-                                                    </td>
 
-                                                    @if(isset($screen->inStockProduct->employer->user))
+                                                    @if(isset($screen->inStockProduct->location->site))
                                                         <td>
                                                             <span class="badge badge-dot mr-4">
                                                                 <i class="bg-success"></i>
                                                                 <span
-                                                                    class="status"> {{$screen->inStockProduct->employer->user->name}}</span>
+                                                                    class="status"> {{$screen->inStockProduct->location->site->address}}</span>
                                                             </span>
 
                                                         </td>
@@ -677,6 +713,27 @@
                                                             </span>
                                                         </td>
                                                     @endif
+
+                                                    @if(isset($screen->inStockProduct->employer->user))
+                                                        <td>
+                                                        <span class="badge badge-dot mr-4">
+                                                                <i class="bg-success"></i>
+                                                                <span
+                                                                    class="status"> {{$screen->inStockProduct->employer->user->name}}</span>
+                                                            </span>
+
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                        <span class="badge badge-dot mr-4">
+                                                                <i class="bg-warning"></i>
+                                                                <span class="status">Non Affecté</span>
+                                                            </span>
+                                                        </td>
+                                                    @endif
+                                                    <td>
+                                                        {{isset($screen->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($screen->inStockProduct->date_affectation)->toDateString() : "N/A"}}
+                                                    </td>
 
                                                     <td class="text-right">
                                                         <div class="dropdown">
@@ -853,8 +910,9 @@
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
-                                                <th scope="col">Date affectation</th>
+                                                <th scope="col">Site d'affectation</th>
                                                 <th scope="col">Employer</th>
+                                                <th scope="col">Date affectation</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
@@ -873,9 +931,24 @@
                                                     <td>
                                                         {{$phone->inStockProduct->serial_number}}
                                                     </td>
-                                                    <td>
-                                                        {{isset($phone->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($phone->inStockProduct->date_affectation)->toDateString() : "N/A"}}
-                                                    </td>
+
+                                                    @if(isset($phone->inStockProduct->location->site))
+                                                        <td>
+                                                            <span class="badge badge-dot mr-4">
+                                                                <i class="bg-success"></i>
+                                                                <span
+                                                                    class="status"> {{$phone->inStockProduct->location->site->address}}</span>
+                                                            </span>
+
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                            <span class="badge badge-dot mr-4">
+                                                                <i class="bg-warning"></i>
+                                                                <span class="status">Non Affecté</span>
+                                                            </span>
+                                                        </td>
+                                                    @endif
 
                                                     @if(isset($phone->inStockProduct->employer->user))
                                                         <td>
@@ -894,6 +967,10 @@
                                                             </span>
                                                         </td>
                                                     @endif
+
+                                                    <td>
+                                                        {{isset($phone->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($phone->inStockProduct->date_affectation)->toDateString() : "N/A"}}
+                                                    </td>
 
                                                     <td class="text-right">
                                                         <div class="dropdown">
@@ -1081,6 +1158,7 @@
                                                     <td>
                                                         {{$ipad->inStockProduct->serial_number}}
                                                     </td>
+
                                                     @if(isset($ipad->inStockProduct->location->site))
                                                         <td>
                                                             <span class="badge badge-dot mr-4">
@@ -1120,6 +1198,7 @@
                                                     <td>
                                                         {{isset($ipad->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($ipad->inStockProduct->date_affectation)->toDateString() : "N/A"}}
                                                     </td>
+
                                                     <td class="text-right">
                                                         <div class="dropdown">
                                                             <a class="btn btn-sm btn-icon-only text-light"

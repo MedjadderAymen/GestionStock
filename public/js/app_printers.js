@@ -1992,6 +1992,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "printers",
   props: {
@@ -2100,6 +2102,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    },
+    visitPrinter: function visitPrinter(url) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (confirm("Êtes-vous sûr ?")) {
+                  window.open("http://".concat(url), '_blank');
+                }
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     },
     success: function success(response) {
@@ -39281,8 +39301,22 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "budget" }, [
-                _vm._v(
-                  "\n                " + _vm._s(printer.ip) + "\n            "
+                _c(
+                  "i",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.visitPrinter(printer.ip)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(printer.ip) +
+                        "\n                "
+                    )
+                  ]
                 )
               ]),
               _vm._v(" "),
