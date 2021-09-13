@@ -1994,6 +1994,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "printers",
   props: {
@@ -39255,7 +39256,20 @@ var render = function() {
                 staticClass: "sort",
                 attrs: { scope: "col", "data-sort": "status" }
               },
-              [_vm._v("Adresse IP")]
+              [
+                _vm._v("Adresse IP"),
+                _c(
+                  "a",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("ip")
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-sort" })]
+                )
+              ]
             ),
             _vm._v(" "),
             _c(

@@ -7,7 +7,8 @@
                     class="fas fa-sort"></i></a></th>
                 <th scope="col" class="sort" data-sort="budget">Emplacement <a v-on:click="sortBy('site')"><i
                     class="fas fa-sort"></i></a></th>
-                <th scope="col" class="sort" data-sort="status">Adresse IP</th>
+                <th scope="col" class="sort" data-sort="status">Adresse IP<a v-on:click="sortBy('ip')"><i
+                    class="fas fa-sort"></i></a></th>
                 <th scope="col" class="sort" data-sort="status">Date Affectation</th>
                 <th v-if="role==='help desk'" scope="col">Modifier</th>
                 <th v-if="role==='help desk'" scope="col">Supprimer</th>
