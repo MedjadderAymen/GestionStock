@@ -27,7 +27,7 @@
 
     <div class="row justify-content-center">
         <div class=" col ">
-            <form action="{{route('user.store')}}" method="post">
+            <form action="{{route('user.store')}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                 @csrf
                 <div class="card">
                     <div class="card-header bg-transparent">

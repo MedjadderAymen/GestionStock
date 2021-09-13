@@ -42,8 +42,9 @@ class PrinterController extends Controller
             'designation' => ['string', 'required', 'max:255'],
             'site' => ['required', 'string', 'max:255'],
             'ip' => ['required', 'ipv4', 'max:255'],
-            'affectation' => ['required', 'date'],
+            'affectation' => ['required', 'string'],
         ]);
+
 
         if ($data->fails()) {
             Session::flash("error", $data->errors());
@@ -126,15 +127,40 @@ class PrinterController extends Controller
             ->with('consumableToners', $consumableToners);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\printer $printer
-     * @return \Illuminate\Http\Response
-     */
     public function edit(printer $printer)
     {
-        //
+        return ['redirect' => route('printer.showUpdate', ['printer' => $printer])];
+    }
+
+    public function showUpdate(printer $printer){
+
+        return view('printer.update')->with('printer',$printer);
+
+    }
+
+    public function updateData(Request $request, printer $printer){
+
+        $data = Validator::make($request->only('designation', 'site', 'ip', 'affectation'), [
+            'designation' => ['string', 'required', 'max:255'],
+            'site' => ['required', 'string', 'max:255'],
+            'ip' => ['required', 'ipv4', 'max:255'],
+            'affectation' => ['required', 'date'],
+        ]);
+
+        if ($data->fails()) {
+            Session::flash("error", $data->errors());
+            return redirect()->back();
+        }
+
+        $printer->designation= $request['designation'];
+        $printer->site= $request['site'];
+        $printer->ip= $request['ip'];
+        $printer->affectation= $request['affectation'];
+
+        $printer->save();
+
+        return redirect()->back();
+
     }
 
 
@@ -182,6 +208,6 @@ class PrinterController extends Controller
     {
         $printer->delete();
 
-        return redirect()->back();
+        return ['redirect' => route('printer.index')];
     }
 }

@@ -37,7 +37,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="{{route("toner.store")}}">
+                <form method="post" action="{{route("toner.store")}}" onsubmit="return confirm('Êtes-vous sûr?');">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">

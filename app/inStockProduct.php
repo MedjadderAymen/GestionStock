@@ -14,7 +14,7 @@ class inStockProduct extends Model
      * @var array
      */
     protected $fillable = [
-        'constructor', 'model', 'serial_number', 'zi', 'affected', 'status', 'employer_id', 'class', 'invoice'
+        'constructor', 'model', 'serial_number', 'zi', 'affected', 'status', 'employer_id', 'class', 'invoice','date_affectation'
     ];
 
     /**
@@ -58,6 +58,11 @@ class inStockProduct extends Model
 
     public function employersHistory()
     {
-        return $this->belongsToMany(employer::class)->withPivot('created_at')->orderBy('pivot_created_at', 'asc');
+        return $this->belongsToMany(employer::class)->withPivot('date_affectation')->orderBy('pivot_date_affectation', 'desc');
     }
+
+    public function location(){
+        return $this->belongsTo(location::class);
+    }
+
 }

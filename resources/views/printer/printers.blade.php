@@ -36,7 +36,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="{{route("printer.store")}}">
+                <form method="post" action="{{route("printer.store")}}" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -51,11 +51,11 @@
                         </div>
                         <div class="form-group">
                             <label for="ip" class="form-control-label">Adresse IP</label>
-                            <input class="form-control" type="text" placeholder="Adresse IP" name="ip" id="ip" required>
+                            <input class="form-control" type="text" placeholder="Adresse IP" name="ip" id="ip" value="0.0.0.0" required>
                         </div>
                         <div class="form-group">
                             <label for="affectation" class="form-control-label">Date Affectation</label>
-                            <input class="form-control" type="date" placeholder="Date Affectation" name="affectation"
+                            <input class="form-control" type="date" placeholder="Date Affectation" name="affectation" value="{{now()->toDateString()}}"
                                    id="affectation" required>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
             <div class="card">
                 <!-- Light table -->
                 <div id="app_printers">
-                    <printers csrf_token="{{csrf_token()}}" v-bind:printers="{{json_encode($printers)}}"></printers>
+                    <printers csrf_token="{{csrf_token()}}" v-bind:printers="{{json_encode($printers)}}" role="{{Auth::user()->role}}"></printers>
                 </div>
             </div>
         </div>

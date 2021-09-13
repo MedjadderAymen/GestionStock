@@ -1973,11 +1973,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "printers",
   props: {
     csrf_token: String,
-    printers: Array
+    printers: Array,
+    role: String
   },
   data: function data() {
     return {
@@ -2017,6 +2037,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    edit: function edit(id) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // For adding the token to axios header (add this only one time).
+
+                window.axios.defaults.headers.common = {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'X-CSRF-TOKEN': _this2.csrf_token
+                };
+                _context2.next = 4;
+                return axios.get("/printer/".concat(id, "/edit")).then(function (res) {
+                  return _this2.success(res);
+                })["catch"](function (err) {
+                  return alert(err.message);
+                });
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    destroy: function destroy(id) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!confirm("Êtes-vous sûr ?")) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // For adding the token to axios header (add this only one time).
+
+                window.axios.defaults.headers.common = {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'X-CSRF-TOKEN': _this3.csrf_token
+                };
+                _context3.next = 5;
+                return axios["delete"]("/printer/".concat(id)).then(function (res) {
+                  return _this3.success(res);
+                })["catch"](function (err) {
+                  return alert(err.message);
+                });
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     },
     success: function success(response) {
@@ -39164,7 +39247,15 @@ var render = function() {
               [_vm._v("Date Affectation")]
             ),
             _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } })
+            _vm.role === "help desk"
+              ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Modifier")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.role === "help desk"
+              ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Supprimer")])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Gérer")])
           ])
         ]),
         _vm._v(" "),
@@ -39203,7 +39294,47 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
+              _vm.role === "help desk"
+                ? _c("td", {}, [
+                    _c("div", { staticClass: "dropdown" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-icon-only text-light",
+                          attrs: { href: "#", role: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.edit(printer.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-edit" })]
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.role === "help desk"
+                ? _c("td", {}, [
+                    _c("div", { staticClass: "dropdown" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-icon-only text-light",
+                          attrs: { href: "#", role: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.destroy(printer.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "ni ni-scissors" })]
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("td", {}, [
                 _c("div", { staticClass: "dropdown" }, [
                   _c(
                     "a",

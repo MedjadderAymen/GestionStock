@@ -85,7 +85,7 @@
                                                    onclick="event.preventDefault(); document.getElementById('invoice-delete-form').submit();">Supprimer</a>
                                                 <form id="invoice-delete-form"
                                                       action="{{route('invoice.destroy',['invoice'=>$invoice])}}"
-                                                      method="POST" class="d-none">
+                                                      method="POST" class="d-none" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                                                     @method('DELETE')
                                                     @csrf
                                                 </form>

@@ -29,7 +29,7 @@
 
     <div class="row justify-content-center">
         <div class=" col ">
-            <form action="{{route('user.update',['user'=>$user])}}" method="post">
+            <form action="{{route('user.update',['user'=>$user])}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                 @csrf
                 @method("PUT")
                 <div class="card">
@@ -125,7 +125,7 @@
                             <div class="form-group col-lg-4 col-sm-12">
                                 <label for="company" class="form-control-label">Entité Légale</label>
                                 <input class="form-control" type="text" placeholder="Entité Légale"
-                                       value="@if(isset($user->employer)) {{$user->employer->company}} @endif"
+                                       value="@if(isset($user->employer)) {{$user->employer->company}} @else VitalCare @endif"
                                        name="company"
                                        id="company" required>
                             </div>
@@ -142,7 +142,6 @@
 @endsection
 
 @section('script')
-    <script src="{{asset("./js/app.js")}}"></script>
 
     <script type="text/javascript">
 

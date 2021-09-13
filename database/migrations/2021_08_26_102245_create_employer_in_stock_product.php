@@ -17,6 +17,7 @@ class CreateEmployerInStockProduct extends Migration
             $table->bigIncrements("id");
             $table->unsignedBigInteger("in_stock_product_id");
             $table->unsignedBigInteger("employer_id");
+            $table->string("date_affectation");
             $table->foreign("in_stock_product_id")->references("id")->on("in_stock_products")->onDelete("cascade");
             $table->foreign("employer_id")->references("id")->on("employers")->onDelete("cascade");
             $table->timestamps();

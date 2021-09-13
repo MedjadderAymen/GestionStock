@@ -45,22 +45,20 @@
                                     </div>
                                     <div class="col-auto">
                                         @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="icon icon-shape text-white rounded-circle shadow"
-                                                 style="background: magenta; cursor: pointer"
-                                                 onclick="event.preventDefault(); document.getElementById('addMagenta-form').submit();">
-                                                <i class="ni ni-send"></i>
-                                            </div>
+                                            <form id="addMagenta-form" method="post" action="{{route('consumableToner.store')}}" onsubmit="return confirm('Êtes-vous sûr?');">
+                                                @csrf
+                                                <input type="hidden" value="Magenta" name="color">
+                                                <input type="hidden" value="{{$printer->id}}" name="printer">
+                                                <button type="submit" class="icon icon-shape text-white rounded-circle shadow"
+                                                     style="background: magenta; cursor: pointer">
+                                                    <i class="ni ni-send"></i>
+                                                </button>
+                                            </form>
                                         @else
                                             <div class="icon icon-shape text-white rounded-circle shadow"
                                                  style="background: magenta;">
                                             </div>
                                         @endif
-                                        <form id="addMagenta-form" method="post"
-                                              action="{{route('consumableToner.store')}}">
-                                            @csrf
-                                            <input type="hidden" value="Magenta" name="color">
-                                            <input type="hidden" value="{{$printer->id}}" name="printer">
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +84,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}">
+                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}" onsubmit="return confirm('Êtes-vous sûr?');">
                                         @csrf
                                         @method('PUT')
                                         <input value="megenta" name="color" type="hidden">
@@ -145,22 +143,21 @@
                                     </div>
                                     <div class="col-auto">
                                         @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="icon icon-shape text-white rounded-circle shadow"
-                                                 style="background: cyan; cursor: pointer"
-                                                 onclick="event.preventDefault(); document.getElementById('addCyan-form').submit();">
-                                                <i class="ni ni-send"></i>
-                                            </div>
+                                            <form id="addCyan-form" method="post"
+                                                  action="{{route('consumableToner.store')}}" onsubmit="return confirm('Êtes-vous sûr ?');">
+                                                @csrf
+                                                <input type="hidden" value="Cyan" name="color">
+                                                <input type="hidden" value="{{$printer->id}}" name="printer">
+                                                <button type="submit" class="icon icon-shape text-white rounded-circle shadow"
+                                                        style="background: cyan; cursor: pointer">
+                                                    <i class="ni ni-send"></i>
+                                                </button>
+                                            </form>
                                         @else
                                             <div class="icon icon-shape text-white rounded-circle shadow"
                                                  style="background: cyan;">
                                             </div>
                                         @endif
-                                        <form id="addCyan-form" method="post"
-                                              action="{{route('consumableToner.store')}}">
-                                            @csrf
-                                            <input type="hidden" value="Cyan" name="color">
-                                            <input type="hidden" value="{{$printer->id}}" name="printer">
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +183,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}">
+                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}" onsubmit="return confirm('Êtes-vous sûr?');">
                                         @csrf
                                         @method('PUT')
                                         <input value="cyan" name="color" type="hidden">
@@ -245,22 +242,20 @@
                                     </div>
                                     <div class="col-auto">
                                         @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="icon icon-shape text-white rounded-circle shadow"
-                                                 style="background: yellow; cursor: pointer"
-                                                 onclick="event.preventDefault(); document.getElementById('addYellow-form').submit();">
-                                                <i class="ni ni-send"></i>
-                                            </div>
+                                            <form id="addYellow-form" method="post" action="{{route('consumableToner.store')}}" onsubmit="return confirm('Êtes-vous sûr?');">
+                                                @csrf
+                                                <input type="hidden" value="Jaune" name="color">
+                                                <input type="hidden" value="{{$printer->id}}" name="printer">
+                                                <button type="submit" class="icon icon-shape text-white rounded-circle shadow" style="background: yellow; cursor: pointer">
+                                                    <i class="ni ni-send"></i>
+                                                </button>
+                                            </form>
                                         @else
                                             <div class="icon icon-shape text-white rounded-circle shadow"
                                                  style="background: yellow;">
                                             </div>
                                         @endif
-                                        <form id="addYellow-form" method="post"
-                                              action="{{route('consumableToner.store')}}">
-                                            @csrf
-                                            <input type="hidden" value="Jaune" name="color">
-                                            <input type="hidden" value="{{$printer->id}}" name="printer">
-                                        </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +281,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}">
+                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}" onsubmit="return confirm('Êtes-vous sûr?');">
                                         @csrf
                                         @method('PUT')
                                         <input value="yellow" name="color" type="hidden">
@@ -344,22 +339,21 @@
                                     </div>
                                     <div class="col-auto">
                                         @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="icon icon-shape text-white rounded-circle shadow"
-                                                 style="background: black; cursor: pointer"
-                                                 onclick="event.preventDefault(); document.getElementById('addBlack-form').submit();">
-                                                <i class="ni ni-send"></i>
-                                            </div>
+                                            <form id="addBlack-form" method="post"
+                                                  action="{{route('consumableToner.store')}}" onsubmit="return confirm('Êtes-vous sûr?');">
+                                                @csrf
+                                                <input type="hidden" value="Noir" name="color">
+                                                <input type="hidden" value="{{$printer->id}}" name="printer">
+                                                <button type="submit" class="icon icon-shape text-white rounded-circle shadow"
+                                                        style="background: black; cursor: pointer">
+                                                    <i class="ni ni-send"></i>
+                                                </button>
+                                            </form>
                                         @else
                                             <div class="icon icon-shape text-white rounded-circle shadow"
                                                  style="background: black;">
                                             </div>
                                         @endif
-                                        <form id="addBlack-form" method="post"
-                                              action="{{route('consumableToner.store')}}">
-                                            @csrf
-                                            <input type="hidden" value="Noir" name="color">
-                                            <input type="hidden" value="{{$printer->id}}" name="printer">
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -385,7 +379,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}">
+                                    <form method="post" action="{{route("printer.update",['printer'=> $printer])}}" onsubmit="return confirm('Êtes-vous sûr?');">
                                         @csrf
                                         @method('PUT')
                                         <input value="black" name="color" type="hidden">

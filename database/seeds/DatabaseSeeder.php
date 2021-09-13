@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(helpdeskSeed::class);
         $this->call(supervisorSeed::class);
+        $this->call(SiteSeeder::class);
     }
 }

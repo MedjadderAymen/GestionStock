@@ -102,10 +102,10 @@
                                                 <h3 class="mb-0">Inventaire laptop</h3>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="col text-right">
-                                                <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
-                                                   data-target="#laptopModal">Ajouter</a>
-                                            </div>
+                                                <div class="col text-right">
+                                                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
+                                                       data-target="#laptopModal">Ajouter</a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                                         {{$laptop->inStockProduct->serial_number}}
                                                     </td>
                                                     <td>
-                                                        {{\Carbon\Carbon::parse($laptop->inStockProduct->updated_at)->toDateString()}}
+                                                        {{isset($laptop->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($laptop->inStockProduct->date_affectation)->toDateString() : "N/A"}}
                                                     </td>
 
                                                     @if(isset($laptop->inStockProduct->employer->user))
@@ -191,14 +191,16 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form method="post" action="{{route("stock.store")}}">
+                                            <form method="post" action="{{route("stock.store")}}"
+                                                  onsubmit="return confirm('Êtes-vous sûr?');">
                                                 @csrf
                                                 <input name="class" value="laptop" type="hidden">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="zi" class="form-control-label">Code immo</label>
-                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
+                                                            <input class="form-control" type="text"
+                                                                   placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -235,7 +237,8 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <select class="form-control" id="constructor" name="constructor"
+                                                            <select class="form-control" id="constructor"
+                                                                    name="constructor"
                                                                     required>
                                                                 @foreach(['Hp','Lenovo'] as $constructor)
                                                                     <option
@@ -301,8 +304,9 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="employer">Affectation</label>
-                                                        <select class="form-control" id="employer" name="user">
+                                                        <label for="laptop_employer">Affectation</label>
+                                                        <select class="form-control" id="laptop_employer" name="user"
+                                                                onchange="affectDataLaptop()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -314,7 +318,29 @@
                                                             </optgroup>
                                                         </select>
                                                     </div>
+                                                    <div class="form-group " id="laptop_date_div" style="display: none">
+                                                        <label for="date_affectation"
+                                                               class="form-control-label">Date d'affectation</label>
+                                                        <input class="form-control" type="date" name="date_affectation"
+                                                               id="date_affectation" value="{{now()->toDateString()}}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="site">Site</label>
+                                                        <select class="form-control" id="site" name="site">
+                                                            <optgroup label="Autres">
+                                                                <option value="null">Non Affecté</option>
+                                                            </optgroup>
+                                                            <optgroup label="VitalCare">
+                                                                @foreach($sites as $site)
+                                                                    <option
+                                                                        value="{{$site->id}}">{{$site->address}}</option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
                                                 </div>
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Close
@@ -339,10 +365,10 @@
                                                 <h3 class="mb-0">Inventaire Desktop</h3>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="col text-right">
-                                                <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
-                                                   data-target="#desktopModal">Ajouter</a>
-                                            </div>
+                                                <div class="col text-right">
+                                                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
+                                                       data-target="#desktopModal">Ajouter</a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -376,7 +402,7 @@
                                                         {{$desktop->inStockProduct->serial_number}}
                                                     </td>
                                                     <td>
-                                                        {{\Carbon\Carbon::parse($desktop->inStockProduct->updated_at)->toDateString()}}
+                                                        {{isset($desktop->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($desktop->inStockProduct->date_affectation)->toDateString() : "N/A"}}
                                                     </td>
 
                                                     @if(isset($desktop->inStockProduct->employer->user))
@@ -429,14 +455,16 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form method="post" action="{{route("stock.store")}}">
+                                            <form method="post" action="{{route("stock.store")}}"
+                                                  onsubmit="return confirm('Êtes-vous sûr?');">
                                                 @csrf
                                                 <input name="class" value="desktop" type="hidden">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="zi" class="form-control-label">Code immo</label>
-                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
+                                                            <input class="form-control" type="text"
+                                                                   placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -473,7 +501,8 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <select class="form-control" id="constructor" name="constructor"
+                                                            <select class="form-control" id="constructor"
+                                                                    name="constructor"
                                                                     required>
                                                                 @foreach(['Hp','Lenovo'] as $constructor)
                                                                     <option
@@ -530,8 +559,9 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="employer">Affectation</label>
-                                                        <select class="form-control" id="employer" name="user">
+                                                        <label for="desktop_employer">Affectation</label>
+                                                        <select class="form-control" id="desktop_employer" name="user"
+                                                                onchange="affectDataDesktop()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -539,6 +569,28 @@
                                                                 @foreach($users as $user)
                                                                     <option
                                                                         value="{{$user->id}}">{{$user->name}}</option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group " id="desktop_date_div"
+                                                         style="display: none">
+                                                        <label for="date_affectation"
+                                                               class="form-control-label">Date d'affectation</label>
+                                                        <input class="form-control" type="date" name="date_affectation"
+                                                               id="date_affectation" value="{{now()->toDateString()}}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="site">Site</label>
+                                                        <select class="form-control" id="site" name="site">
+                                                            <optgroup label="Autres">
+                                                                <option value="null">Non Affecté</option>
+                                                            </optgroup>
+                                                            <optgroup label="VitalCare">
+                                                                @foreach($sites as $site)
+                                                                    <option
+                                                                        value="{{$site->id}}">{{$site->address}}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
@@ -568,10 +620,10 @@
                                                 <h3 class="mb-0">Inventaire Ecrans</h3>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="col text-right">
-                                                <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
-                                                   data-target="#screenModal">Ajouter</a>
-                                            </div>
+                                                <div class="col text-right">
+                                                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
+                                                       data-target="#screenModal">Ajouter</a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -605,7 +657,7 @@
                                                         {{$screen->inStockProduct->serial_number}}
                                                     </td>
                                                     <td>
-                                                        {{\Carbon\Carbon::parse($screen->inStockProduct->updated_at)->toDateString()}}
+                                                        {{isset($screen->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($screen->inStockProduct->date_affectation)->toDateString() : "N/A"}}
                                                     </td>
 
                                                     @if(isset($screen->inStockProduct->employer->user))
@@ -658,14 +710,16 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form method="post" action="{{route("stock.store")}}">
+                                            <form method="post" action="{{route("stock.store")}}"
+                                                  onsubmit="return confirm('Êtes-vous sûr?');">
                                                 @csrf
                                                 <input name="class" value="screen" type="hidden">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="zi" class="form-control-label">Code immo</label>
-                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
+                                                            <input class="form-control" type="text"
+                                                                   placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -687,7 +741,8 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <select class="form-control" id="constructor" name="constructor"
+                                                            <select class="form-control" id="constructor"
+                                                                    name="constructor"
                                                                     required>
                                                                 @foreach(['Hp','Lenovo','LG', 'Samsung'] as $constructor)
                                                                     <option
@@ -722,8 +777,9 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="employer">Employer</label>
-                                                        <select class="form-control" id="employer" name="user">
+                                                        <label for="screen_employer">Affectation</label>
+                                                        <select class="form-control" id="screen_employer" name="user"
+                                                                onchange="affectDataScreen()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -731,6 +787,27 @@
                                                                 @foreach($users as $user)
                                                                     <option
                                                                         value="{{$user->id}}">{{$user->name}}</option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group " id="screen_date_div" style="display: none">
+                                                        <label for="date_affectation"
+                                                               class="form-control-label">Date d'affectation</label>
+                                                        <input class="form-control" type="date" name="date_affectation"
+                                                               id="date_affectation" value="{{now()->toDateString()}}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="site">Site</label>
+                                                        <select class="form-control" id="site" name="site">
+                                                            <optgroup label="Autres">
+                                                                <option value="null">Non Affecté</option>
+                                                            </optgroup>
+                                                            <optgroup label="VitalCare">
+                                                                @foreach($sites as $site)
+                                                                    <option
+                                                                        value="{{$site->id}}">{{$site->address}}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
@@ -760,10 +837,10 @@
                                                 <h3 class="mb-0">Inventaire Téléphone</h3>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="col text-right">
-                                                <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
-                                                   data-target="#phoneModal">Ajouter</a>
-                                            </div>
+                                                <div class="col text-right">
+                                                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
+                                                       data-target="#phoneModal">Ajouter</a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -797,7 +874,7 @@
                                                         {{$phone->inStockProduct->serial_number}}
                                                     </td>
                                                     <td>
-                                                        {{\Carbon\Carbon::parse($phone->inStockProduct->updated_at)->toDateString()}}
+                                                        {{isset($phone->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($phone->inStockProduct->date_affectation)->toDateString() : "N/A"}}
                                                     </td>
 
                                                     @if(isset($phone->inStockProduct->employer->user))
@@ -850,14 +927,16 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form method="post" action="{{route("stock.store")}}">
+                                            <form method="post" action="{{route("stock.store")}}"
+                                                  onsubmit="return confirm('Êtes-vous sûr?');">
                                                 @csrf
                                                 <input name="class" value="phone" type="hidden">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="zi" class="form-control-label">Code immo</label>
-                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
+                                                            <input class="form-control" type="text"
+                                                                   placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -879,10 +958,12 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <select class="form-control" id="constructor" name="constructor"
+                                                            <select class="form-control" id="constructor"
+                                                                    name="constructor"
                                                                     required>
-                                                                @foreach(['Samsung','Xiaomi', 'Apple','Condor'] as $constructor)
-                                                                    <option value="{{$constructor}}">{{$constructor}}</option>
+                                                                @foreach(['Samsung','Xiaomi', 'Apple','Condor', 'Nokia', 'Wiko'] as $constructor)
+                                                                    <option
+                                                                        value="{{$constructor}}">{{$constructor}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -904,8 +985,9 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="employer">Employer</label>
-                                                        <select class="form-control" id="employer" name="user">
+                                                        <label for="phone_employer">Affectation</label>
+                                                        <select class="form-control" id="phone_employer" name="user"
+                                                                onchange="affectDataPhone()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -913,6 +995,27 @@
                                                                 @foreach($users as $user)
                                                                     <option
                                                                         value="{{$user->id}}">{{$user->name}}</option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group " id="phone_date_div" style="display: none">
+                                                        <label for="date_affectation"
+                                                               class="form-control-label">Date d'affectation</label>
+                                                        <input class="form-control" type="date" name="date_affectation"
+                                                               id="date_affectation" value="{{now()->toDateString()}}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="site">Site</label>
+                                                        <select class="form-control" id="site" name="site">
+                                                            <optgroup label="Autres">
+                                                                <option value="null">Non Affecté</option>
+                                                            </optgroup>
+                                                            <optgroup label="VitalCare">
+                                                                @foreach($sites as $site)
+                                                                    <option
+                                                                        value="{{$site->id}}">{{$site->address}}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
@@ -941,10 +1044,10 @@
                                                 <h3 class="mb-0">Inventaire IPad</h3>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
-                                            <div class="col text-right">
-                                                <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
-                                                   data-target="#ipadModal">Ajouter</a>
-                                            </div>
+                                                <div class="col text-right">
+                                                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal"
+                                                       data-target="#ipadModal">Ajouter</a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -957,8 +1060,9 @@
                                                 <th scope="col">constructeur</th>
                                                 <th scope="col">modele</th>
                                                 <th scope="col">Numéro de série</th>
-                                                <th scope="col">Date affectation</th>
+                                                <th scope="col">Site d'affectation</th>
                                                 <th scope="col">Employer</th>
+                                                <th scope="col">Date affectation</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
@@ -977,9 +1081,23 @@
                                                     <td>
                                                         {{$ipad->inStockProduct->serial_number}}
                                                     </td>
-                                                    <td>
-                                                        {{\Carbon\Carbon::parse($ipad->inStockProduct->updated_at)->toDateString()}}
-                                                    </td>
+                                                    @if(isset($ipad->inStockProduct->location->site))
+                                                        <td>
+                                                            <span class="badge badge-dot mr-4">
+                                                                <i class="bg-success"></i>
+                                                                <span
+                                                                    class="status"> {{$ipad->inStockProduct->location->site->address}}</span>
+                                                            </span>
+
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                            <span class="badge badge-dot mr-4">
+                                                                <i class="bg-warning"></i>
+                                                                <span class="status">Non Affecté</span>
+                                                            </span>
+                                                        </td>
+                                                    @endif
 
                                                     @if(isset($ipad->inStockProduct->employer->user))
                                                         <td>
@@ -999,6 +1117,9 @@
                                                         </td>
                                                     @endif
 
+                                                    <td>
+                                                        {{isset($ipad->inStockProduct->date_affectation) ? \Carbon\Carbon::parse($ipad->inStockProduct->date_affectation)->toDateString() : "N/A"}}
+                                                    </td>
                                                     <td class="text-right">
                                                         <div class="dropdown">
                                                             <a class="btn btn-sm btn-icon-only text-light"
@@ -1031,14 +1152,16 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form method="post" action="{{route("stock.store")}}">
+                                            <form method="post" action="{{route("stock.store")}}"
+                                                  onsubmit="return confirm('Êtes-vous sûr?');">
                                                 @csrf
                                                 <input name="class" value="ipad" type="hidden">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="zi" class="form-control-label">Code immo</label>
-                                                            <input class="form-control" type="text" placeholder="Code immo" value="ZI-"
+                                                            <input class="form-control" type="text"
+                                                                   placeholder="Code immo" value="ZI-"
                                                                    name="zi" id="zi">
                                                         </div>
                                                         <div class="form-group col-lg-6 col-sm-12">
@@ -1060,7 +1183,8 @@
                                                         <div class="form-group col-lg-6 col-sm-12">
                                                             <label for="constructor"
                                                                    class="form-control-label">Constructeur</label>
-                                                            <select class="form-control" id="constructor" name="constructor"
+                                                            <select class="form-control" id="constructor"
+                                                                    name="constructor"
                                                                     required>
                                                                 @foreach(['Apple'] as $constructor)
                                                                     <option
@@ -1096,8 +1220,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="employer">Employer</label>
-                                                        <select class="form-control" id="employer" name="user">
+                                                        <label for="ipad_employer">Affectation</label>
+                                                        <select class="form-control" id="ipad_employer" name="user"
+                                                                onchange="affectDataIPad()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -1105,6 +1230,27 @@
                                                                 @foreach($users as $user)
                                                                     <option
                                                                         value="{{$user->id}}">{{$user->name}}</option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group " id="ipad_date_div" style="display: none">
+                                                        <label for="date_affectation"
+                                                               class="form-control-label">Date d'affectation</label>
+                                                        <input class="form-control" type="date" name="date_affectation"
+                                                               id="date_affectation" value="{{now()->toDateString()}}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="site">Site</label>
+                                                        <select class="form-control" id="site" name="site">
+                                                            <optgroup label="Autres">
+                                                                <option value="null">Non Affecté</option>
+                                                            </optgroup>
+                                                            <optgroup label="VitalCare">
+                                                                @foreach($sites as $site)
+                                                                    <option
+                                                                        value="{{$site->id}}">{{$site->address}}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
@@ -1160,6 +1306,86 @@
                 $('a[data-toggle=\'tab\']').first().attr('href');
             $('a[href=\'' + anchor + '\']').tab('show');
         });
+    </script>
+
+    <script>
+
+        function affectDataLaptop() {
+
+            var x = document.getElementById('laptop_employer');
+            var y = document.getElementById('laptop_date_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+            } else {
+                y.style.display = "block"
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectDataDesktop() {
+
+            var x = document.getElementById('desktop_employer');
+            var y = document.getElementById('desktop_date_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+            } else {
+                y.style.display = "block"
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectDataScreen() {
+
+            var x = document.getElementById('screen_employer');
+            var y = document.getElementById('screen_date_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+            } else {
+                y.style.display = "block"
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectDataPhone() {
+
+            var x = document.getElementById('phone_employer');
+            var y = document.getElementById('phone_date_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+            } else {
+                y.style.display = "block"
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectDataIPad() {
+
+            var x = document.getElementById('ipad_employer');
+            var y = document.getElementById('ipad_date_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+            } else {
+                y.style.display = "block"
+            }
+
+        }
     </script>
 
 @endsection

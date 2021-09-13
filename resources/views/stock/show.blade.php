@@ -22,7 +22,7 @@
                                class="btn btn-sm btn-danger col-4 text-white">Supprimer</a>
                             <form id="delete-material-form"
                                   action="{{route('stock.destroy',['stock'=>$inStockProduct])}}"
-                                  method="post">
+                                  method="post" onsubmit="return confirm('Êtes-vous sûr?');">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -39,7 +39,8 @@
 
     <div class="row justify-content-center">
         <div class=" col ">
-            <form action="{{route('stock.update',['stock'=>$inStockProduct])}}" method="post">
+            <form action="{{route('stock.update',['stock'=>$inStockProduct])}}" method="post"
+                  onsubmit="return confirm('Êtes-vous sûr?');">
                 @csrf
                 @method("PUT")
                 <div class="card">
@@ -61,23 +62,25 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        @if($inStockProduct->class === 'phone' && isset($inStockProduct->employer->user))
+                        @if(isset($inStockProduct->employer->user))
                             <div class="row">
-                                <div class="form-group col-lg-3 col-sm-6">
+                                <div class="form-group col-lg-6 col-sm-6">
                                     <label for="zi" class="form-control-label">Zi</label>
                                     <input class="form-control" type="text" placeholder="Zi"
                                            name="zi" value="{{$inStockProduct->zi}}"
                                            id="zi">
                                 </div>
-                                <div class="form-group col-lg-3 col-sm-6">
+                                <div class="form-group col-lg-6 col-sm-6">
                                     <label for="invoice" class="form-control-label">Facture</label>
                                     <input class="form-control" type="text" placeholder="Facture"
                                            name="invoice" value="{{$inStockProduct->invoice}}"
                                            id="invoice">
                                 </div>
-                                <div class="form-group col-lg-3 col-sm-12">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-4 col-sm-12">
                                     <label for="employer" class="form-control-label">Affecté à</label>
-                                    <select class="form-control" id="employer" name="user">
+                                    <select class="form-control" id="employer" name="user" onchange="affectDate()">
                                         @if(isset($inStockProduct->employer->user))
                                             <optgroup label="Autres">
                                                 <option value="null">Non Affecté</option>
@@ -107,61 +110,100 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="form-group col-lg-3 col-sm-6">
+                                <div class="form-group col-lg-4 col-sm-12" id="div_phone">
                                     <label for="phone_number" class="form-control-label">Numéro Tléléphone</label>
                                     <input disabled class="form-control" type="text" placeholder="Numéro Tléléphone"
                                            name="phone_number" value="{{$inStockProduct->employer->user->phone_number}}"
                                            id="phone_number">
                                 </div>
+                                <div class="form-group col-lg-4 col-sm-12" id="date_div">
+                                    <label for="date_affectation"
+                                           class="form-control-label">Date d'affectation</label>
+                                    <input class="form-control" type="date" name="date_affectation"
+                                           id="date_affectation"
+                                           value="{{\Carbon\Carbon::parse($inStockProduct->date_affectation)->toDateString()}}"
+                                           required>
+                                </div>
                             </div>
                         @else
                             <div class="row">
-                                <div class="form-group col-lg-4 col-sm-6">
+                                <div class="form-group col-lg-6 col-sm-6">
                                     <label for="zi" class="form-control-label">Zi</label>
                                     <input class="form-control" type="text" placeholder="Zi"
                                            name="zi" value="{{$inStockProduct->zi}}"
                                            id="zi">
                                 </div>
-                                <div class="form-group col-lg-4 col-sm-6">
+                                <div class="form-group col-lg-6 col-sm-6">
                                     <label for="invoice" class="form-control-label">Facture</label>
                                     <input class="form-control" type="text" placeholder="Facture"
                                            name="invoice" value="{{$inStockProduct->invoice}}"
                                            id="invoice">
                                 </div>
-                                <div class="form-group col-lg-4 col-sm-12">
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-lg-12 col-sm-12" id="div_employer">
                                     <label for="employer" class="form-control-label">Affecté à</label>
-                                    <select class="form-control" id="employer" name="user">
-                                        @if(isset($inStockProduct->employer->user))
-                                            <optgroup label="Autres">
-                                                <option value="null">Non Affecté</option>
-                                            </optgroup>
-                                            <optgroup label="Employers">
-                                                @foreach($users as $user)
-                                                    <option
-                                                        @if($user->id == $inStockProduct->employer->user->id)
-                                                        selected
-                                                        @endif
-                                                        value="{{$user->id}}"
-                                                    >
-                                                        {{$user->name}}
-                                                    </option>
-                                                @endforeach
-                                            </optgroup>
-                                        @else
-                                            <optgroup label="Autres">
-                                                <option value="null">Non Affecté</option>
-                                            </optgroup>
-                                            <optgroup label="Employers">
-                                                @foreach($users as $user)
-                                                    <option
-                                                        value="{{$user->id}}">{{$user->name}}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        @endif
+                                    <select class="form-control" id="employer" name="user" onchange="affect()">
+                                        <optgroup label="Autres">
+                                            <option value="null">Non Affecté</option>
+                                        </optgroup>
+                                        <optgroup label="Employers">
+                                            @foreach($users as $user)
+                                                <option
+                                                    value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                        </optgroup>
                                     </select>
+                                </div>
+                                <div class="form-group col-lg-6 col-sm-12" id="date_div" style="display: none">
+                                    <label for="date_affectation"
+                                           class="form-control-label">Date d'affectation</label>
+                                    <input class="form-control" type="date" name="date_affectation"
+                                           id="date_affectation"
+                                           value="{{now()->toDateString()}}"
+                                           required>
                                 </div>
                             </div>
                         @endif
+
+                        <div class="row">
+                            <div class="form-group col-lg-12 col-sm-12" id="div_employer">
+                                <label for="site" class="form-control-label">Site</label>
+                                <select class="form-control" id="site" name="site">
+                                    @if(isset($inStockProduct->location))
+                                        <optgroup label="Autres">
+                                            <option value="null">Non Affecté</option>
+                                        </optgroup>
+                                        <optgroup label="VitalCare">
+                                            @foreach($sites as $site)
+                                                <option
+                                                    @if($site->id == $inStockProduct->location->site->id)
+                                                    selected
+                                                    @endif
+                                                    value="{{$site->id}}"
+                                                >
+                                                    {{$site->address}}
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
+                                    @else
+                                        <optgroup label="Autres">
+                                            <option value="null">Non Affecté</option>
+                                        </optgroup>
+                                        <optgroup label="VitalCare">
+                                            @foreach($sites as $site)
+                                                <option
+                                                    value="{{$site->id}}"
+                                                >
+                                                    {{$site->address}}
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="row">
                             @switch($inStockProduct->class)
@@ -175,7 +217,7 @@
                                 @php($constructors=['Hp','Lenovo','LG', 'Samsung'])
                                 @break
                                 @case("phone")
-                                @php($constructors=['Samsung','Xiaomi', 'Apple','Condor'])
+                                @php($constructors=['Samsung','Xiaomi', 'Apple','Condor', 'Nokia', 'Wiko'])
                                 @break
                                 @case("ipad")
                                 @php($constructors=['Apple'])
@@ -429,7 +471,7 @@
                                         <div class="media align-items-center">
                                             <div class="media-body">
                                                 <span
-                                                    class="name mb-0 text-sm">{{\Carbon\Carbon::parse($employersHistory->pivot->created_at)->toDateString()}}</span>
+                                                    class="name mb-0 text-sm">{{\Carbon\Carbon::parse($employersHistory->pivot->date_affectation)->toDateString()}}</span>
                                             </div>
                                         </div>
                                     </th>
@@ -475,5 +517,54 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+    <script>
+
+        function affectDate() {
+
+            var x = document.getElementById('employer');
+            var y = document.getElementById('date_div');
+            var z = document.getElementById('div_phone');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+
+                z.classList.remove('col-lg-4');
+                z.classList.add('col-lg-8');
+
+
+            } else {
+                y.style.display = "block"
+
+                z.classList.add('col-lg-4');
+                z.classList.remove('col-lg-8');
+            }
+
+        }
+
+        function affect() {
+            var x = document.getElementById('employer');
+            var y = document.getElementById('div_employer');
+            var z = document.getElementById('date_div');
+
+            if (x.value === 'null') {
+
+                z.style.display = "none";
+
+                y.classList.remove('col-lg-6');
+                y.classList.add('col-lg-12');
+
+
+            } else {
+
+                z.style.display = "block";
+
+                y.classList.remove('col-lg-12');
+                y.classList.add('col-lg-6');
+            }
+        }
+    </script>
 @endsection
 

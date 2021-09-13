@@ -192,6 +192,7 @@ class UserController extends Controller
             }
 
             $detachData->employer_id = null;
+            $detachData->date_affectation = null;
             $detachData->save();
 
         }

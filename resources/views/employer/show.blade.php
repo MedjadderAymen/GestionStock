@@ -153,7 +153,7 @@
                                         {{$laptop->serial_number}}
                                     </td>
                                     <td>
-                                        {{\Carbon\Carbon::parse($laptop->updated_at)->toDateString()}}
+                                        {{\Carbon\Carbon::parse($laptop->date_affectation)->toDateString()}}
                                     </td>
                                     @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                         <td class="text-left">
@@ -217,7 +217,7 @@
                                         {{$desktop->serial_number}}
                                     </td>
                                     <td>
-                                        {{\Carbon\Carbon::parse($desktop->updated_at)->toDateString()}}
+                                        {{\Carbon\Carbon::parse($desktop->date_affectation)->toDateString()}}
                                     </td>
                                     @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                         <td class="text-left">
@@ -282,7 +282,7 @@
                                         {{$screen->serial_number}}
                                     </td>
                                     <td>
-                                        {{\Carbon\Carbon::parse($screen->updated_at)->toDateString()}}
+                                        {{\Carbon\Carbon::parse($screen->date_affectation)->toDateString()}}
                                     </td>
                                     @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                         <td class="text-left">
@@ -346,7 +346,7 @@
                                         {{$phone->serial_number}}
                                     </td>
                                     <td>
-                                        {{\Carbon\Carbon::parse($phone->updated_at)->toDateString()}}
+                                        {{\Carbon\Carbon::parse($phone->date_affectation)->toDateString()}}
                                     </td>
                                     @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                     <td class="text-left">
@@ -410,7 +410,7 @@
                                         {{$ipad->serial_number}}
                                     </td>
                                     <td>
-                                        {{\Carbon\Carbon::parse($ipad->updated_at)->toDateString()}}
+                                        {{\Carbon\Carbon::parse($ipad->date_affectation)->toDateString()}}
                                     </td>
                                     @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                     <td class="text-left">

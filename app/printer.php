@@ -8,17 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class printer extends Model
 {
     protected $fillable = [
-        'designation', 'ip', 'site', 'affection'
+        'designation', 'ip', 'site', 'affectation'
     ];
 
-    public $timestamps = [
-        'affectation'
-    ];
-
-    public function getAffectationAttribute($value)
+ /*   public function getAffectationAttribute($value)
     {
         return Carbon::parse($value, 'UTC')->isoFormat('Do MMM YYYY');
-    }
+    }*/
 
     public function Toners()
     {

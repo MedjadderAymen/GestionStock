@@ -144,7 +144,7 @@
                                                 <a class="dropdown-item" href=""
                                                    onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
                                                 <form id="delete-user-form"
-                                                      action="{{route('user.destroy',['user'=>$user])}}" method="post">
+                                                      action="{{route('user.destroy',['user'=>$user])}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>

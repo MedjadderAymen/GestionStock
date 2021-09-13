@@ -22,6 +22,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route("site.index")}}">
+                            <i class="fas fa-warehouse text-primary"></i>
+                            <span class="nav-link-text">Sites</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route("stock.index")}}">
                             <i class="ni ni-box-2 text-primary"></i>
                             <span class="nav-link-text">Parc</span>

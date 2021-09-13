@@ -8,6 +8,7 @@ use App\ipad;
 use App\laptop;
 use App\phone;
 use App\screen;
+use App\site;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -19,13 +20,14 @@ class InStockProductController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['helpDesk'])->except(['index','show','search']);
+        $this->middleware(['helpDesk'])->except(['index', 'show', 'search']);
 
     }
 
     public function index()
     {
-        $users = User::where('role', 'employer')->get();
+        $users = User::where('role', 'employer')->has('employer')->get();
+        $sites = site::all();
 
         $laptops = laptop::with('inStockProduct.employer')->paginate(5);
         $desktops = desktop::with('inStockProduct.employer')->paginate(5);
@@ -39,6 +41,7 @@ class InStockProductController extends Controller
             ->with('screens', $screens)
             ->with('phones', $phones)
             ->with('ipads', $ipads)
+            ->with('sites', $sites)
             ->with('users', $users);
     }
 
@@ -63,7 +66,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'cpu' => ['string', 'required', 'max:255'],
                         'ram' => ['string', 'required', 'max:255'],
                         'disk' => ['string', 'required', 'max:255'],
@@ -112,6 +115,7 @@ class InStockProductController extends Controller
                             'constructor' => $request['constructor'],
                             'model' => $request['model'],
                             'status' => $request['status'],
+                            'date_affectation' => $request['date_affectation'],
                             'affected' => 0,
 
                         ]);
@@ -124,7 +128,7 @@ class InStockProductController extends Controller
                             'screen' => $request['screen'],
                         ]);
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         $user->active = 1;
                         $user->save();
@@ -139,7 +143,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'cpu' => ['string', 'required', 'max:255'],
                         'ram' => ['string', 'required', 'max:255'],
                         'disk' => ['string', 'required', 'max:255'],
@@ -186,6 +190,7 @@ class InStockProductController extends Controller
                             'constructor' => $request['constructor'],
                             'model' => $request['model'],
                             'status' => $request['status'],
+                            'date_affectation' => $request['date_affectation'],
                             'affected' => 0,
 
                         ]);
@@ -197,7 +202,7 @@ class InStockProductController extends Controller
                             'disk' => $request['disk'],
                         ]);
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         $user->active = 1;
                         $user->save();
@@ -211,7 +216,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'screen' => ['string', 'required', 'max:255'],
                     ]);
 
@@ -251,6 +256,7 @@ class InStockProductController extends Controller
                             'constructor' => $request['constructor'],
                             'model' => $request['model'],
                             'status' => $request['status'],
+                            'date_affectation' => $request['date_affectation'],
                             'affected' => 0,
 
                         ]);
@@ -259,7 +265,7 @@ class InStockProductController extends Controller
                             'screen' => $request['screen'],
                         ]);
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         $user->active = 1;
                         $user->save();
@@ -274,7 +280,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                     ]);
 
                     if ($data->fails()) {
@@ -313,6 +319,7 @@ class InStockProductController extends Controller
                             'constructor' => $request['constructor'],
                             'model' => $request['model'],
                             'status' => $request['status'],
+                            'date_affectation' => $request['date_affectation'],
                             'affected' => 0,
 
                         ]);
@@ -320,7 +327,7 @@ class InStockProductController extends Controller
                         $inStockProduct->phone()->create([
                         ]);
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         $user->active = 1;
                         $user->save();
@@ -334,7 +341,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                     ]);
 
                     if ($data->fails()) {
@@ -373,6 +380,7 @@ class InStockProductController extends Controller
                             'constructor' => $request['constructor'],
                             'model' => $request['model'],
                             'status' => $request['status'],
+                            'date_affectation' => $request['date_affectation'],
                             'affected' => 0,
 
                         ]);
@@ -381,7 +389,7 @@ class InStockProductController extends Controller
                             'dimension' => $request['dimension']
                         ]);
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         $user->active = 1;
                         $user->save();
@@ -390,14 +398,28 @@ class InStockProductController extends Controller
                 break;
         }
 
+        $site = site::find($request['site']);
+
+        if ($site != null) {
+
+            $location = $site->locations()->create([
+
+            ]);
+
+            $inStockProduct->location_id = $location->id;
+            $inStockProduct->save();
+
+        }
+
         return redirect()->back();
     }
 
     public function show(inStockProduct $stock)
     {
-        $users = User::where('role', 'employer')->get();
+        $users = User::where('role', 'employer')->has('employer')->get();
+        $sites=site::all();
 
-        return view('stock.show')->with("inStockProduct", $stock)->with("users", $users);
+        return view('stock.show')->with("inStockProduct", $stock)->with("users", $users)->with('sites',$sites);
     }
 
     /**
@@ -422,7 +444,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'cpu' => ['string', 'required', 'max:255'],
                         'ram' => ['string', 'required', 'max:255'],
                         'disk' => ['string', 'required', 'max:255'],
@@ -448,12 +470,16 @@ class InStockProductController extends Controller
                     if ($user == null) {
 
                         $stock->employer_id = null;
+                        $stock->date_affectation = null;
 
                     } else {
+
+                        $stock->date_affectation = $request['date_affectation'];
+
                         if ($stock->employer_id != $user->employer->id) {
 
                             $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
 
@@ -484,7 +510,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'cpu' => ['string', 'required', 'max:255'],
                         'ram' => ['string', 'required', 'max:255'],
                         'disk' => ['string', 'required', 'max:255'],
@@ -509,12 +535,16 @@ class InStockProductController extends Controller
                     if ($user == null) {
 
                         $stock->employer_id = null;
+                        $stock->date_affectation = null;
 
                     } else {
+
+                        $stock->date_affectation = $request['date_affectation'];
+
                         if ($stock->employer_id != $user->employer->id) {
 
                             $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
 
@@ -539,7 +569,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'screen' => ['string', 'required', 'max:255'],
                         'user' => ['string', 'required'],
                     ]);
@@ -561,12 +591,16 @@ class InStockProductController extends Controller
                     if ($user == null) {
 
                         $stock->employer_id = null;
+                        $stock->date_affectation = null;
 
                     } else {
+
+                        $stock->date_affectation = $request['date_affectation'];
+
                         if ($stock->employer_id != $user->employer->id) {
 
                             $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
 
@@ -588,7 +622,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'user' => ['string', 'required'],
                     ]);
 
@@ -609,12 +643,16 @@ class InStockProductController extends Controller
                     if ($user == null) {
 
                         $stock->employer_id = null;
+                        $stock->date_affectation = null;
 
                     } else {
+
+                        $stock->date_affectation = $request['date_affectation'];
+
                         if ($stock->employer_id != $user->employer->id) {
 
                             $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
 
@@ -640,7 +678,7 @@ class InStockProductController extends Controller
                         'serial_number' => ['string', 'required', 'max:255'],
                         'constructor' => ['string', 'required', 'max:255'],
                         'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen, hors service'],
+                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         'user' => ['string', 'required'],
                     ]);
 
@@ -661,12 +699,16 @@ class InStockProductController extends Controller
                     if ($user == null) {
 
                         $stock->employer_id = null;
+                        $stock->date_affectation = null;
 
                     } else {
+
+                        $stock->date_affectation = $request['date_affectation'];
+
                         if ($stock->employer_id != $user->employer->id) {
 
                             $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
                         }
 
@@ -683,6 +725,23 @@ class InStockProductController extends Controller
 
                 }
                 break;
+        }
+
+        $site = site::find($request['site']);
+
+        if ($site != null) {
+
+            $stock->location()->delete();
+
+            $location = $site->locations()->create([
+
+            ]);
+
+            $stock->location_id = $location->id;
+            $stock->save();
+
+        }else{
+            $stock->location()->delete();
         }
 
         return redirect()->back();
@@ -703,7 +762,7 @@ class InStockProductController extends Controller
 
         $inStockProduct = inStockProduct::where('zi', $request['zi_search'])->first();
 
-        if ($inStockProduct === null){
+        if ($inStockProduct === null) {
 
             Session::flash("info", "ce Zi n'éxiste pas");
 
@@ -724,6 +783,7 @@ class InStockProductController extends Controller
             case 'laptop':
 
                 $stock->employer_id = null;
+                $stock->date_affectation = null;
                 $stock->save();
 
                 $laptop = $stock->laptop;
@@ -736,6 +796,7 @@ class InStockProductController extends Controller
             case 'desktop':
 
                 $stock->employer_id = null;
+                $stock->date_affectation = null;
                 $stock->save();
 
                 $desktop = $stock->desktop;
@@ -748,6 +809,7 @@ class InStockProductController extends Controller
             case 'screen':
 
                 $stock->employer_id = null;
+                $stock->date_affectation = null;
                 $stock->save();
 
                 $screen = $stock->screen;
@@ -761,6 +823,7 @@ class InStockProductController extends Controller
 
                 if (!$phone->cession) {
                     $stock->employer_id = null;
+                    $stock->date_affectation = null;
                     $stock->save();
                 }
 
@@ -771,6 +834,7 @@ class InStockProductController extends Controller
             case 'ipad':
 
                 $stock->employer_id = null;
+                $stock->date_affectation = null;
                 $stock->save();
 
                 $ipad = $stock->ipad;

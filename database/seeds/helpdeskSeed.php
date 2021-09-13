@@ -13,11 +13,11 @@ class helpdeskSeed extends Seeder
     public function run()
     {
         $user = User::create([
-            'email' => 'm.nabih@vitalcareprod.com',
-            'password' => bcrypt('password'),
+            'email' => 'm.nebih@vitalcareprod.com',
+            'password' => bcrypt('Dev@2021'),
             'phone_number' => "0770169703",
             'role' => 'help desk',
-            'name' => 'Mehdi Nabih',
+            'name' => 'Mahdi Nebih',
         ]);
 
         $user->helpDesk()->create([
@@ -25,8 +25,8 @@ class helpdeskSeed extends Seeder
         ]);
 
         $user = User::create([
-            'email' => 'y.boughrara@vitalcareprod.com',
-            'password' => bcrypt('password'),
+            'email' => 'y.bougherara@vitalcareprod.com',
+            'password' => bcrypt('Dev@2021'),
             'phone_number' => "0770249933",
             'role' => 'help desk',
             'name' => 'Youcef Boughrara',
@@ -38,7 +38,7 @@ class helpdeskSeed extends Seeder
 
         $user = User::create([
             'email' => 'a.medjadder@vitalcareprod.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('Dev@2021'),
             'phone_number' => "0770271561",
             'role' => 'help desk',
             'name' => 'Aimen Medjadder',
