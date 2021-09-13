@@ -62,8 +62,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="{{asset("../assets/img/theme/vue.jpg")}}">
+                  <span class="avatar avatar-sm rounded-circle bg-white">
+                    <img alt="Image placeholder" src="{{asset("../assets/img/brand/brand.png")}}" style="width: 100px">
                   </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">{{Auth::user()->name}}</span>
