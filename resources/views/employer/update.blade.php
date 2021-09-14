@@ -111,7 +111,7 @@
                             <div class="form-group col-lg-4 col-sm-12">
                                 <label for="department" class="form-control-label">Département</label>
                                 <select class="form-control" id="department" name="department">
-                                    @foreach(['DFC','DSI'] as $department)
+                                    @foreach($departments as $department)
                                         <option
                                             @if(isset($user->employer))
                                             @if($user->employer->department == $department)

@@ -37,19 +37,32 @@
         <div class=" col ">
             <div class="card">
                 <div class="card-header bg-transparent">
-                    <h3 class="mb-0">Employer: {{$user->name}}
-                        @if($user->active)
-                            <span class="badge badge-dot mr-4">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Employer: {{$user->name}}
+                                @if($user->active)
+                                    <span class="badge badge-dot mr-4">
                                 <i class="bg-success"></i>
                                 <span class="status"></span>
                             </span>
-                        @else
-                            <span class="badge badge-dot mr-4">
+                                @else
+                                    <span class="badge badge-dot mr-4">
                                 <i class="bg-danger"></i>
                                 <span class="status"></span>
                             </span>
-                        @endif
-                    </h3>
+                                @endif
+                            </h3>
+                        </div>
+                        <div class="col text-right">
+                            <form id="delete-user-form text-right"
+                                  action="{{route('user.destroy',['user'=>$user])}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-warning col-2"><i
+                                        class="fas fa-eraser"></i> Supprimer</button>
+                                @method('DELETE')
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-md-start">

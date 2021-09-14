@@ -95,7 +95,7 @@
                             <div class="form-group col-lg-4 col-sm-12">
                                 <label for="department" class="form-control-label">Département</label>
                                 <select class="form-control" id="department" name="department">
-                                    @foreach(['DSI','DFC'] as $department)
+                                    @foreach($departments as $department)
                                         <option value="{{$department}}">{{$department}}</option>
                                     @endforeach
                                 </select>

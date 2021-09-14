@@ -39197,214 +39197,207 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "table-responsive" }, [
-    _c(
-      "table",
-      {
-        staticClass: "table align-items-center table-flush text-center",
-        attrs: { id: "stocks" }
-      },
-      [
-        _c("thead", { staticClass: "thead-light" }, [
-          _c("tr", [
-            _c(
-              "th",
-              {
-                staticClass: "sort",
-                attrs: { scope: "col", "data-sort": "name" }
-              },
-              [
-                _vm._v("Désignation "),
-                _c(
-                  "a",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.sortBy("designation")
-                      }
+    _c("table", { staticClass: "table table-flush", attrs: { id: "stocks" } }, [
+      _c("thead", { staticClass: "thead-light" }, [
+        _c("tr", [
+          _c(
+            "th",
+            {
+              staticClass: "sort",
+              attrs: { scope: "col", "data-sort": "name" }
+            },
+            [
+              _vm._v("Désignation "),
+              _c(
+                "a",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.sortBy("designation")
                     }
-                  },
-                  [_c("i", { staticClass: "fas fa-sort" })]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "th",
-              {
-                staticClass: "sort",
-                attrs: { scope: "col", "data-sort": "budget" }
-              },
-              [
-                _vm._v("Emplacement "),
-                _c(
-                  "a",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.sortBy("site")
-                      }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-sort" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass: "sort",
+              attrs: { scope: "col", "data-sort": "budget" }
+            },
+            [
+              _vm._v("Emplacement "),
+              _c(
+                "a",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.sortBy("site")
                     }
-                  },
-                  [_c("i", { staticClass: "fas fa-sort" })]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "th",
-              {
-                staticClass: "sort",
-                attrs: { scope: "col", "data-sort": "status" }
-              },
-              [
-                _vm._v("Adresse IP"),
-                _c(
-                  "a",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.sortBy("ip")
-                      }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-sort" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass: "sort",
+              attrs: { scope: "col", "data-sort": "status" }
+            },
+            [
+              _vm._v("Adresse IP"),
+              _c(
+                "a",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.sortBy("ip")
                     }
-                  },
-                  [_c("i", { staticClass: "fas fa-sort" })]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "th",
-              {
-                staticClass: "sort",
-                attrs: { scope: "col", "data-sort": "status" }
-              },
-              [_vm._v("Date Affectation")]
-            ),
-            _vm._v(" "),
-            _vm.role === "help desk"
-              ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Modifier")])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.role === "help desk"
-              ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Supprimer")])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Gérer")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          { staticClass: "list" },
-          _vm._l(_vm.printers_list, function(printer) {
-            return _c("tr", { key: printer.id }, [
-              _c("th", { attrs: { scope: "row" } }, [
-                _c("div", { staticClass: "media align-items-center" }, [
-                  _c("div", { staticClass: "media-body" }, [
-                    _c("span", { staticClass: "name mb-0 text-sm" }, [
-                      _vm._v(_vm._s(printer.designation))
-                    ])
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-sort" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass: "sort",
+              attrs: { scope: "col", "data-sort": "status" }
+            },
+            [_vm._v("Date Affectation")]
+          ),
+          _vm._v(" "),
+          _vm.role === "help desk"
+            ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Modifier")])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.role === "help desk"
+            ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Supprimer")])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Gérer")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        { staticClass: "list" },
+        _vm._l(_vm.printers_list, function(printer) {
+          return _c("tr", { key: printer.id }, [
+            _c("th", { attrs: { scope: "row" } }, [
+              _c("div", { staticClass: "media align-items-center" }, [
+                _c("div", { staticClass: "media-body" }, [
+                  _c("span", { staticClass: "name mb-0 text-sm" }, [
+                    _vm._v(_vm._s(printer.designation))
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "budget" }, [
-                _vm._v(
-                  "\n                " + _vm._s(printer.site) + "\n            "
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "budget" }, [
-                _c(
-                  "i",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.visitPrinter(printer.ip)
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(printer.ip) +
-                        "\n                "
-                    )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "budget" }, [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(printer.affectation) +
-                    "\n            "
-                )
-              ]),
-              _vm._v(" "),
-              _vm.role === "help desk"
-                ? _c("td", {}, [
-                    _c("div", { staticClass: "dropdown" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-icon-only text-light",
-                          attrs: { href: "#", role: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.edit(printer.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-edit" })]
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.role === "help desk"
-                ? _c("td", {}, [
-                    _c("div", { staticClass: "dropdown" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-icon-only text-light",
-                          attrs: { href: "#", role: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.destroy(printer.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ni ni-scissors" })]
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "dropdown" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-sm btn-icon-only text-light",
-                      attrs: { href: "#", role: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.show(printer.id)
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-arrow-alt-circle-right" })]
-                  )
                 ])
               ])
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "budget" }, [
+              _vm._v(
+                "\n                " + _vm._s(printer.site) + "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "budget" }, [
+              _c(
+                "i",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.visitPrinter(printer.ip)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(printer.ip) +
+                      "\n                "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "budget" }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(printer.affectation) +
+                  "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _vm.role === "help desk"
+              ? _c("td", {}, [
+                  _c("div", { staticClass: "dropdown" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-icon-only text-light",
+                        attrs: { href: "#", role: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.edit(printer.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-edit" })]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.role === "help desk"
+              ? _c("td", {}, [
+                  _c("div", { staticClass: "dropdown" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-icon-only text-light",
+                        attrs: { href: "#", role: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.destroy(printer.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "ni ni-scissors" })]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("td", {}, [
+              _c("div", { staticClass: "dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-icon-only text-light",
+                    attrs: { href: "#", role: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.show(printer.id)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-arrow-alt-circle-right" })]
+                )
+              ])
             ])
-          }),
-          0
-        )
-      ]
-    )
+          ])
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = []

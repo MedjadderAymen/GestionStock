@@ -78,7 +78,7 @@
 
                 <!-- Light table -->
                 <div class="table-responsive">
-                    <table id="stocks" class="table align-items-center table-flush text-center">
+                    <table id="stocks" class="table table-flush ">
                         <thead class="thead-light">
                         <tr>
                             <th scope="col" class="sort" data-sort="name">Référence</th>

@@ -26,7 +26,16 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('employer.employer');
+        $departments=['Direction Générale',
+            'Direction Industrielle',
+            'Direction Ventes et Marketing',
+            'Direction Finances et Comptabilité',
+            'Direction Commerciale et Distribution',
+            'Direction des Ressources Humaines',
+            'Direction Médicale',
+            'Direction Market Access et Affaires Règlementaires'];
+
+        return view('employer.employer')->with("departments", $departments);
     }
 
     public function store(Request $request)
@@ -38,7 +47,7 @@ class UserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone_number' => ['required', 'numeric', 'unique:users'],
+            'phone_number' => ['required', 'unique:users'],
             'windows_username' => ['required', 'string', 'max:255'],
             'function' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
@@ -97,14 +106,32 @@ class UserController extends Controller
 
         } else {
 
-            return view('employer.update')->with('user', $user);
+            $departments=['Direction Générale',
+                'Direction Industrielle',
+                'Direction Ventes et Marketing',
+                'Direction Finances et Comptabilité',
+                'Direction Commerciale et Distribution',
+                'Direction des Ressources Humaines',
+                'Direction Médicale',
+                'Direction Market Access et Affaires Règlementaires'];
+
+            return view('employer.update')->with('user', $user)->with('departments', $departments);
 
         }
     }
 
     public function edit(User $user)
     {
-        return view('employer.update')->with('user', $user);
+        $departments=['Direction Générale',
+            'Direction Industrielle',
+            'Direction Ventes et Marketing',
+            'Direction Finances et Comptabilité',
+            'Direction Commerciale et Distribution',
+            'Direction des Ressources Humaines',
+            'Direction Médicale',
+            'Direction Market Access et Affaires Règlementaires'];
+
+        return view('employer.update')->with('user', $user)->with('departments', $departments);
     }
 
     public function update(Request $request, User $user)
@@ -112,7 +139,7 @@ class UserController extends Controller
         $data = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255',],
-            'phone_number' => ['required', 'numeric'],
+            'phone_number' => ['required',],
             'windows_username' => ['required', 'string', 'max:255'],
             'function' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
@@ -150,7 +177,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
+            $user->delete();
 
         return redirect()->route('user.index');
     }

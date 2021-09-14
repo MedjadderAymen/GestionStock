@@ -32,7 +32,7 @@
             <div class="card">
                 <!-- Light table -->
                 <div class="table-responsive">
-                    <table id="stocks" class="table align-items-center table-flush text-center">
+                    <table id="stocks" class="table table-flush ">
                         <thead class="thead-light">
                         <tr>
                             <th scope="col" class="sort" data-sort="name">Nom & Prénom</th>
@@ -141,13 +141,6 @@
                                                 <a class="dropdown-item" href="{{route('user.show',['user'=>$user])}}">Détail</a>
                                                 <a class="dropdown-item"
                                                    href="{{route('user.edit',['user'=>$user])}}">Modifier</a>
-                                                <a class="dropdown-item" href=""
-                                                   onclick="event.preventDefault(); document.getElementById('delete-user-form').submit();">Supprimer</a>
-                                                <form id="delete-user-form"
-                                                      action="{{route('user.destroy',['user'=>$user])}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
                                             </div>
                                         </div>
                                     </td>
