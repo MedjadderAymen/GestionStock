@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\consumableToner;
 use App\printer;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ConsumableTonerController extends Controller
@@ -44,28 +46,42 @@ class ConsumableTonerController extends Controller
 
         // dd($request->all());
 
-        $printer = printer::find($request['printer']);
+        DB::beginTransaction();
 
-        $printerStocks = $printer->PrinterStocks->where('color', $request['color'])->where('quantity', '>', 0)->first();
+        try {
+            $printer = printer::find($request['printer']);
 
-        if (empty($printerStocks) || $printerStocks->quantity <= 0) {
-            Session::flash("error", "Quantité non disponble");
+            $printerStocks = $printer->PrinterStocks->where('color', $request['color'])->where('quantity', '>', 0)->first();
+
+            if (empty($printerStocks) || $printerStocks->quantity <= 0) {
+                Session::flash("error", "Quantité non disponble");
+                return redirect()->back();
+            } else {
+
+                $printer->consumableToners()->create([
+                    "help_desk_id" => Auth::user()->helpDesk->id,
+                    'reference' => $printerStocks->reference,
+                    'color' => $printerStocks->color,
+                    'quantity' => 1,
+                ]);
+
+                $printerStocks->quantity--;
+                $printerStocks->save();
+
+            }
+
+        }catch (ValidationException $e){
+
+            DB::rollBack();
+
+            Session::flash("error", $e->getMessage());
             return redirect()->back();
-        } else {
-
-            $printer->consumableToners()->create([
-                "help_desk_id" => Auth::user()->helpDesk->id,
-                'reference' => $printerStocks->reference,
-                'color' => $printerStocks->color,
-                'quantity' => 1,
-            ]);
-
-            $printerStocks->quantity--;
-            $printerStocks->save();
-
-            return redirect()->back();
-
         }
+
+        DB::commit();
+
+        return redirect()->back();
+
 
     }
 

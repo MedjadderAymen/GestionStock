@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\printer;
 use App\toner;
 use Carbon\Carbon;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +17,7 @@ class PrinterController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['helpDesk'])->except(['index','show','showRedirect']);
+        $this->middleware(['helpDesk'])->except(['index', 'show', 'showRedirect']);
 
     }
 
@@ -132,13 +134,15 @@ class PrinterController extends Controller
         return ['redirect' => route('printer.showUpdate', ['printer' => $printer])];
     }
 
-    public function showUpdate(printer $printer){
+    public function showUpdate(printer $printer)
+    {
 
-        return view('printer.update')->with('printer',$printer);
+        return view('printer.update')->with('printer', $printer);
 
     }
 
-    public function updateData(Request $request, printer $printer){
+    public function updateData(Request $request, printer $printer)
+    {
 
         $data = Validator::make($request->only('designation', 'site', 'ip', 'affectation'), [
             'designation' => ['string', 'required', 'max:255'],
@@ -152,10 +156,10 @@ class PrinterController extends Controller
             return redirect()->back();
         }
 
-        $printer->designation= $request['designation'];
-        $printer->site= $request['site'];
-        $printer->ip= $request['ip'];
-        $printer->affectation= $request['affectation'];
+        $printer->designation = $request['designation'];
+        $printer->site = $request['site'];
+        $printer->ip = $request['ip'];
+        $printer->affectation = $request['affectation'];
 
         $printer->save();
 
@@ -167,39 +171,52 @@ class PrinterController extends Controller
     public function update(Request $request, printer $printer)
     {
 
-        $toner = toner::find($request['reference']);
+        DB::beginTransaction();
 
-        if ($toner->quantity < $request['quantity']) {
+        try {
 
-            Session::flash("error", "Quantité non disponble");
+            $toner = toner::find($request['reference']);
+
+            if ($toner->quantity < $request['quantity']) {
+
+                Session::flash("error", "Quantité non disponble");
+                return redirect()->back();
+
+            }
+
+            if ($toner->quantity == $request['quantity']) {
+                Session::flash("success", "Toners ajoutés, quantité du toner " . $toner->reference . " couleur: " . $toner->color . " dans le stock est terminée");
+            } else {
+                Session::flash("success", "Toners ajoutés");
+            }
+
+            $printer->toners()->attach($request['reference'], ['quantity' => $request['quantity']]);
+
+            //-----add to printer stock
+
+            $printerStock = $printer->PrinterStocks()->firstOrCreate(
+                ['reference' => $toner->reference, 'color' => $toner->color],
+                ['reference' => $toner->reference, 'quantity' => 0, 'color' => $toner->color]
+            );
+
+            $printerStock->quantity += $request['quantity'];
+            $printerStock->save();
+
+            //-------------------------
+
+            $toner->quantity -= $request['quantity'];
+            $toner->save();
+
+        } catch (ValidationException $e) {
+
+            DB::rollBack();
+
+            Session::flash("error", $e->getMessage());
             return redirect()->back();
 
         }
 
-        if ($toner->quantity == $request['quantity']) {
-            Session::flash("success", "Toners ajoutés, quantité du toner " . $toner->reference . " couleur: " . $toner->color . " dans le stock est terminée");
-        } else {
-            Session::flash("success", "Toners ajoutés");
-        }
-
-        $printer->toners()->attach($request['reference'], ['quantity' => $request['quantity']]);
-
-        //-----add to printer stock
-
-        $printerStock = $printer->PrinterStocks()->firstOrCreate(
-            ['reference' => $toner->reference, 'color' => $toner->color],
-            ['reference' => $toner->reference, 'quantity' => 0, 'color' => $toner->color]
-        );
-
-        $printerStock->quantity += $request['quantity'];
-        $printerStock->save();
-
-        //-------------------------
-
-        $toner->quantity -= $request['quantity'];
-        $toner->save();
-
-
+        DB::commit();
         return redirect()->back();
 
     }

@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\inStockProduct;
 use App\invoice;
 use App\toner;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class InvoiceController extends Controller
 {
@@ -31,41 +34,52 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
 
-        $invoice = invoice::create([
-            "provider" => $request['provider'],
-            "serial_number" => $request['serial_number'],
-            "total_price" => 0,
-            "help_desk_id" => Auth::user()->helpDesk->id,
-        ]);
+        DB::beginTransaction();
 
-        $total_price = 0;
+        try {
 
-        foreach ($request['products'] as $product) {
+            $invoice = invoice::create([
+                "provider" => $request['provider'],
+                "serial_number" => $request['serial_number'],
+                "total_price" => 0,
+                "help_desk_id" => Auth::user()->helpDesk->id,
+            ]);
 
-            $invoice->inStockProducts()->attach($product['id'], ['quantity' => $product['quantity'], 'product_price' => $product['price']]);
+            $total_price = 0;
 
-            $inStockProduct = inStockProduct::find($product['id']);
-            $inStockProduct->quantity += $product['quantity'];
-            $inStockProduct->save();
+            foreach ($request['products'] as $product) {
 
-            $total_price += $product['price'] * $product['quantity'];
+                $invoice->inStockProducts()->attach($product['id'], ['quantity' => $product['quantity'], 'product_price' => $product['price']]);
+
+                $inStockProduct = inStockProduct::find($product['id']);
+                $inStockProduct->quantity += $product['quantity'];
+                $inStockProduct->save();
+
+                $total_price += $product['price'] * $product['quantity'];
+            }
+
+            foreach ($request['toners_list'] as $toner) {
+
+                $invoice->toners()->attach($toner['id'], ['quantity' => $toner['quantity'], 'toner_price' => $toner['price']]);
+
+                $toner_item = toner::find($toner['id']);
+                $toner_item->quantity += $toner['quantity'];
+                $toner_item->save();
+
+                $total_price += $toner['price'] * $toner['quantity'];
+
+            }
+
+            $invoice->total_price = $total_price;
+            $invoice->save();
+
+        }catch (ValidationException $e){
+            DB::rollBack();
+            Session::flash("error", $e->getMessage());
+            return ['redirect' => back()];
         }
 
-        foreach ($request['toners_list'] as $toner) {
-
-            $invoice->toners()->attach($toner['id'], ['quantity' => $toner['quantity'], 'toner_price' => $toner['price']]);
-
-            $toner_item = toner::find($toner['id']);
-            $toner_item->quantity += $toner['quantity'];
-            $toner_item->save();
-
-            $total_price += $toner['price'] * $toner['quantity'];
-
-        }
-
-        $invoice->total_price = $total_price;
-        $invoice->save();
-
+        DB::commit();
         return ['redirect' => route('invoice.index')];
 
     }

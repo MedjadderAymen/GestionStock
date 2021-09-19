@@ -10,7 +10,9 @@ use App\phone;
 use App\screen;
 use App\site;
 use App\User;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -58,359 +60,373 @@ class InStockProductController extends Controller
     public function store(Request $request)
     {
 
-        switch ($request['class']) {
-            case'laptop' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'class' => ['string', 'required', 'max:255'],
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'cpu' => ['string', 'required', 'max:255'],
-                        'ram' => ['string', 'required', 'max:255'],
-                        'disk' => ['string', 'required', 'max:255'],
-                        'screen' => ['string', 'required', 'max:255'],
-                        'vc' => ['string', 'required', 'max:255'],
-                        'user' => ['string', 'required'],
-                    ]);
+        DB::beginTransaction();
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
+        try {
 
-                    $user = User::find($request['user']);
-
-                    if ($user == null) {
-
-                        $inStockProduct = inStockProduct::create([
-
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'affected' => 0,
-
+            switch ($request['class']) {
+                case'laptop' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'class' => ['string', 'required', 'max:255'],
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'cpu' => ['string', 'required', 'max:255'],
+                            'ram' => ['string', 'required', 'max:255'],
+                            'disk' => ['string', 'required', 'max:255'],
+                            'screen' => ['string', 'required', 'max:255'],
+                            'vc' => ['string', 'required', 'max:255'],
+                            'user' => ['string', 'required'],
                         ]);
 
-                        $inStockProduct->laptop()->create([
-                            'cpu' => $request['cpu'],
-                            'vc' => $request['vc'],
-                            'ram' => $request['ram'],
-                            'disk' => $request['disk'],
-                            'screen' => $request['screen'],
-                        ]);
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
 
-                    } else {
-                        $inStockProduct = $user->employer->inStockProducts()->create([
+                        $user = User::find($request['user']);
 
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'date_affectation' => $request['date_affectation'],
-                            'affected' => 0,
+                        if ($user == null) {
 
-                        ]);
+                            $inStockProduct = inStockProduct::create([
 
-                        $inStockProduct->laptop()->create([
-                            'cpu' => $request['cpu'],
-                            'vc' => $request['vc'],
-                            'ram' => $request['ram'],
-                            'disk' => $request['disk'],
-                            'screen' => $request['screen'],
-                        ]);
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'affected' => 0,
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            ]);
 
-                        $user->active = 1;
-                        $user->save();
-                    }
+                            $inStockProduct->laptop()->create([
+                                'cpu' => $request['cpu'],
+                                'vc' => $request['vc'],
+                                'ram' => $request['ram'],
+                                'disk' => $request['disk'],
+                                'screen' => $request['screen'],
+                            ]);
 
-                }
-                break;
-            case'desktop' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'class' => ['string', 'required', 'max:255'],
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'cpu' => ['string', 'required', 'max:255'],
-                        'ram' => ['string', 'required', 'max:255'],
-                        'disk' => ['string', 'required', 'max:255'],
-                        'vc' => ['string', 'required', 'max:255'],
-                        'user' => ['string', 'required'],
-                    ]);
+                        } else {
+                            $inStockProduct = $user->employer->inStockProducts()->create([
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'date_affectation' => $request['date_affectation'],
+                                'affected' => 0,
 
-                    $user = User::find($request['user']);
+                            ]);
 
-                    if ($user == null) {
+                            $inStockProduct->laptop()->create([
+                                'cpu' => $request['cpu'],
+                                'vc' => $request['vc'],
+                                'ram' => $request['ram'],
+                                'disk' => $request['disk'],
+                                'screen' => $request['screen'],
+                            ]);
 
-                        $inStockProduct = inStockProduct::create([
+                            $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'affected' => 0,
-
-                        ]);
-
-                        $inStockProduct->desktop()->create([
-                            'cpu' => $request['cpu'],
-                            'vc' => $request['vc'],
-                            'ram' => $request['ram'],
-                            'disk' => $request['disk'],
-                        ]);
-
-                    } else {
-                        $inStockProduct = $user->employer->inStockProducts()->create([
-
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'date_affectation' => $request['date_affectation'],
-                            'affected' => 0,
-
-                        ]);
-
-                        $inStockProduct->desktop()->create([
-                            'cpu' => $request['cpu'],
-                            'vc' => $request['vc'],
-                            'ram' => $request['ram'],
-                            'disk' => $request['disk'],
-                        ]);
-
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
-
-                        $user->active = 1;
-                        $user->save();
-                    }
-                }
-                break;
-            case'screen' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'class' => ['string', 'required', 'max:255'],
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'screen' => ['string', 'required', 'max:255'],
-                    ]);
-
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
-
-                    $user = User::find($request['user']);
-
-                    if ($user == null) {
-
-                        $inStockProduct = inStockProduct::create([
-
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'affected' => 0,
-
-                        ]);
-
-                        $inStockProduct->screen()->create([
-                            'screen' => $request['screen'],
-                        ]);
-
-                    } else {
-                        $inStockProduct = $user->employer->inStockProducts()->create([
-
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'date_affectation' => $request['date_affectation'],
-                            'affected' => 0,
-
-                        ]);
-
-                        $inStockProduct->screen()->create([
-                            'screen' => $request['screen'],
-                        ]);
-
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
-
-                        $user->active = 1;
-                        $user->save();
+                            $user->active = 1;
+                            $user->save();
+                        }
 
                     }
-                }
-                break;
-            case'phone' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'class' => ['string', 'required', 'max:255'],
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                    ]);
+                    break;
+                case'desktop' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'class' => ['string', 'required', 'max:255'],
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'cpu' => ['string', 'required', 'max:255'],
+                            'ram' => ['string', 'required', 'max:255'],
+                            'disk' => ['string', 'required', 'max:255'],
+                            'vc' => ['string', 'required', 'max:255'],
+                            'user' => ['string', 'required'],
+                        ]);
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
+
+                        $user = User::find($request['user']);
+
+                        if ($user == null) {
+
+                            $inStockProduct = inStockProduct::create([
+
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'affected' => 0,
+
+                            ]);
+
+                            $inStockProduct->desktop()->create([
+                                'cpu' => $request['cpu'],
+                                'vc' => $request['vc'],
+                                'ram' => $request['ram'],
+                                'disk' => $request['disk'],
+                            ]);
+
+                        } else {
+                            $inStockProduct = $user->employer->inStockProducts()->create([
+
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'date_affectation' => $request['date_affectation'],
+                                'affected' => 0,
+
+                            ]);
+
+                            $inStockProduct->desktop()->create([
+                                'cpu' => $request['cpu'],
+                                'vc' => $request['vc'],
+                                'ram' => $request['ram'],
+                                'disk' => $request['disk'],
+                            ]);
+
+                            $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            $user->active = 1;
+                            $user->save();
+                        }
                     }
-
-                    $user = User::find($request['user']);
-
-                    if ($user == null) {
-
-                        $inStockProduct = inStockProduct::create([
-
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'affected' => 0,
-
+                    break;
+                case'screen' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'class' => ['string', 'required', 'max:255'],
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'screen' => ['string', 'required', 'max:255'],
                         ]);
 
-                        $inStockProduct->phone()->create([
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
 
-                        ]);
+                        $user = User::find($request['user']);
 
-                    } else {
-                        $inStockProduct = $user->employer->inStockProducts()->create([
+                        if ($user == null) {
 
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'date_affectation' => $request['date_affectation'],
-                            'affected' => 0,
+                            $inStockProduct = inStockProduct::create([
 
-                        ]);
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'affected' => 0,
 
-                        $inStockProduct->phone()->create([
-                        ]);
+                            ]);
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            $inStockProduct->screen()->create([
+                                'screen' => $request['screen'],
+                            ]);
 
-                        $user->active = 1;
-                        $user->save();
+                        } else {
+                            $inStockProduct = $user->employer->inStockProducts()->create([
+
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'date_affectation' => $request['date_affectation'],
+                                'affected' => 0,
+
+                            ]);
+
+                            $inStockProduct->screen()->create([
+                                'screen' => $request['screen'],
+                            ]);
+
+                            $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            $user->active = 1;
+                            $user->save();
+
+                        }
                     }
-                }
-                break;
-            case'ipad' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'class' => ['string', 'required', 'max:255'],
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                    ]);
+                    break;
+                case'phone' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'class' => ['string', 'required', 'max:255'],
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                        ]);
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
+
+                        $user = User::find($request['user']);
+
+                        if ($user == null) {
+
+                            $inStockProduct = inStockProduct::create([
+
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'affected' => 0,
+
+                            ]);
+
+                            $inStockProduct->phone()->create([
+
+                            ]);
+
+                        } else {
+                            $inStockProduct = $user->employer->inStockProducts()->create([
+
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'date_affectation' => $request['date_affectation'],
+                                'affected' => 0,
+
+                            ]);
+
+                            $inStockProduct->phone()->create([
+                            ]);
+
+                            $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            $user->active = 1;
+                            $user->save();
+                        }
                     }
-
-                    $user = User::find($request['user']);
-
-                    if ($user == null) {
-
-                        $inStockProduct = inStockProduct::create([
-
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'affected' => 0,
-
+                    break;
+                case'ipad' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'class' => ['string', 'required', 'max:255'],
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
                         ]);
 
-                        $inStockProduct->ipad()->create([
-                            'dimension' => $request['dimension']
-                        ]);
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
 
-                    } else {
-                        $inStockProduct = $user->employer->inStockProducts()->create([
+                        $user = User::find($request['user']);
 
-                            'zi' => $request['zi'],
-                            'invoice' => $request['invoice'],
-                            'class' => $request['class'],
-                            'serial_number' => $request['serial_number'],
-                            'constructor' => $request['constructor'],
-                            'model' => $request['model'],
-                            'status' => $request['status'],
-                            'date_affectation' => $request['date_affectation'],
-                            'affected' => 0,
+                        if ($user == null) {
 
-                        ]);
+                            $inStockProduct = inStockProduct::create([
 
-                        $inStockProduct->ipad()->create([
-                            'dimension' => $request['dimension']
-                        ]);
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'affected' => 0,
 
-                        $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            ]);
 
-                        $user->active = 1;
-                        $user->save();
+                            $inStockProduct->ipad()->create([
+                                'dimension' => $request['dimension']
+                            ]);
+
+                        } else {
+                            $inStockProduct = $user->employer->inStockProducts()->create([
+
+                                'zi' => $request['zi'],
+                                'invoice' => $request['invoice'],
+                                'class' => $request['class'],
+                                'serial_number' => $request['serial_number'],
+                                'constructor' => $request['constructor'],
+                                'model' => $request['model'],
+                                'status' => $request['status'],
+                                'date_affectation' => $request['date_affectation'],
+                                'affected' => 0,
+
+                            ]);
+
+                            $inStockProduct->ipad()->create([
+                                'dimension' => $request['dimension']
+                            ]);
+
+                            $inStockProduct->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            $user->active = 1;
+                            $user->save();
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+
+            $site = site::find($request['site']);
+
+            if ($site != null) {
+
+                $location = $site->locations()->create([
+
+                ]);
+
+                $inStockProduct->location_id = $location->id;
+                $inStockProduct->save();
+
+            }
+
+        }catch (ValidationException $e){
+
+            DB::rollBack();
+
+            Session::flash("error", $e->getMessage());
+            return redirect()->back();
+
         }
 
-        $site = site::find($request['site']);
-
-        if ($site != null) {
-
-            $location = $site->locations()->create([
-
-            ]);
-
-            $inStockProduct->location_id = $location->id;
-            $inStockProduct->save();
-
-        }
-
+        DB::commit();
         return redirect()->back();
     }
 
@@ -437,312 +453,326 @@ class InStockProductController extends Controller
     public function update(Request $request, inStockProduct $stock)
     {
 
-        switch ($stock->class) {
-            case'laptop' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'cpu' => ['string', 'required', 'max:255'],
-                        'ram' => ['string', 'required', 'max:255'],
-                        'disk' => ['string', 'required', 'max:255'],
-                        'screen' => ['string', 'required', 'max:255'],
-                        'vc' => ['string', 'required', 'max:255'],
-                        'user' => ['string', 'required'],
-                    ]);
+        DB::beginTransaction();
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
+        try {
+
+            switch ($stock->class) {
+                case'laptop' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'cpu' => ['string', 'required', 'max:255'],
+                            'ram' => ['string', 'required', 'max:255'],
+                            'disk' => ['string', 'required', 'max:255'],
+                            'screen' => ['string', 'required', 'max:255'],
+                            'vc' => ['string', 'required', 'max:255'],
+                            'user' => ['string', 'required'],
+                        ]);
+
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
+
+                        $stock->zi = $request['zi'];
+                        $stock->invoice = $request['invoice'];
+                        $stock->serial_number = $request['serial_number'];
+                        $stock->constructor = $request['constructor'];
+                        $stock->model = $request['model'];
+                        $stock->status = $request['status'];
+
+                        $user = User::find($request['user']);
+
+                        if ($user == null) {
+
+                            $stock->employer_id = null;
+                            $stock->date_affectation = null;
+
+                        } else {
+
+                            $stock->date_affectation = $request['date_affectation'];
+
+                            if ($stock->employer_id != $user->employer->id) {
+
+                                $stock->employer_id = $user->employer->id;
+                                $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            }
+
+                            $user->active = 1;
+                            $user->save();
+                        }
+
+                        $stock->save();
+
+                        $stock->laptop->cpu = $request['cpu'];
+                        $stock->laptop->vc = $request['vc'];
+                        $stock->laptop->ram = $request['ram'];
+                        $stock->laptop->disk = $request['disk'];
+                        $stock->laptop->screen = $request['screen'];
+
+                        if (isset($request['bag'])) {
+                            $stock->laptop->bag = 1;
+                        } else {
+                            $stock->laptop->bag = 0;
+                        }
+
+                        $stock->laptop->save();
                     }
+                    break;
+                case'desktop' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'cpu' => ['string', 'required', 'max:255'],
+                            'ram' => ['string', 'required', 'max:255'],
+                            'disk' => ['string', 'required', 'max:255'],
+                            'vc' => ['string', 'required', 'max:255'],
+                            'user' => ['string', 'required'],
+                        ]);
 
-                    $stock->zi = $request['zi'];
-                    $stock->invoice = $request['invoice'];
-                    $stock->serial_number = $request['serial_number'];
-                    $stock->constructor = $request['constructor'];
-                    $stock->model = $request['model'];
-                    $stock->status = $request['status'];
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
 
-                    $user = User::find($request['user']);
+                        $stock->zi = $request['zi'];
+                        $stock->invoice = $request['invoice'];
+                        $stock->serial_number = $request['serial_number'];
+                        $stock->constructor = $request['constructor'];
+                        $stock->model = $request['model'];
+                        $stock->status = $request['status'];
 
-                    if ($user == null) {
+                        $user = User::find($request['user']);
 
-                        $stock->employer_id = null;
-                        $stock->date_affectation = null;
+                        if ($user == null) {
 
-                    } else {
+                            $stock->employer_id = null;
+                            $stock->date_affectation = null;
 
-                        $stock->date_affectation = $request['date_affectation'];
+                        } else {
 
-                        if ($stock->employer_id != $user->employer->id) {
+                            $stock->date_affectation = $request['date_affectation'];
 
-                            $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            if ($stock->employer_id != $user->employer->id) {
+
+                                $stock->employer_id = $user->employer->id;
+                                $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            }
+
+                            $user->active = 1;
+                            $user->save();
+                        }
+
+                        $stock->save();
+
+                        $stock->desktop->cpu = $request['cpu'];
+                        $stock->desktop->vc = $request['vc'];
+                        $stock->desktop->ram = $request['ram'];
+                        $stock->desktop->disk = $request['disk'];
+
+                        $stock->desktop->save();
+
+                    }
+                    break;
+                case'screen' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'screen' => ['string', 'required', 'max:255'],
+                            'user' => ['string', 'required'],
+                        ]);
+
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
+
+                        $stock->zi = $request['zi'];
+                        $stock->invoice = $request['invoice'];
+                        $stock->serial_number = $request['serial_number'];
+                        $stock->constructor = $request['constructor'];
+                        $stock->model = $request['model'];
+                        $stock->status = $request['status'];
+
+                        $user = User::find($request['user']);
+
+                        if ($user == null) {
+
+                            $stock->employer_id = null;
+                            $stock->date_affectation = null;
+
+                        } else {
+
+                            $stock->date_affectation = $request['date_affectation'];
+
+                            if ($stock->employer_id != $user->employer->id) {
+
+                                $stock->employer_id = $user->employer->id;
+                                $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            }
+
+                            $user->active = 1;
+                            $user->save();
 
                         }
 
-                        $user->active = 1;
-                        $user->save();
+                        $stock->save();
+
+                        $stock->screen->screen = $request['screen'];
+
+                        $stock->screen->save();
                     }
+                    break;
+                case'phone' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'user' => ['string', 'required'],
+                        ]);
 
-                    $stock->save();
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
 
-                    $stock->laptop->cpu = $request['cpu'];
-                    $stock->laptop->vc = $request['vc'];
-                    $stock->laptop->ram = $request['ram'];
-                    $stock->laptop->disk = $request['disk'];
-                    $stock->laptop->screen = $request['screen'];
+                        $stock->zi = $request['zi'];
+                        $stock->invoice = $request['invoice'];
+                        $stock->serial_number = $request['serial_number'];
+                        $stock->constructor = $request['constructor'];
+                        $stock->model = $request['model'];
+                        $stock->status = $request['status'];
 
-                    if (isset($request['bag'])) {
-                        $stock->laptop->bag = 1;
-                    } else {
-                        $stock->laptop->bag = 0;
+                        $user = User::find($request['user']);
+
+                        if ($user == null) {
+
+                            $stock->employer_id = null;
+                            $stock->date_affectation = null;
+
+                        } else {
+
+                            $stock->date_affectation = $request['date_affectation'];
+
+                            if ($stock->employer_id != $user->employer->id) {
+
+                                $stock->employer_id = $user->employer->id;
+                                $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+
+                            }
+
+                            $user->active = 1;
+                            $user->save();
+                        }
+
+                        $stock->save();
+
+                        if (isset($request['cession'])) {
+                            $stock->phone->cession = 1;
+                        } else {
+                            $stock->phone->cession = 0;
+                        }
+
+                        $stock->phone->save();
+
                     }
+                    break;
+                case'ipad' :
+                    {
+                        $data = Validator::make($request->all(), [
+                            'serial_number' => ['string', 'required', 'max:255'],
+                            'constructor' => ['string', 'required', 'max:255'],
+                            'model' => ['string', 'required', 'max:255'],
+                            'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
+                            'user' => ['string', 'required'],
+                        ]);
 
-                    $stock->laptop->save();
-                }
-                break;
-            case'desktop' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'cpu' => ['string', 'required', 'max:255'],
-                        'ram' => ['string', 'required', 'max:255'],
-                        'disk' => ['string', 'required', 'max:255'],
-                        'vc' => ['string', 'required', 'max:255'],
-                        'user' => ['string', 'required'],
-                    ]);
+                        if ($data->fails()) {
+                            Session::flash("error", $data->errors());
+                            return redirect()->back();
+                        }
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
+                        $stock->zi = $request['zi'];
+                        $stock->invoice = $request['invoice'];
+                        $stock->serial_number = $request['serial_number'];
+                        $stock->constructor = $request['constructor'];
+                        $stock->model = $request['model'];
+                        $stock->status = $request['status'];
 
-                    $stock->zi = $request['zi'];
-                    $stock->invoice = $request['invoice'];
-                    $stock->serial_number = $request['serial_number'];
-                    $stock->constructor = $request['constructor'];
-                    $stock->model = $request['model'];
-                    $stock->status = $request['status'];
+                        $user = User::find($request['user']);
 
-                    $user = User::find($request['user']);
+                        if ($user == null) {
 
-                    if ($user == null) {
+                            $stock->employer_id = null;
+                            $stock->date_affectation = null;
 
-                        $stock->employer_id = null;
-                        $stock->date_affectation = null;
+                        } else {
 
-                    } else {
+                            $stock->date_affectation = $request['date_affectation'];
 
-                        $stock->date_affectation = $request['date_affectation'];
+                            if ($stock->employer_id != $user->employer->id) {
 
-                        if ($stock->employer_id != $user->employer->id) {
+                                $stock->employer_id = $user->employer->id;
+                                $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
 
-                            $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
+                            }
+
+                            $user->active = 1;
+                            $user->save();
 
                         }
 
-                        $user->active = 1;
-                        $user->save();
-                    }
+                        $stock->save();
 
-                    $stock->save();
+                        $stock->ipad->dimension = $request['dimension'];
 
-                    $stock->desktop->cpu = $request['cpu'];
-                    $stock->desktop->vc = $request['vc'];
-                    $stock->desktop->ram = $request['ram'];
-                    $stock->desktop->disk = $request['disk'];
-
-                    $stock->desktop->save();
-
-                }
-                break;
-            case'screen' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'screen' => ['string', 'required', 'max:255'],
-                        'user' => ['string', 'required'],
-                    ]);
-
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
-
-                    $stock->zi = $request['zi'];
-                    $stock->invoice = $request['invoice'];
-                    $stock->serial_number = $request['serial_number'];
-                    $stock->constructor = $request['constructor'];
-                    $stock->model = $request['model'];
-                    $stock->status = $request['status'];
-
-                    $user = User::find($request['user']);
-
-                    if ($user == null) {
-
-                        $stock->employer_id = null;
-                        $stock->date_affectation = null;
-
-                    } else {
-
-                        $stock->date_affectation = $request['date_affectation'];
-
-                        if ($stock->employer_id != $user->employer->id) {
-
-                            $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
-
-                        }
-
-                        $user->active = 1;
-                        $user->save();
+                        $stock->ipad->save();
 
                     }
+                    break;
+            }
 
-                    $stock->save();
+            $site = site::find($request['site']);
 
-                    $stock->screen->screen = $request['screen'];
+            if ($site != null) {
 
-                    $stock->screen->save();
-                }
-                break;
-            case'phone' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'user' => ['string', 'required'],
-                    ]);
+                $stock->location()->delete();
 
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
+                $location = $site->locations()->create([
 
-                    $stock->zi = $request['zi'];
-                    $stock->invoice = $request['invoice'];
-                    $stock->serial_number = $request['serial_number'];
-                    $stock->constructor = $request['constructor'];
-                    $stock->model = $request['model'];
-                    $stock->status = $request['status'];
+                ]);
 
-                    $user = User::find($request['user']);
+                $stock->location_id = $location->id;
+                $stock->save();
 
-                    if ($user == null) {
+            }else{
+                $stock->location()->delete();
+            }
 
-                        $stock->employer_id = null;
-                        $stock->date_affectation = null;
+        }catch (ValidationException $e){
 
-                    } else {
+            DB::rollBack();
+            Session::flash("error", $e->getMessage());
+            return redirect()->back();
 
-                        $stock->date_affectation = $request['date_affectation'];
-
-                        if ($stock->employer_id != $user->employer->id) {
-
-                            $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
-
-                        }
-
-                        $user->active = 1;
-                        $user->save();
-                    }
-
-                    $stock->save();
-
-                    if (isset($request['cession'])) {
-                        $stock->phone->cession = 1;
-                    } else {
-                        $stock->phone->cession = 0;
-                    }
-
-                    $stock->phone->save();
-
-                }
-                break;
-            case'ipad' :
-                {
-                    $data = Validator::make($request->all(), [
-                        'serial_number' => ['string', 'required', 'max:255'],
-                        'constructor' => ['string', 'required', 'max:255'],
-                        'model' => ['string', 'required', 'max:255'],
-                        'status' => ['string', 'required', 'max:255', 'in:bon,neuf,moyen,hors service'],
-                        'user' => ['string', 'required'],
-                    ]);
-
-                    if ($data->fails()) {
-                        Session::flash("error", $data->errors());
-                        return redirect()->back();
-                    }
-
-                    $stock->zi = $request['zi'];
-                    $stock->invoice = $request['invoice'];
-                    $stock->serial_number = $request['serial_number'];
-                    $stock->constructor = $request['constructor'];
-                    $stock->model = $request['model'];
-                    $stock->status = $request['status'];
-
-                    $user = User::find($request['user']);
-
-                    if ($user == null) {
-
-                        $stock->employer_id = null;
-                        $stock->date_affectation = null;
-
-                    } else {
-
-                        $stock->date_affectation = $request['date_affectation'];
-
-                        if ($stock->employer_id != $user->employer->id) {
-
-                            $stock->employer_id = $user->employer->id;
-                            $stock->employersHistory()->attach($user->employer->id, ['date_affectation' => $request['date_affectation'], 'created_at' => now()->toDateTimeString(), 'updated_at' => now()->toDateTimeString()]);
-
-                        }
-
-                        $user->active = 1;
-                        $user->save();
-
-                    }
-
-                    $stock->save();
-
-                    $stock->ipad->dimension = $request['dimension'];
-
-                    $stock->ipad->save();
-
-                }
-                break;
         }
 
-        $site = site::find($request['site']);
-
-        if ($site != null) {
-
-            $stock->location()->delete();
-
-            $location = $site->locations()->create([
-
-            ]);
-
-            $stock->location_id = $location->id;
-            $stock->save();
-
-        }else{
-            $stock->location()->delete();
-        }
+        DB::commit();
 
         return redirect()->back();
 
@@ -777,73 +807,90 @@ class InStockProductController extends Controller
     public function restore(inStockProduct $stock)
     {
 
-        $user = $stock->employer->user;
+        DB::beginTransaction();
 
-        switch ($stock->class) {
-            case 'laptop':
+        try {
 
-                $stock->employer_id = null;
-                $stock->date_affectation = null;
-                $stock->save();
+            $user = $stock->employer->user;
 
-                $laptop = $stock->laptop;
+            switch ($stock->class) {
+                case 'laptop':
 
-                return view('stock.restitution')
-                    ->with('laptop', $laptop)
-                    ->with('class', $stock->class)
-                    ->with('user', $user);
-
-            case 'desktop':
-
-                $stock->employer_id = null;
-                $stock->date_affectation = null;
-                $stock->save();
-
-                $desktop = $stock->desktop;
-
-                return view('stock.restitution')
-                    ->with('desktop', $desktop)
-                    ->with('class', $stock->class)
-                    ->with('user', $user);
-
-            case 'screen':
-
-                $stock->employer_id = null;
-                $stock->date_affectation = null;
-                $stock->save();
-
-                $screen = $stock->screen;
-
-                return view('stock.restitution')
-                    ->with('screen', $screen)
-                    ->with('class', $stock->class)
-                    ->with('user', $user);
-            case 'phone':
-                $phone = $stock->phone;
-
-                if (!$phone->cession) {
                     $stock->employer_id = null;
                     $stock->date_affectation = null;
                     $stock->save();
-                }
 
-                return view('stock.restitution')
-                    ->with('phone', $phone)
-                    ->with('class', $stock->class)
-                    ->with('user', $user);
-            case 'ipad':
+                    $laptop = $stock->laptop;
 
-                $stock->employer_id = null;
-                $stock->date_affectation = null;
-                $stock->save();
+                    return view('stock.restitution')
+                        ->with('laptop', $laptop)
+                        ->with('class', $stock->class)
+                        ->with('user', $user);
 
-                $ipad = $stock->ipad;
+                case 'desktop':
 
-                return view('stock.restitution')
-                    ->with('ipad', $ipad)
-                    ->with('class', $stock->class)
-                    ->with('user', $user);
+                    $stock->employer_id = null;
+                    $stock->date_affectation = null;
+                    $stock->save();
+
+                    $desktop = $stock->desktop;
+
+                    return view('stock.restitution')
+                        ->with('desktop', $desktop)
+                        ->with('class', $stock->class)
+                        ->with('user', $user);
+
+                case 'screen':
+
+                    $stock->employer_id = null;
+                    $stock->date_affectation = null;
+                    $stock->save();
+
+                    $screen = $stock->screen;
+
+                    return view('stock.restitution')
+                        ->with('screen', $screen)
+                        ->with('class', $stock->class)
+                        ->with('user', $user);
+                case 'phone':
+                    $phone = $stock->phone;
+
+                    if (!$phone->cession) {
+                        $stock->employer_id = null;
+                        $stock->date_affectation = null;
+                        $stock->save();
+                    }
+
+                    return view('stock.restitution')
+                        ->with('phone', $phone)
+                        ->with('class', $stock->class)
+                        ->with('user', $user);
+                case 'ipad':
+
+                    $stock->employer_id = null;
+                    $stock->date_affectation = null;
+                    $stock->save();
+
+                    $ipad = $stock->ipad;
+
+                    return view('stock.restitution')
+                        ->with('ipad', $ipad)
+                        ->with('class', $stock->class)
+                        ->with('user', $user);
+            }
+
+        }catch (ValidationException $e){
+
+            DB::rollBack();
+
+            Session::flash("error", $e->getMessage());
+            return redirect()->back();
+
         }
+
+        DB::commit();
+
+        return redirect()->back();
 
 
     }
