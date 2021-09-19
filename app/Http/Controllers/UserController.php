@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -154,8 +155,8 @@ class UserController extends Controller
 
             $data = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['sometimes', 'nullable', 'string', 'email', 'max:255', 'unique:users'],
-                'phone_number' => ['sometimes', 'nullable', 'unique:users'],
+                'email' => ['sometimes', 'nullable', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user),],
+                'phone_number' => ['sometimes', 'nullable',Rule::unique('users')->ignore($user),],
                 'windows_username' => ['sometimes', 'nullable', 'string', 'max:255'],
                 'function' => ['required', 'string', 'max:255'],
                 'department' => ['required', 'string', 'max:255'],
