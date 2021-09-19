@@ -51,13 +51,13 @@
                             <div class="form-group col-lg-6 col-sm-12">
                                 <label for="email" class="form-control-label">Email</label>
                                 <input class="form-control" type="text" placeholder="Email" name="email"
-                                       id="email" required>
+                                       id="email" >
                             </div>
                             <div class="form-group col-lg-6 col-sm-12">
                                 <label for="phone_number" class="form-control-label">Numéro téléphone</label>
                                 <input class="form-control" type="text" placeholder="Numéro téléphone"
                                        name="phone_number"
-                                       id="phone_number" required>
+                                       id="phone_number" >
                             </div>
                         </div>
                         <div class="row">
@@ -81,7 +81,7 @@
                                 <label for="windows_username" class="form-control-label">Windows username</label>
                                 <input class="form-control" type="text" placeholder="Windows username"
                                        name="windows_username"
-                                       id="windows_username" required>
+                                       id="windows_username" >
                             </div>
                         </div>
                         <hr class="my-1"/>

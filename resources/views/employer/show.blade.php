@@ -53,15 +53,17 @@
                                 @endif
                             </h3>
                         </div>
-                        <div class="col text-right">
-                            <form id="delete-user-form text-right"
-                                  action="{{route('user.destroy',['user'=>$user])}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-warning col-2"><i
-                                        class="fas fa-eraser"></i> Supprimer</button>
-                                @method('DELETE')
-                            </form>
-                        </div>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                            <div class="col text-right">
+                                <form id="delete-user-form text-right"
+                                      action="{{route('user.destroy',['user'=>$user])}}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-warning col-2"><i
+                                            class="fas fa-eraser"></i> Supprimer</button>
+                                    @method('DELETE')
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">

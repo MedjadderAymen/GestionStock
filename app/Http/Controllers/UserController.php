@@ -46,9 +46,9 @@ class UserController extends Controller
         $data = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone_number' => ['required', 'unique:users'],
-            'windows_username' => ['required', 'string', 'max:255'],
+            'email' => ['sometimes','nullable', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['sometimes','nullable', 'unique:users'],
+            'windows_username' => ['sometimes','nullable', 'string', 'max:255'],
             'function' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
             'company' => ['required', 'string', 'max:255'],
@@ -138,9 +138,9 @@ class UserController extends Controller
     {
         $data = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255',],
-            'phone_number' => ['required',],
-            'windows_username' => ['required', 'string', 'max:255'],
+            'email' => ['sometimes','nullable', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['sometimes','nullable', 'unique:users'],
+            'windows_username' => ['sometimes','nullable', 'string', 'max:255'],
             'function' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
             'company' => ['required', 'string', 'max:255'],

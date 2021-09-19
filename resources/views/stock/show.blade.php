@@ -217,7 +217,7 @@
                                 @php($constructors=['Hp','Lenovo','LG', 'Samsung'])
                                 @break
                                 @case("phone")
-                                @php($constructors=['Samsung','Xiaomi', 'Apple','Condor', 'Nokia', 'Wiko'])
+                                @php($constructors=['Samsung','Xiaomi', 'Apple','Condor', 'Nokia', 'Wiko','Huawei', 'StarLight'])
                                 @break
                                 @case("ipad")
                                 @php($constructors=['Apple'])

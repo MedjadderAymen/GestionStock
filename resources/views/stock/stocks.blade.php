@@ -1038,7 +1038,7 @@
                                                             <select class="form-control" id="constructor"
                                                                     name="constructor"
                                                                     required>
-                                                                @foreach(['Samsung','Xiaomi', 'Apple','Condor', 'Nokia', 'Wiko'] as $constructor)
+                                                                @foreach(['Samsung','Xiaomi', 'Apple','Condor', 'Nokia', 'Wiko','Huawei', 'StarLight'] as $constructor)
                                                                     <option
                                                                         value="{{$constructor}}">{{$constructor}}</option>
                                                                 @endforeach

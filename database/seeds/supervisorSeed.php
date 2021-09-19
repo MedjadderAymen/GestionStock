@@ -14,7 +14,7 @@ class supervisorSeed extends Seeder
     {
         $user = User::create([
             'email' => 'y.achir@vitalcareprod.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('yasmine@2021'),
             'phone_number' => "0770526333",
             'role' => 'supervisor',
             'name' => 'Yasmine Achir',
