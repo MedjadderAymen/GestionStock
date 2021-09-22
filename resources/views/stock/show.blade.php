@@ -319,7 +319,7 @@
                                     <label for="cpu" class="form-control-label">Cpu</label>
                                     <select class="form-control" id="cpu" name="cpu"
                                             required>
-                                        @foreach(['I3','I5','I7'] as $cpu)
+                                        @foreach(['Pentium','I3','I5','I7'] as $cpu)
                                             <option
                                                 @if($inStockProduct->laptop->cpu === $cpu)
                                                 selected
@@ -350,7 +350,7 @@
                                     <label for="ram" class="form-control-label">Ram</label>
                                     <select class="form-control" id="ram" name="ram"
                                             required>
-                                        @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                        @foreach(['2Go','4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
                                             <option
                                                 @if($inStockProduct->laptop->ram === $ram)
                                                 selected
@@ -394,7 +394,7 @@
                                     <label for="cpu" class="form-control-label">Cpu</label>
                                     <select class="form-control" id="cpu" name="cpu"
                                             required>
-                                        @foreach(['I3','I5','I7'] as $cpu)
+                                        @foreach(['Pentium','I3','I5','I7'] as $cpu)
                                             <option
                                                 @if($inStockProduct->desktop->cpu === $cpu)
                                                 selected
@@ -407,7 +407,7 @@
                                     <label for="ram" class="form-control-label">Ram</label>
                                     <select class="form-control" id="ram" name="ram"
                                             required>
-                                        @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                        @foreach(['2Go','4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
                                             <option
                                                 @if($inStockProduct->desktop->ram === $ram)
                                                 selected

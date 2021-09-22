@@ -279,7 +279,7 @@
                                                                    class="form-control-label">CPU</label>
                                                             <select class="form-control" id="cpu" name="cpu"
                                                                     required>
-                                                                @foreach(['I3','I5','I7'] as $cpu)
+                                                                @foreach(['Pentium','I3','I5','I7'] as $cpu)
                                                                     <option
                                                                         value="{{$cpu}}">{{$cpu}}</option>
                                                                 @endforeach
@@ -290,7 +290,7 @@
                                                                    class="form-control-label ">RAM</label>
                                                             <select class="form-control" id="ram" name="ram"
                                                                     required>
-                                                                @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                                                @foreach(['2Go','4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
                                                                     <option
                                                                         value="{{$ram}}">{{$ram}}</option>
                                                                 @endforeach
@@ -583,7 +583,7 @@
                                                                    class="form-control-label">CPU</label>
                                                             <select class="form-control" id="cpu" name="cpu"
                                                                     required>
-                                                                @foreach(['I3','I5','I7'] as $cpu)
+                                                                @foreach(['Pentium','I3','I5','I7'] as $cpu)
                                                                     <option
                                                                         value="{{$cpu}}">{{$cpu}}</option>
                                                                 @endforeach
@@ -594,7 +594,7 @@
                                                                    class="form-control-label ">RAM</label>
                                                             <select class="form-control" id="ram" name="ram"
                                                                     required>
-                                                                @foreach(['4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
+                                                                @foreach(['2Go','4Go','6Go','8Go','12Go','16Go','32Go'] as $ram)
                                                                     <option
                                                                         value="{{$ram}}">{{$ram}}</option>
                                                                 @endforeach

@@ -31,11 +31,11 @@ class InStockProductController extends Controller
         $users = User::where('role', 'employer')->has('employer')->get();
         $sites = site::all();
 
-        $laptops = laptop::with('inStockProduct.employer')->paginate(5);
-        $desktops = desktop::with('inStockProduct.employer')->paginate(5);
-        $screens = screen::with('inStockProduct.employer')->paginate(5);
-        $phones = phone::with('inStockProduct.employer')->paginate(5);
-        $ipads = ipad::with('inStockProduct.employer')->paginate(5);
+        $laptops = laptop::with('inStockProduct.employer')->paginate(25);
+        $desktops = desktop::with('inStockProduct.employer')->paginate(25);
+        $screens = screen::with('inStockProduct.employer')->paginate(25);
+        $phones = phone::with('inStockProduct.employer')->paginate(25);
+        $ipads = ipad::with('inStockProduct.employer')->paginate(25);
 
         return view("stock.stocks")
             ->with('laptops', $laptops)
