@@ -168,10 +168,10 @@
                         @endif
 
                         <div class="row">
-                            <div class="form-group col-lg-12 col-sm-12" id="div_employer">
-                                <label for="site" class="form-control-label">Site</label>
-                                <select class="form-control" id="site" name="site">
-                                    @if(isset($inStockProduct->location))
+                            @if(isset($inStockProduct->location))
+                                <div class="form-group col-lg-4 col-sm-6">
+                                    <label for="site" class="form-control-label">Site</label>
+                                    <select class="form-control" id="site" name="site">
                                         <optgroup label="Autres">
                                             <option value="null">Non Affecté</option>
                                         </optgroup>
@@ -187,7 +187,26 @@
                                                 </option>
                                             @endforeach
                                         </optgroup>
-                                    @else
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-4 col-sm-6" id="laptop_location_one_div">
+                                    <label for="location_line_one"
+                                           class="form-control-label">ligne de localisation 1</label>
+                                    <input class="form-control" type="text"
+                                           placeholder="ligne de localisation 1" name="location_line_one" value="{{$inStockProduct->location->location_line_one}}"
+                                           id="location_line_one" required>
+                                </div>
+                                <div class="form-group col-lg-4 col-sm-6" id="laptop_location_two_div">
+                                    <label for="location_line_two"
+                                           class="form-control-label">ligne de localisation 2</label>
+                                    <input class="form-control" type="text"
+                                           placeholder="ligne de localisation 2" name="location_line_two" value="{{$inStockProduct->location->location_line_two}}"
+                                           id="location_line_two" required>
+                                </div>
+                            @else
+                                <div class="form-group col-lg-12 col-sm-12" id="div_site">
+                                    <label for="site" class="form-control-label">Site</label>
+                                    <select class="form-control" id="site" name="site" onchange="siteAffectation()">
                                         <optgroup label="Autres">
                                             <option value="null">Non Affecté</option>
                                         </optgroup>
@@ -200,9 +219,24 @@
                                                 </option>
                                             @endforeach
                                         </optgroup>
-                                    @endif
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-4 col-sm-12" id="div_location_line_one" style="display: none">
+                                    <label for="location_line_one"
+                                           class="form-control-label">ligne de localisation 1</label>
+                                    <input class="form-control" type="text"
+                                           placeholder="ligne de localisation 1" name="location_line_one"
+                                           id="location_line_one" >
+                                </div>
+                                <div class="form-group col-lg-4 col-sm-12" id="div_location_line_two" style="display: none">
+                                    <label for="location_line_two"
+                                           class="form-control-label">ligne de localisation 2</label>
+                                    <input class="form-control" type="text"
+                                           placeholder="ligne de localisation 2" name="location_line_two"
+                                           id="location_line_two" >
+                                </div>
+                            @endif
+
                         </div>
 
                         <div class="row">
@@ -565,6 +599,35 @@
                 y.classList.add('col-lg-6');
             }
         }
+
+        function siteAffectation() {
+            var x = document.getElementById('site');
+            var w = document.getElementById('div_site');
+            var y = document.getElementById('div_location_line_one');
+            var z = document.getElementById('div_location_line_two');
+
+            if (x.value === 'null') {
+
+                w.classList.remove('col-lg-4');
+                w.classList.add('col-lg-12');
+
+                y.style.display = "none";
+                document.getElementById('location_line_one').required = false;
+                z.style.display = "none";
+                document.getElementById('location_line_two').required = false;
+
+            } else {
+
+                w.classList.remove('col-lg-12');
+                w.classList.add('col-lg-4');
+
+                y.style.display = "block";
+                document.getElementById('location_line_one').required = true;
+                z.style.display = "block";
+                document.getElementById('location_line_two').required = true;
+            }
+        }
+
     </script>
 @endsection
 

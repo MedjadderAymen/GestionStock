@@ -79,6 +79,8 @@ class InStockProductController extends Controller
                             'screen' => ['string', 'required', 'max:255'],
                             'vc' => ['string', 'required', 'max:255'],
                             'user' => ['string', 'required'],
+                            'location_line_one' => ['string', 'sometimes'],
+                            'location_line_two' => ['string', 'sometimes'],
                         ]);
 
                         if ($data->fails()) {
@@ -409,7 +411,8 @@ class InStockProductController extends Controller
             if ($site != null) {
 
                 $location = $site->locations()->create([
-
+                    'location_line_one'=>$request['location_line_one'],
+                    'location_line_two'=>$request['location_line_two'],
                 ]);
 
                 $inStockProduct->location_id = $location->id;
@@ -754,7 +757,8 @@ class InStockProductController extends Controller
                 $stock->location()->delete();
 
                 $location = $site->locations()->create([
-
+                    'location_line_one'=>$request['location_line_one'],
+                    'location_line_two'=>$request['location_line_two'],
                 ]);
 
                 $stock->location_id = $location->id;

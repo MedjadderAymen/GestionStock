@@ -345,8 +345,9 @@
                                                                required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="site">Site</label>
-                                                        <select class="form-control" id="site" name="site">
+                                                        <label for="site_laptop">Site</label>
+                                                        <select class="form-control" id="site_laptop" name="site"
+                                                                onchange="affectSiteLaptop()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -357,6 +358,26 @@
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group" id="laptop_location_one_div"
+                                                         style="display: none">
+                                                        <label for="laptop_location_line_one"
+                                                               class="form-control-label">ligne de localisation
+                                                            1</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 1"
+                                                               name="location_line_one"
+                                                               id="laptop_location_line_one">
+                                                    </div>
+                                                    <div class="form-group " id="laptop_location_two_div"
+                                                         style="display: none">
+                                                        <label for="laptop_location_line_two"
+                                                               class="form-control-label">ligne de localisation
+                                                            2</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 2"
+                                                               name="location_line_two"
+                                                               id="laptop_location_line_two">
                                                     </div>
                                                 </div>
 
@@ -611,8 +632,7 @@
                                                             </optgroup>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group " id="desktop_date_div"
-                                                         style="display: none">
+                                                    <div class="form-group " id="desktop_date_div" style="display: none">
                                                         <label for="date_affectation"
                                                                class="form-control-label">Date d'affectation</label>
                                                         <input class="form-control" type="date" name="date_affectation"
@@ -620,8 +640,9 @@
                                                                required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="site">Site</label>
-                                                        <select class="form-control" id="site" name="site">
+                                                        <label for="site_desktop">Site</label>
+                                                        <select class="form-control" id="site_desktop" name="site"
+                                                                onchange="affectSiteDesktop()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -632,6 +653,26 @@
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group" id="desktop_location_one_div"
+                                                         style="display: none">
+                                                        <label for="desktop_location_line_one"
+                                                               class="form-control-label">ligne de localisation
+                                                            1</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 1"
+                                                               name="location_line_one"
+                                                               id="desktop_location_line_one">
+                                                    </div>
+                                                    <div class="form-group " id="desktop_location_two_div"
+                                                         style="display: none">
+                                                        <label for="desktop_location_line_two"
+                                                               class="form-control-label">ligne de localisation
+                                                            2</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 2"
+                                                               name="location_line_two"
+                                                               id="desktop_location_line_two">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -856,8 +897,9 @@
                                                                required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="site">Site</label>
-                                                        <select class="form-control" id="site" name="site">
+                                                        <label for="site_screen">Site</label>
+                                                        <select class="form-control" id="site_screen" name="site"
+                                                                onchange="affectSiteScreen()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -868,6 +910,26 @@
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group" id="screen_location_one_div"
+                                                         style="display: none">
+                                                        <label for="screen_location_line_one"
+                                                               class="form-control-label">ligne de localisation
+                                                            1</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 1"
+                                                               name="location_line_one"
+                                                               id="screen_location_line_one">
+                                                    </div>
+                                                    <div class="form-group " id="screen_location_two_div"
+                                                         style="display: none">
+                                                        <label for="screen_location_line_two"
+                                                               class="form-control-label">ligne de localisation
+                                                            2</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 2"
+                                                               name="location_line_two"
+                                                               id="screen_location_line_two">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -1084,8 +1146,9 @@
                                                                required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="site">Site</label>
-                                                        <select class="form-control" id="site" name="site">
+                                                        <label for="site_phone">Site</label>
+                                                        <select class="form-control" id="site_phone" name="site"
+                                                                onchange="affectSitePhone()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -1096,6 +1159,26 @@
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group" id="phone_location_one_div"
+                                                         style="display: none">
+                                                        <label for="phone_location_line_one"
+                                                               class="form-control-label">ligne de localisation
+                                                            1</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 1"
+                                                               name="location_line_one"
+                                                               id="phone_location_line_one">
+                                                    </div>
+                                                    <div class="form-group " id="phone_location_two_div"
+                                                         style="display: none">
+                                                        <label for="phone_location_line_two"
+                                                               class="form-control-label">ligne de localisation
+                                                            2</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 2"
+                                                               name="location_line_two"
+                                                               id="phone_location_line_two">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -1321,8 +1404,9 @@
                                                                required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="site">Site</label>
-                                                        <select class="form-control" id="site" name="site">
+                                                        <label for="site_ipad">Site</label>
+                                                        <select class="form-control" id="site_ipad" name="site"
+                                                                onchange="affectSiteIPad()">
                                                             <optgroup label="Autres">
                                                                 <option value="null">Non Affecté</option>
                                                             </optgroup>
@@ -1333,6 +1417,26 @@
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group" id="ipad_location_one_div"
+                                                         style="display: none">
+                                                        <label for="ipad_location_line_one"
+                                                               class="form-control-label">ligne de localisation
+                                                            1</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 1"
+                                                               name="location_line_one"
+                                                               id="ipad_location_line_one">
+                                                    </div>
+                                                    <div class="form-group " id="ipad_location_two_div"
+                                                         style="display: none">
+                                                        <label for="ipad_location_line_two"
+                                                               class="form-control-label">ligne de localisation
+                                                            2</label>
+                                                        <input class="form-control" type="text"
+                                                               placeholder="ligne de localisation 2"
+                                                               name="location_line_two"
+                                                               id="ipad_location_line_two">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -1462,6 +1566,121 @@
                 y.style.display = "none";
             } else {
                 y.style.display = "block"
+            }
+
+        }
+    </script>
+    <!--here affectation-->
+    <script>
+
+        function affectSiteLaptop() {
+
+            var x = document.getElementById('site_laptop');
+            var y = document.getElementById('laptop_location_one_div');
+            var z = document.getElementById('laptop_location_two_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+                document.getElementById('laptop_location_line_one').required = false;
+                z.style.display = "none";
+                document.getElementById('laptop_location_line_two').required = false;
+            } else {
+                y.style.display = "block";
+                document.getElementById('laptop_location_line_one').required = true;
+                z.style.display = "block";
+                document.getElementById('laptop_location_line_two').required = true;
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectSiteDesktop() {
+
+            var x = document.getElementById('site_desktop');
+            var y = document.getElementById('desktop_location_one_div');
+            var z = document.getElementById('desktop_location_two_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+                document.getElementById('desktop_location_line_one').required = false;
+                z.style.display = "none";
+                document.getElementById('desktop_location_line_two').required = false;
+            } else {
+                y.style.display = "block";
+                document.getElementById('desktop_location_line_one').required = true;
+                z.style.display = "block";
+                document.getElementById('desktop_location_line_two').required = true;
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectSiteScreen() {
+
+            var x = document.getElementById('site_screen');
+            var y = document.getElementById('screen_location_one_div');
+            var z = document.getElementById('screen_location_two_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+                document.getElementById('screen_location_line_one').required = false;
+                z.style.display = "none";
+                document.getElementById('screen_location_line_two').required = false;
+            } else {
+                y.style.display = "block";
+                document.getElementById('screen_location_line_one').required = true;
+                z.style.display = "block";
+                document.getElementById('screen_location_line_two').required = true;
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectSitePhone() {
+
+            var x = document.getElementById('site_phone');
+            var y = document.getElementById('phone_location_one_div');
+            var z = document.getElementById('phone_location_two_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+                document.getElementById('phone_location_line_one').required = false;
+                z.style.display = "none";
+                document.getElementById('phone_location_line_two').required = false;
+            } else {
+                y.style.display = "block";
+                document.getElementById('phone_location_line_one').required = true;
+                z.style.display = "block";
+                document.getElementById('phone_location_line_two').required = true;
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function affectSiteIPad() {
+
+            var x = document.getElementById('site_ipad');
+            var y = document.getElementById('ipad_location_one_div');
+            var z = document.getElementById('ipad_location_two_div');
+
+            if (x.value === 'null') {
+                y.style.display = "none";
+                document.getElementById('ipad_location_line_one').required = false;
+                z.style.display = "none";
+                document.getElementById('ipad_location_line_two').required = false;
+            } else {
+                y.style.display = "block";
+                document.getElementById('ipad_location_line_one').required = true;
+                z.style.display = "block";
+                document.getElementById('ipad_location_line_two').required = true;
             }
 
         }
