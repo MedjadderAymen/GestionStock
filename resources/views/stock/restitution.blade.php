@@ -42,7 +42,7 @@
                     <div class="row justify-content-md-center mt-4">
                         <div class="col-md-auto">
                             <h1>
-                                Réstitution Matériel Informatique [{{$class}}]: D{{$user->id}}
+                               @if($class === "phone" && $phone->cession) Cession @else Réstitution Matériel Informatique @endif  [{{$class}}]: D{{$user->id}}
                             </h1>
                         </div>
                     </div>

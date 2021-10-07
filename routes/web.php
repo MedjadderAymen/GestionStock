@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\InStockProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['basicAuth'])->group(function () {
+
+
+    Route::get('inv', function () {
+
+        $employers = \App\employer::doesntHave('inStockProducts')->with('user')->get();
+
+        return view('who')->with('employers',$employers);
+
+    });
 
     Route::get('csrf', function () {
         return csrf_token();
@@ -34,6 +42,7 @@ Route::middleware(['basicAuth'])->group(function () {
         Route::resource('user', "UserController");
         Route::get('user/{user}/print', "UserController@print")->name('user.print');
         Route::get('user/{user}/restore', "UserController@restore")->name('user.restore');
+        Route::post('user/search', "UserController@search")->name('user.search');
 
         Route::resource('printer', "PrinterController");
         Route::get('/printer/showRedirect/{printer}', "PrinterController@showRedirect")->name('printer.showRedirect');
@@ -50,9 +59,9 @@ Route::middleware(['basicAuth'])->group(function () {
 
         Route::resource('invoice', "InvoiceController");
 
-        Route::resource('site','SiteController');
+        Route::resource('site', 'SiteController');
 
-        Route::resource('location','LocationController');
+        Route::resource('location', 'LocationController');
 
     });
 

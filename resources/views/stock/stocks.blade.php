@@ -985,7 +985,7 @@
                                                         {{$phone->inStockProduct->zi}}
                                                     </th>
                                                     <td>
-                                                        {{$phone->inStockProduct->constructor}}
+                                                        {{$phone->inStockProduct->constructor}} @if($phone->cession) (cession) @endif
                                                     </td>
                                                     <td>
                                                         {{$phone->inStockProduct->model}}

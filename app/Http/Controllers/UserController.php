@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\inStockProduct;
 use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
@@ -155,8 +156,8 @@ class UserController extends Controller
 
             $data = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['sometimes', 'nullable', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user),],
-                'phone_number' => ['sometimes', 'nullable',Rule::unique('users')->ignore($user),],
+                'email' => ['sometimes', 'nullable', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user),],
+                'phone_number' => ['sometimes', 'nullable', Rule::unique('users')->ignore($user),],
                 'windows_username' => ['sometimes', 'nullable', 'string', 'max:255'],
                 'function' => ['required', 'string', 'max:255'],
                 'department' => ['required', 'string', 'max:255'],
@@ -278,4 +279,21 @@ class UserController extends Controller
             ->with('ipads', $ipads);
 
     }
+
+    public function search(Request $request)
+    {
+
+        $user = User::where('name', 'like', '%' . $request['name'] . '%')->first();
+
+        if ($user === null) {
+
+            Session::flash("info", "ce Employé n'éxiste pas");
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('user.show', ['user' => $user]);
+
+    }
+
 }

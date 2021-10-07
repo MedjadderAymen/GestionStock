@@ -826,6 +826,8 @@ class InStockProductController extends Controller
 
                     $laptop = $stock->laptop;
 
+                    DB::commit();
+
                     return view('stock.restitution')
                         ->with('laptop', $laptop)
                         ->with('class', $stock->class)
@@ -838,6 +840,8 @@ class InStockProductController extends Controller
                     $stock->save();
 
                     $desktop = $stock->desktop;
+
+                    DB::commit();
 
                     return view('stock.restitution')
                         ->with('desktop', $desktop)
@@ -852,6 +856,8 @@ class InStockProductController extends Controller
 
                     $screen = $stock->screen;
 
+                    DB::commit();
+
                     return view('stock.restitution')
                         ->with('screen', $screen)
                         ->with('class', $stock->class)
@@ -865,6 +871,8 @@ class InStockProductController extends Controller
                         $stock->save();
                     }
 
+                    DB::commit();
+
                     return view('stock.restitution')
                         ->with('phone', $phone)
                         ->with('class', $stock->class)
@@ -876,6 +884,8 @@ class InStockProductController extends Controller
                     $stock->save();
 
                     $ipad = $stock->ipad;
+
+                    DB::commit();
 
                     return view('stock.restitution')
                         ->with('ipad', $ipad)
