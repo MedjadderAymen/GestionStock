@@ -366,9 +366,9 @@
                                     @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
                                     <td class="text-left">
                                         <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-danger"
+                                            <a class="btn btn-sm  text-danger"
                                                href="{{route("stock.restore",['stock' => $phone])}}" role="button">
-                                                <i class="ni ni-scissors"></i>
+                                                <i class="ni ni-scissors">@if($phone->phone->cession) (cession) @endif</i>
                                             </a>
                                         </div>
                                     </td>

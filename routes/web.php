@@ -1,5 +1,6 @@
 <?php
 
+use App\inStockProduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -66,3 +67,5 @@ Route::middleware(['basicAuth'])->group(function () {
     });
 
 });
+
+Route::get('stock/export_mapping', 'ExcelController@export_mapping')->name('registrations.export_mapping') ;

@@ -23,6 +23,7 @@ class PrinterController extends Controller
 
     public function index()
     {
+
         return view('printer.printers')->with('printers', printer::all());
     }
 
