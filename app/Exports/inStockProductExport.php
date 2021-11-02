@@ -37,7 +37,7 @@ class inStockProductExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $row->id,
-            'ZI-'.$row->iz,
+            'ZI-'.$row->zi,
             $row->constructor,
             $row->model,
             $row->serial_number,

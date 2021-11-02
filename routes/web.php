@@ -1,8 +1,9 @@
 <?php
 
-use App\inStockProduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use LaravelQRCode\Facades\QRCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::middleware(['basicAuth'])->group(function () {
 
         $employers = \App\employer::doesntHave('inStockProducts')->with('user')->get();
 
-        return view('who')->with('employers',$employers);
+        return view('who')->with('employers', $employers);
 
     });
 
@@ -53,6 +54,7 @@ Route::middleware(['basicAuth'])->group(function () {
         Route::resource('stock', "InStockProductController");
         Route::post('stock/search', "InStockProductController@search")->name('stock.search');
         Route::get('stock/{stock}/restore', "InStockProductController@restore")->name('stock.restore');
+        Route::get('stock/qrCode/{stockProduct}', "InStockProductController@QrCode")->name('stock.qrcode');
 
         Route::resource('toner', "TonerController");
 
@@ -68,4 +70,5 @@ Route::middleware(['basicAuth'])->group(function () {
 
 });
 
-Route::get('stock/export_mapping', 'ExcelController@export_mapping')->name('registrations.export_mapping') ;
+Route::get('stock/export_mapping', 'ExcelController@export_mapping')->name('registrations.export_mapping');
+

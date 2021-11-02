@@ -45,21 +45,28 @@
                 @method("PUT")
                 <div class="card">
                     <div class="card-header bg-transparent">
-                        <h3 class="mb-0">Matériel:
-                            <strong>{{$inStockProduct->class}}</strong>
-                            [{{$inStockProduct->zi}}]
-                            @if(isset($inStockProduct->employer) )
-                                <span class="badge badge-dot mr-4">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class=" mb-0">Matériel:
+                                    <strong>{{$inStockProduct->class}}</strong>
+                                    [{{$inStockProduct->zi}}]
+                                    @if(isset($inStockProduct->employer) )
+                                        <span class="badge badge-dot mr-4">
                                 <i class="bg-success"></i>
                                 <span class="status"></span>
                             </span>
-                            @else
-                                <span class="badge badge-dot mr-4">
+                                    @else
+                                        <span class="badge badge-dot mr-4">
                                 <i class="bg-danger"></i>
                                 <span class="status"></span>
                             </span>
-                            @endif
-                        </h3>
+                                    @endif
+                                </h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="{{route('stock.qrcode', ['stockProduct'=>$inStockProduct])}}" class="btn btn-sm btn-primary">QrCode</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         @if(isset($inStockProduct->employer->user))
@@ -193,14 +200,16 @@
                                     <label for="location_line_one"
                                            class="form-control-label">ligne de localisation 1</label>
                                     <input class="form-control" type="text"
-                                           placeholder="ligne de localisation 1" name="location_line_one" value="{{$inStockProduct->location->location_line_one}}"
+                                           placeholder="ligne de localisation 1" name="location_line_one"
+                                           value="{{$inStockProduct->location->location_line_one}}"
                                            id="location_line_one" required>
                                 </div>
                                 <div class="form-group col-lg-4 col-sm-6" id="laptop_location_two_div">
                                     <label for="location_line_two"
                                            class="form-control-label">ligne de localisation 2</label>
                                     <input class="form-control" type="text"
-                                           placeholder="ligne de localisation 2" name="location_line_two" value="{{$inStockProduct->location->location_line_two}}"
+                                           placeholder="ligne de localisation 2" name="location_line_two"
+                                           value="{{$inStockProduct->location->location_line_two}}"
                                            id="location_line_two" required>
                                 </div>
                             @else
@@ -221,19 +230,21 @@
                                         </optgroup>
                                     </select>
                                 </div>
-                                <div class="form-group col-lg-4 col-sm-12" id="div_location_line_one" style="display: none">
+                                <div class="form-group col-lg-4 col-sm-12" id="div_location_line_one"
+                                     style="display: none">
                                     <label for="location_line_one"
                                            class="form-control-label">ligne de localisation 1</label>
                                     <input class="form-control" type="text"
                                            placeholder="ligne de localisation 1" name="location_line_one"
-                                           id="location_line_one" >
+                                           id="location_line_one">
                                 </div>
-                                <div class="form-group col-lg-4 col-sm-12" id="div_location_line_two" style="display: none">
+                                <div class="form-group col-lg-4 col-sm-12" id="div_location_line_two"
+                                     style="display: none">
                                     <label for="location_line_two"
                                            class="form-control-label">ligne de localisation 2</label>
                                     <input class="form-control" type="text"
                                            placeholder="ligne de localisation 2" name="location_line_two"
-                                           id="location_line_two" >
+                                           id="location_line_two">
                                 </div>
                             @endif
 

@@ -100,9 +100,13 @@
                                 <td class="budget">
                                     {{$toner->color}}
                                 </td>
-                                <td class="budget">
-                                    {{$toner->quantity}}
-                                </td>
+
+                                @if($toner->quantity<=2)
+                                    <td class="budget text-danger badge-danger"> {{$toner->quantity}} </td>
+                                @else
+                                    <td class="budget"> {{$toner->quantity}} </td>
+                                @endif
+
                                 <td class="budget">
                                     {{$toner->printers()->sum('quantity')}}
                                 </td>

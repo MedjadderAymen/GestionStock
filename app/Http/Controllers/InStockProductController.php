@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use LaravelQRCode\Facades\QRCode;
 
 class InStockProductController extends Controller
 {
@@ -411,8 +412,8 @@ class InStockProductController extends Controller
             if ($site != null) {
 
                 $location = $site->locations()->create([
-                    'location_line_one'=>$request['location_line_one'],
-                    'location_line_two'=>$request['location_line_two'],
+                    'location_line_one' => $request['location_line_one'],
+                    'location_line_two' => $request['location_line_two'],
                 ]);
 
                 $inStockProduct->location_id = $location->id;
@@ -420,7 +421,7 @@ class InStockProductController extends Controller
 
             }
 
-        }catch (ValidationException $e){
+        } catch (ValidationException $e) {
 
             DB::rollBack();
 
@@ -436,9 +437,9 @@ class InStockProductController extends Controller
     public function show(inStockProduct $stock)
     {
         $users = User::where('role', 'employer')->has('employer')->get();
-        $sites=site::all();
+        $sites = site::all();
 
-        return view('stock.show')->with("inStockProduct", $stock)->with("users", $users)->with('sites',$sites);
+        return view('stock.show')->with("inStockProduct", $stock)->with("users", $users)->with('sites', $sites);
     }
 
     /**
@@ -757,18 +758,18 @@ class InStockProductController extends Controller
                 $stock->location()->delete();
 
                 $location = $site->locations()->create([
-                    'location_line_one'=>$request['location_line_one'],
-                    'location_line_two'=>$request['location_line_two'],
+                    'location_line_one' => $request['location_line_one'],
+                    'location_line_two' => $request['location_line_two'],
                 ]);
 
                 $stock->location_id = $location->id;
                 $stock->save();
 
-            }else{
+            } else {
                 $stock->location()->delete();
             }
 
-        }catch (ValidationException $e){
+        } catch (ValidationException $e) {
 
             DB::rollBack();
             Session::flash("error", $e->getMessage());
@@ -893,7 +894,7 @@ class InStockProductController extends Controller
                         ->with('user', $user);
             }
 
-        }catch (ValidationException $e){
+        } catch (ValidationException $e) {
 
             DB::rollBack();
 
@@ -906,6 +907,27 @@ class InStockProductController extends Controller
 
         return redirect()->back();
 
+
+    }
+
+    public function QrCode(inStockProduct $stockProduct)
+    {
+
+
+        $qr = public_path("storage/qr/" . time() . "-" . $stockProduct->serial_number . "qr-code.png");
+
+        $zi = $stockProduct->zi;
+        $constructor = $stockProduct->constructor;
+        $model = $stockProduct->model;
+        $serialNumber = $stockProduct->serial_number;
+        $employee = $stockProduct->employer->user->name;
+        $site = $stockProduct->location->site->designation;
+
+        QRCode::text('{Code immo:' . $zi . ', constructeur:' . $constructor . ', modele:' . $model . ', serial number:' . $serialNumber . ', employé:' . $employee . ', site:' . $site . '}')
+            ->setOutfile($qr)
+            ->png();
+
+        return redirect()->back();
 
     }
 }
