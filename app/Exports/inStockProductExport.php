@@ -14,19 +14,19 @@ class inStockProductExport implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
-        return inStockProduct::with('location.site')->with('employer.user')->get();
+        return inStockProduct::whereIn('class',['laptop','desktop'])->with('location.site')->with('employer.user')->get();
     }
 
     public function headings(): array
     {
         return [
             '#',
-            'Code Immo',
+            'Class',
+            'VC',
             'Constructeur',
             'Modele',
             'Numéro de série',
             "nom d'employé",
-            "numéro téléphone",
             "site",
             "ligne d'adresse 1",
             "ligne d'adresse 2"
@@ -35,14 +35,21 @@ class inStockProductExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($row): array
     {
+
+        if ($row->class == "laptop"){
+            $vc="VC".$row->laptop->vc."L";
+        }else{
+            $vc="VC".$row->desktop->vc."D";
+        }
+
         return [
             $row->id,
-            'ZI-'.$row->zi,
+            $row->class,
+            $vc,
             $row->constructor,
             $row->model,
             $row->serial_number,
             $row->employer->user->name ?? 'non affecté',
-            $row->employer->user->phone_number ?? 'non affecté',
             $row->location->site->address ?? 'non affecté',
             $row->location->location_line_one ?? 'non affecté',
             $row->location->location_line_two ?? 'non affecté',

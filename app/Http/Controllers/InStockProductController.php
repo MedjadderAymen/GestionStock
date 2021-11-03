@@ -80,8 +80,7 @@ class InStockProductController extends Controller
                             'screen' => ['string', 'required', 'max:255'],
                             'vc' => ['string', 'required', 'max:255'],
                             'user' => ['string', 'required'],
-                            'location_line_one' => ['string', 'sometimes'],
-                            'location_line_two' => ['string', 'sometimes'],
+
                         ]);
 
                         if ($data->fails()) {

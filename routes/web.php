@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use LaravelQRCode\Facades\QRCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,5 +68,5 @@ Route::middleware(['basicAuth'])->group(function () {
 
 });
 
-Route::get('stock/export_mapping', 'ExcelController@export_mapping')->name('registrations.export_mapping');
+Route::get('export_mapping', 'ExcelController@export_mapping')->name('registrations.export_mapping');
 
