@@ -11,7 +11,7 @@
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
                 <label>
-                    <input class="form-control" placeholder="Chercher un ZI" type="text" name="zi_search">
+                    <input class="form-control" placeholder="Chercher un Numéro de Série" type="text" name="serial_number">
                 </label>
             </div>
         </div>
