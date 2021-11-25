@@ -45,6 +45,11 @@
                         </nav>
                     </div>
                     <!-- Search form -->
+                    @if(\Illuminate\Support\Facades\Auth::user()->role==="help desk")
+                        <div class="col-lg-6 col-5 text-right">
+                            <a href="{{route("parc.export_mapping")}}" class="btn btn-sm btn-neutral col-4">Export Data</a>
+                        </div>
+                    @endif
                 </div>
 
             </div>
