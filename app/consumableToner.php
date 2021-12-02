@@ -14,7 +14,7 @@ class consumableToner extends Model
 
     public function Printer()
     {
-        $this->belongsTo(printer::class);
+        return $this->belongsTo(printer::class);
     }
 
     /**

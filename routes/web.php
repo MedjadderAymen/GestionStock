@@ -70,3 +70,5 @@ Route::middleware(['basicAuth'])->group(function () {
 
 Route::get('export_mapping', 'ExcelController@export_mapping')->name('parc.export_mapping');
 
+Route::get('export_report', 'ExcelController@export_report')->name('parc.export_report');
+
